@@ -1,0 +1,225 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1200;
+            height: 1000;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+        #loadingBar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width: 1200;
+            height: 1000;
+            background-color:rgba(200,200,200,0.8);
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+            opacity:1;
+        }
+
+        #bar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width:20px;
+            height:20px;
+            margin:auto auto auto auto;
+            border-radius:11px;
+            border:2px solid rgba(30,30,30,0.05);
+            background: rgb(0, 173, 246); /* Old browsers */
+            box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+        }
+
+        #border {
+            position:absolute;
+            top:10px;
+            left:10px;
+            width:500px;
+            height:23px;
+            margin:auto auto auto auto;
+            box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+            border-radius:10px;
+        }
+
+        #text {
+            position:absolute;
+            top:8px;
+            left:530px;
+            width:30px;
+            height:50px;
+            margin:auto auto auto auto;
+            font-size:22px;
+            color: #000000;
+        }
+
+        div.outerBorder {
+            position:relative;
+            top:400px;
+            width:600px;
+            height:44px;
+            margin:auto auto auto auto;
+            border:8px solid rgba(0,0,0,0.1);
+            background: rgb(252,252,252); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+            border-radius:72px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+<div id="loadingBar">
+    <div class="outerBorder">
+        <div id="text">0%</div>
+        <div id="border">
+            <div id="bar"></div>
+        </div>
+    </div>
+</div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": 0, "label": "_:ub8bL228C9", "shape": "dot", "title": "_:ub8bL228C9"}, {"id": 1, "label": "dcat:granularity", "shape": "dot", "title": "dcat:granularity"}, {"id": 2, "label": "_:ub8bL37C9", "shape": "dot", "title": "_:ub8bL37C9"}, {"id": 3, "label": "sh:ValidationResult", "shape": "dot", "title": "sh:ValidationResult"}, {"id": 4, "label": "_:ub8bL256C9", "shape": "dot", "title": "_:ub8bL256C9"}, {"id": 5, "label": "Optional: dcatde:qualityProcessURI ist nicht vorhanden! Sie k\u00f6nnen mittels dcatde:originator auf die Personen als foaf:Agent verweisen, die Urheberrechte am Dataset haben.", "shape": "dot", "title": "Optional: dcatde:qualityProcessURI ist nicht vorhanden! Sie k\u00f6nnen mittels dcatde:originator auf die Personen als foaf:Agent verweisen, die Urheberrechte am Dataset haben."}, {"id": 6, "label": "_:ub8bL23C9", "shape": "dot", "title": "_:ub8bL23C9"}, {"id": 7, "label": "_:ub8bL156C9", "shape": "dot", "title": "_:ub8bL156C9"}, {"id": 8, "label": "sh:Info", "shape": "dot", "title": "sh:Info"}, {"id": 9, "label": "_:ub8bL65C9", "shape": "dot", "title": "_:ub8bL65C9"}, {"id": 10, "label": "_:ub8bL177C9", "shape": "dot", "title": "_:ub8bL177C9"}, {"id": 11, "label": "_:fb6ae91720c0f4ce492e84a24e0c3a692b4", "shape": "dot", "title": "_:fb6ae91720c0f4ce492e84a24e0c3a692b4"}, {"id": 12, "label": "_:ub8bL30C9", "shape": "dot", "title": "_:ub8bL30C9"}, {"id": 13, "label": "dct:contributor", "shape": "dot", "title": "dct:contributor"}, {"id": 14, "label": "_:ub8bL7C1", "shape": "dot", "title": "_:ub8bL7C1"}, {"id": 15, "label": "_:ub8bL86C9", "shape": "dot", "title": "_:ub8bL86C9"}, {"id": 16, "label": "_:ub8bL142C9", "shape": "dot", "title": "_:ub8bL142C9"}, {"id": 17, "label": ":Dataset_qualityProcessURI_Ex", "shape": "dot", "title": ":Dataset_qualityProcessURI_Ex"}, {"id": 18, "label": "dcatde:qualityProcessURI", "shape": "dot", "title": "dcatde:qualityProcessURI"}, {"id": 19, "label": "_:ub8bL72C9", "shape": "dot", "title": "_:ub8bL72C9"}, {"id": 20, "label": "_:ub8bL121C9", "shape": "dot", "title": "_:ub8bL121C9"}, {"id": 21, "label": "Optional: dcat:granularity ist nicht vorhanden! Sie k\u00f6nnen die zeitliche Granularit\u00e4t mittels dcat:granularity mit Verweis auf einen Eintrag in http://publications.europa.eu/resource/authority/frequency angeben.", "shape": "dot", "title": "Optional: dcat:granularity ist nicht vorhanden! Sie k\u00f6nnen die zeitliche Granularit\u00e4t mittels dcat:granularity mit Verweis auf einen Eintrag in http://publications.europa.eu/resource/authority/frequency angeben."}, {"id": 22, "label": "_:fb6ae91720c0f4ce492e84a24e0c3a692b2", "shape": "dot", "title": "_:fb6ae91720c0f4ce492e84a24e0c3a692b2"}, {"id": 23, "label": "Pflicht (K32): Distributionen von Datens\u00e4tzen M\u00dcSSEN mit einer Lizenz ausgewiesen werden. F\u00fcr die Kennzeichnung der im Abschnitt 2.1 aufgef\u00fchrten Lizenzen M\u00dcSSEN die dort genannten URIs verwendet werden. - Seite 23. Nicht passende Lizenz", "shape": "dot", "title": "Pflicht (K32): Distributionen von Datens\u00e4tzen M\u00dcSSEN mit einer Lizenz ausgewiesen werden. F\u00fcr die Kennzeichnung der im Abschnitt 2.1 aufgef\u00fchrten Lizenzen M\u00dcSSEN die dort genannten URIs verwendet werden. - Seite 23. Nicht passende Lizenz"}, {"id": 24, "label": "_:ub8bL135C9", "shape": "dot", "title": "_:ub8bL135C9"}, {"id": 25, "label": ":Dataset_originator_Ex", "shape": "dot", "title": ":Dataset_originator_Ex"}, {"id": 26, "label": "sh:MinCountConstraintComponent", "shape": "dot", "title": "sh:MinCountConstraintComponent"}, {"id": 27, "label": "_:ub8bL93C9", "shape": "dot", "title": "_:ub8bL93C9"}, {"id": 28, "label": "Hinweis (K10): Die Eigenschaft \u201everwaltungspolitische oder fachliche Geobezug\u201c (dcatde:geocodingDescription) MUSS als Freitextfeld verwendet werden, wenn eine andere geopolitische Codierung der Abdeckung der Datenstruktur nicht m\u00f6glich oder zu komplex ist. - Seite 12", "shape": "dot", "title": "Hinweis (K10): Die Eigenschaft \u201everwaltungspolitische oder fachliche Geobezug\u201c (dcatde:geocodingDescription) MUSS als Freitextfeld verwendet werden, wenn eine andere geopolitische Codierung der Abdeckung der Datenstruktur nicht m\u00f6glich oder zu komplex ist. - Seite 12"}, {"id": 29, "label": "_:ub8bL249C9", "shape": "dot", "title": "_:ub8bL249C9"}, {"id": 30, "label": "dcatde:contributorID", "shape": "dot", "title": "dcatde:contributorID"}, {"id": 31, "label": "_:ub8bL16C9", "shape": "dot", "title": "_:ub8bL16C9"}, {"id": 32, "label": "Optional: dct:contributor ist nicht vorhanden! Sie k\u00f6nnen mittels dct:contributor als foaf:Agent auf die Stellen oder Personen verweisen, die die Daten bearbeitet haben (z.B. durch Formatierung derselben).", "shape": "dot", "title": "Optional: dct:contributor ist nicht vorhanden! Sie k\u00f6nnen mittels dct:contributor als foaf:Agent auf die Stellen oder Personen verweisen, die die Daten bearbeitet haben (z.B. durch Formatierung derselben)."}, {"id": 33, "label": "_:ub8bL128C9", "shape": "dot", "title": "_:ub8bL128C9"}, {"id": 34, "label": "Optional: contributorID ist nicht vorhanden! Sie k\u00f6nnen den Datenbereitsteller mittels dcatde:contributorID angeben. Eine Liste existierender Datenbereitsteller finden Sie unter: https://www.dcat-ap.de/def/contributors/", "shape": "dot", "title": "Optional: contributorID ist nicht vorhanden! Sie k\u00f6nnen den Datenbereitsteller mittels dcatde:contributorID angeben. Eine Liste existierender Datenbereitsteller finden Sie unter: https://www.dcat-ap.de/def/contributors/"}, {"id": 35, "label": "\u003chttps://backend.datenadler.de/kataloge/mik/dcat_catalog-1/behoerdenverzeichnis\u003e", "shape": "dot", "title": "\u003chttps://backend.datenadler.de/kataloge/mik/dcat_catalog-1/behoerdenverzeichnis\u003e"}, {"id": 36, "label": "_:ub8bL221C9", "shape": "dot", "title": "_:ub8bL221C9"}, {"id": 37, "label": "_:ub8bL107C9", "shape": "dot", "title": "_:ub8bL107C9"}, {"id": 38, "label": "sh:Warning", "shape": "dot", "title": "sh:Warning"}, {"id": 39, "label": "_:ub8bL51C9", "shape": "dot", "title": "_:ub8bL51C9"}, {"id": 40, "label": "_:ub8bL192C9", "shape": "dot", "title": "_:ub8bL192C9"}, {"id": 41, "label": "_:ub8bL185C9", "shape": "dot", "title": "_:ub8bL185C9"}, {"id": 42, "label": "Optional: dcatde:licenseAttributionByText ist nicht vorhanden! Sie k\u00f6nnen mittels dcatde:licenseAttributionByText zur Lizenz geh\u00f6rende Namensnennungen als Freitext angeben.", "shape": "dot", "title": "Optional: dcatde:licenseAttributionByText ist nicht vorhanden! Sie k\u00f6nnen mittels dcatde:licenseAttributionByText zur Lizenz geh\u00f6rende Namensnennungen als Freitext angeben."}, {"id": 43, "label": ":Distribution_plannedAvailability_Ex", "shape": "dot", "title": ":Distribution_plannedAvailability_Ex"}, {"id": 44, "label": "_:ub8bL206C9", "shape": "dot", "title": "_:ub8bL206C9"}, {"id": 45, "label": "Optional: dcatde:geocodingDescription ist nicht vorhanden! Sie k\u00f6nnen die geografische Abdeckung des Datasets als Freitext angeben.", "shape": "dot", "title": "Optional: dcatde:geocodingDescription ist nicht vorhanden! Sie k\u00f6nnen die geografische Abdeckung des Datasets als Freitext angeben."}, {"id": 46, "label": "\u003chttps://backend.datenadler.de/kataloge/mik/dcat_catalog-1/kommunalverzeichnis\u003e", "shape": "dot", "title": "\u003chttps://backend.datenadler.de/kataloge/mik/dcat_catalog-1/kommunalverzeichnis\u003e"}, {"id": 47, "label": "_:ub8bL9C15", "shape": "dot", "title": "_:ub8bL9C15"}, {"id": 48, "label": "_:ub8bL44C9", "shape": "dot", "title": "_:ub8bL44C9"}, {"id": 49, "label": "dcatde:geocodingDescription", "shape": "dot", "title": "dcatde:geocodingDescription"}, {"id": 50, "label": "_:ub8bL213C9", "shape": "dot", "title": "_:ub8bL213C9"}, {"id": 51, "label": "sh:NodeConstraintComponent", "shape": "dot", "title": "sh:NodeConstraintComponent"}, {"id": 52, "label": "_:ub8bL242C9", "shape": "dot", "title": "_:ub8bL242C9"}, {"id": 53, "label": ":Dataset_contributorID_Ex", "shape": "dot", "title": ":Dataset_contributorID_Ex"}, {"id": 54, "label": ":Dataset_geocodingDescription_Ex", "shape": "dot", "title": ":Dataset_geocodingDescription_Ex"}, {"id": 55, "label": "_:ub8bL100C9", "shape": "dot", "title": "_:ub8bL100C9"}, {"id": 56, "label": "Optional: dcatde:maintainer ist nicht vorhanden! Sie k\u00f6nnen mittels dcatde:maintainer als foaf:Agent auf Stellen oder Personen verweisen, die Verantwortung und Rechenschaftspflicht f\u00fcr die Daten und ihre angemessene Pflege \u00fcbernehmen.", "shape": "dot", "title": "Optional: dcatde:maintainer ist nicht vorhanden! Sie k\u00f6nnen mittels dcatde:maintainer als foaf:Agent auf Stellen oder Personen verweisen, die Verantwortung und Rechenschaftspflicht f\u00fcr die Daten und ihre angemessene Pflege \u00fcbernehmen."}, {"id": 57, "label": ":Dataset_contributor_Ex", "shape": "dot", "title": ":Dataset_contributor_Ex"}, {"id": 58, "label": "Pflicht (K30): Werden, wie empfohlen, Kategorien verwendet, M\u00dcSSEN die MDR data themes genutzt werden. - Seite 20", "shape": "dot", "title": "Pflicht (K30): Werden, wie empfohlen, Kategorien verwendet, M\u00dcSSEN die MDR data themes genutzt werden. - Seite 20"}, {"id": 59, "label": "_:ub8bL149C9", "shape": "dot", "title": "_:ub8bL149C9"}, {"id": 60, "label": "_:ub8bL114C9", "shape": "dot", "title": "_:ub8bL114C9"}, {"id": 61, "label": "sh:Violation", "shape": "dot", "title": "sh:Violation"}, {"id": 62, "label": "dcatde:legalBasis", "shape": "dot", "title": "dcatde:legalBasis"}, {"id": 63, "label": ":Dataset_politicalGeocodingURI_Ex", "shape": "dot", "title": ":Dataset_politicalGeocodingURI_Ex"}, {"id": 64, "label": "_:ub8bL199C9", "shape": "dot", "title": "_:ub8bL199C9"}, {"id": 65, "label": ":Dataset_maintainer_Ex", "shape": "dot", "title": ":Dataset_maintainer_Ex"}, {"id": 66, "label": "_:fb6ae91720c0f4ce492e84a24e0c3a692b3", "shape": "dot", "title": "_:fb6ae91720c0f4ce492e84a24e0c3a692b3"}, {"id": 67, "label": "_:ub8bL58C9", "shape": "dot", "title": "_:ub8bL58C9"}, {"id": 68, "label": "Optional (K02): Sie k\u00f6nnten mittels dcatde:qualityProcessURI auf eine Webseite, die den Prozess zur Qualit\u00e4tssicherung des Datasets beschreibt, verweisen.", "shape": "dot", "title": "Optional (K02): Sie k\u00f6nnten mittels dcatde:qualityProcessURI auf eine Webseite, die den Prozess zur Qualit\u00e4tssicherung des Datasets beschreibt, verweisen."}, {"id": 69, "label": "dcat:theme", "shape": "dot", "title": "dcat:theme"}, {"id": 70, "label": "dct:license", "shape": "dot", "title": "dct:license"}, {"id": 71, "label": "\u003chttp://publications.europa.eu/resource/authority/data-theme/GOVE\u003e", "shape": "dot", "title": "\u003chttp://publications.europa.eu/resource/authority/data-theme/GOVE\u003e"}, {"id": 72, "label": "_:ub8bL235C9", "shape": "dot", "title": "_:ub8bL235C9"}, {"id": 73, "label": ":Distribution_licenseAttributionByText_Ex", "shape": "dot", "title": ":Distribution_licenseAttributionByText_Ex"}, {"id": 74, "label": "_:ub8bL79C9", "shape": "dot", "title": "_:ub8bL79C9"}, {"id": 75, "label": ":Dataset_legalBasis_Ex", "shape": "dot", "title": ":Dataset_legalBasis_Ex"}, {"id": 76, "label": "Pflicht (K12): Alle Datenstrukturen, die direkt an das GovData Portal geliefert werden, M\u00dcSSEN ihre Herkunft \u00fcber eine eindeutige Kennzeichnung des Datenbereitstellers \u00fcber die DatenbereitstellerID (dcatde:contributorID) ausweisen. - Seite 13", "shape": "dot", "title": "Pflicht (K12): Alle Datenstrukturen, die direkt an das GovData Portal geliefert werden, M\u00dcSSEN ihre Herkunft \u00fcber eine eindeutige Kennzeichnung des Datenbereitstellers \u00fcber die DatenbereitstellerID (dcatde:contributorID) ausweisen. - Seite 13"}, {"id": 77, "label": "\u003chttp://publications.europa.eu/resource/authority/data-theme/SOCI\u003e", "shape": "dot", "title": "\u003chttp://publications.europa.eu/resource/authority/data-theme/SOCI\u003e"}, {"id": 78, "label": "_:ub8bL163C9", "shape": "dot", "title": "_:ub8bL163C9"}, {"id": 79, "label": "sh:OrConstraintComponent", "shape": "dot", "title": "sh:OrConstraintComponent"}, {"id": 80, "label": ":Dataset_granularity_Ex", "shape": "dot", "title": ":Dataset_granularity_Ex"}, {"id": 81, "label": "Empfohlen: dcatde:plannedAvailability ist nicht vorhanden! Sie sollten mittels dcatde:plannedAvailability die Verf\u00fcgbarkeit der Distribution \u00fcber einer IRI aus der Liste https://www.dcat-ap.de/def/plannedAvailability/ angeben.", "shape": "dot", "title": "Empfohlen: dcatde:plannedAvailability ist nicht vorhanden! Sie sollten mittels dcatde:plannedAvailability die Verf\u00fcgbarkeit der Distribution \u00fcber einer IRI aus der Liste https://www.dcat-ap.de/def/plannedAvailability/ angeben."}, {"id": 82, "label": "dcatde:plannedAvailability", "shape": "dot", "title": "dcatde:plannedAvailability"}, {"id": 83, "label": "Optional: dcatde:qualityProcessURI ist nicht vorhanden! Sie k\u00f6nnen mittels dcatde:qualityProcessURI auf eine Webseite, die den Prozess zur Qualit\u00e4tssicherung des Datasets beschreibt, verweisen.", "shape": "dot", "title": "Optional: dcatde:qualityProcessURI ist nicht vorhanden! Sie k\u00f6nnen mittels dcatde:qualityProcessURI auf eine Webseite, die den Prozess zur Qualit\u00e4tssicherung des Datasets beschreibt, verweisen."}, {"id": 84, "label": "_:ub8bL170C9", "shape": "dot", "title": "_:ub8bL170C9"}, {"id": 85, "label": "\u003chttps://backend.datenadler.de/kataloge/mik/dcat_catalog-1/behoerdenverzeichnis/behoerdenverzeichnis-zum-mitnehmen\u003e", "shape": "dot", "title": "\u003chttps://backend.datenadler.de/kataloge/mik/dcat_catalog-1/behoerdenverzeichnis/behoerdenverzeichnis-zum-mitnehmen\u003e"}, {"id": 86, "label": "Empfohlen: dcatde:politicalGeocodingLevelURI ist nicht vorhanden! Sie sollten mittels dcatde:politicalGeocodingLevelURI die prinzipielle Verwaltungsebene, von der das Dataset erhoben und eingestellt wurde, angeben. Es wird empfohlen, folgende Liste zu verwenden: https://www.dcat-ap.de/def/politicalGeocoding/Level/", "shape": "dot", "title": "Empfohlen: dcatde:politicalGeocodingLevelURI ist nicht vorhanden! Sie sollten mittels dcatde:politicalGeocodingLevelURI die prinzipielle Verwaltungsebene, von der das Dataset erhoben und eingestellt wurde, angeben. Es wird empfohlen, folgende Liste zu verwenden: https://www.dcat-ap.de/def/politicalGeocoding/Level/"}, {"id": 87, "label": "dct:creator", "shape": "dot", "title": "dct:creator"}, {"id": 88, "label": ":Dataset_creator_Ex", "shape": "dot", "title": ":Dataset_creator_Ex"}, {"id": 89, "label": "sh:ValidationReport", "shape": "dot", "title": "sh:ValidationReport"}, {"id": 90, "label": "dcatde:maintainer", "shape": "dot", "title": "dcatde:maintainer"}, {"id": 91, "label": "Empfohlen: dcatde:politicalGeocodingURI ist nicht vorhanden! Sie k\u00f6nnen mittels dcatde:politicalGeocodingURI das Dataset mit dem von ihr abgedeckten administrativen Gebiet der Bundesrepublik Deutschland, verkn\u00fcpfen. Es wird empfohlen, folgend Listen zu verwenden: https://www.dcat-ap.de/def/politicalGeocoding/stateKey/, https://www.dcat-ap.de/def/politicalGeocoding/regionalKey/, https://www.dcat-ap.de/def/politicalGeocoding/districtKey/", "shape": "dot", "title": "Empfohlen: dcatde:politicalGeocodingURI ist nicht vorhanden! Sie k\u00f6nnen mittels dcatde:politicalGeocodingURI das Dataset mit dem von ihr abgedeckten administrativen Gebiet der Bundesrepublik Deutschland, verkn\u00fcpfen. Es wird empfohlen, folgend Listen zu verwenden: https://www.dcat-ap.de/def/politicalGeocoding/stateKey/, https://www.dcat-ap.de/def/politicalGeocoding/regionalKey/, https://www.dcat-ap.de/def/politicalGeocoding/districtKey/"}, {"id": 92, "label": "dcatde:licenseAttributionByText", "shape": "dot", "title": "dcatde:licenseAttributionByText"}, {"id": 93, "label": "_:fb6ae91720c0f4ce492e84a24e0c3a692b1", "shape": "dot", "title": "_:fb6ae91720c0f4ce492e84a24e0c3a692b1"}, {"id": 94, "label": "\u003chttps://backend.datenadler.de/kataloge/mik/dcat_catalog-1/kommunalverzeichnis/kommunalverzeichnis-zum-mitnehmen\u003e", "shape": "dot", "title": "\u003chttps://backend.datenadler.de/kataloge/mik/dcat_catalog-1/kommunalverzeichnis/kommunalverzeichnis-zum-mitnehmen\u003e"}, {"id": 95, "label": ":Shapes_ImplR_Konv_10", "shape": "dot", "title": ":Shapes_ImplR_Konv_10"}, {"id": 96, "label": "dcatde:politicalGeocodingURI", "shape": "dot", "title": "dcatde:politicalGeocodingURI"}, {"id": 97, "label": ":DCATAPde_themes", "shape": "dot", "title": ":DCATAPde_themes"}, {"id": 98, "label": "_:fb6ae91720c0f4ce492e84a24e0c3a692b5", "shape": "dot", "title": "_:fb6ae91720c0f4ce492e84a24e0c3a692b5"}, {"id": 99, "label": ":DCATAPde_license", "shape": "dot", "title": ":DCATAPde_license"}, {"id": 100, "label": "Optional: dct:creator ist nicht vorhanden! Sie k\u00f6nnen mittels dct:creator auf die Stellen oder Personen als foaf:Agent zu verweisen, die die Daten erstellt haben.", "shape": "dot", "title": "Optional: dct:creator ist nicht vorhanden! Sie k\u00f6nnen mittels dct:creator auf die Stellen oder Personen als foaf:Agent zu verweisen, die die Daten erstellt haben."}, {"id": 101, "label": "dcatde:politicalGeocodingLevelURI", "shape": "dot", "title": "dcatde:politicalGeocodingLevelURI"}, {"id": 102, "label": ":Dataset_politicalGeocodingLevelURI_Ex", "shape": "dot", "title": ":Dataset_politicalGeocodingLevelURI_Ex"}, {"id": 103, "label": "False", "shape": "dot", "title": "False"}, {"id": 104, "label": "1", "shape": "dot", "title": "1"}, {"id": 105, "label": "sh:QualifiedMinCountConstraintComponent", "shape": "dot", "title": "sh:QualifiedMinCountConstraintComponent"}, {"id": 106, "label": "dcatde:originator", "shape": "dot", "title": "dcatde:originator"}, {"id": 107, "label": "Optional: dcatde:legalBasis ist nicht vorhanden! Sie k\u00f6nnen mittels dcatde:legalbasis die Rechtsgrundlage f\u00fcr den Zugang zu den Informationen als Freitext angeben.", "shape": "dot", "title": "Optional: dcatde:legalBasis ist nicht vorhanden! Sie k\u00f6nnen mittels dcatde:legalbasis die Rechtsgrundlage f\u00fcr den Zugang zu den Informationen als Freitext angeben."}]);
+        edges = new vis.DataSet([{"from": 0, "label": "sh:resultPath", "to": 1}, {"from": 2, "label": "rdf:type", "to": 3}, {"from": 4, "label": "sh:resultMessage", "to": 5}, {"from": 6, "label": "rdf:type", "to": 3}, {"from": 7, "label": "sh:resultSeverity", "to": 8}, {"from": 9, "label": "rdf:type", "to": 3}, {"from": 10, "label": "sh:sourceShape", "to": 11}, {"from": 12, "label": "sh:resultPath", "to": 13}, {"from": 14, "label": "sh:result", "to": 15}, {"from": 16, "label": "sh:sourceShape", "to": 17}, {"from": 16, "label": "sh:resultPath", "to": 18}, {"from": 19, "label": "rdf:type", "to": 3}, {"from": 20, "label": "sh:resultMessage", "to": 21}, {"from": 22, "label": "sh:message", "to": 23}, {"from": 24, "label": "sh:sourceShape", "to": 25}, {"from": 12, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 27, "label": "sh:resultMessage", "to": 28}, {"from": 29, "label": "sh:resultPath", "to": 30}, {"from": 7, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 20, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 31, "label": "sh:resultMessage", "to": 32}, {"from": 33, "label": "sh:resultMessage", "to": 34}, {"from": 14, "label": "sh:result", "to": 24}, {"from": 0, "label": "sh:focusNode", "to": 35}, {"from": 14, "label": "sh:result", "to": 2}, {"from": 36, "label": "sh:resultMessage", "to": 34}, {"from": 37, "label": "sh:resultSeverity", "to": 38}, {"from": 4, "label": "sh:sourceShape", "to": 25}, {"from": 14, "label": "sh:result", "to": 39}, {"from": 14, "label": "sh:result", "to": 12}, {"from": 40, "label": "sh:value", "to": 35}, {"from": 41, "label": "sh:resultMessage", "to": 42}, {"from": 37, "label": "sh:sourceShape", "to": 43}, {"from": 44, "label": "rdf:type", "to": 3}, {"from": 6, "label": "sh:resultMessage", "to": 45}, {"from": 36, "label": "sh:focusNode", "to": 46}, {"from": 12, "label": "sh:focusNode", "to": 46}, {"from": 14, "label": "sh:result", "to": 47}, {"from": 48, "label": "sh:resultPath", "to": 49}, {"from": 14, "label": "sh:result", "to": 29}, {"from": 10, "label": "rdf:type", "to": 3}, {"from": 15, "label": "sh:resultSeverity", "to": 38}, {"from": 4, "label": "sh:resultSeverity", "to": 8}, {"from": 33, "label": "sh:resultSeverity", "to": 8}, {"from": 20, "label": "sh:resultSeverity", "to": 8}, {"from": 50, "label": "sh:sourceConstraintComponent", "to": 51}, {"from": 52, "label": "sh:focusNode", "to": 35}, {"from": 24, "label": "sh:resultSeverity", "to": 8}, {"from": 4, "label": "rdf:type", "to": 3}, {"from": 36, "label": "sh:sourceShape", "to": 53}, {"from": 48, "label": "sh:sourceShape", "to": 54}, {"from": 12, "label": "sh:resultSeverity", "to": 8}, {"from": 44, "label": "sh:resultSeverity", "to": 38}, {"from": 12, "label": "rdf:type", "to": 3}, {"from": 55, "label": "sh:resultMessage", "to": 56}, {"from": 12, "label": "sh:sourceShape", "to": 57}, {"from": 10, "label": "sh:resultMessage", "to": 58}, {"from": 59, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 60, "label": "sh:resultSeverity", "to": 61}, {"from": 14, "label": "sh:result", "to": 10}, {"from": 7, "label": "sh:resultPath", "to": 62}, {"from": 14, "label": "sh:result", "to": 44}, {"from": 15, "label": "sh:sourceShape", "to": 63}, {"from": 60, "label": "sh:resultPath", "to": 30}, {"from": 15, "label": "rdf:type", "to": 3}, {"from": 19, "label": "sh:sourceShape", "to": 22}, {"from": 44, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 64, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 64, "label": "sh:sourceShape", "to": 65}, {"from": 29, "label": "sh:sourceShape", "to": 66}, {"from": 9, "label": "sh:focusNode", "to": 35}, {"from": 9, "label": "sh:sourceShape", "to": 17}, {"from": 24, "label": "sh:resultMessage", "to": 5}, {"from": 41, "label": "rdf:type", "to": 3}, {"from": 67, "label": "sh:resultMessage", "to": 68}, {"from": 10, "label": "sh:resultPath", "to": 69}, {"from": 6, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 31, "label": "sh:sourceShape", "to": 57}, {"from": 22, "label": "sh:path", "to": 70}, {"from": 14, "label": "sh:result", "to": 40}, {"from": 6, "label": "sh:resultSeverity", "to": 8}, {"from": 10, "label": "sh:resultSeverity", "to": 61}, {"from": 27, "label": "sh:resultSeverity", "to": 8}, {"from": 50, "label": "sh:value", "to": 71}, {"from": 72, "label": "sh:sourceShape", "to": 73}, {"from": 14, "label": "sh:result", "to": 74}, {"from": 7, "label": "sh:sourceShape", "to": 75}, {"from": 15, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 31, "label": "sh:focusNode", "to": 35}, {"from": 14, "label": "sh:result", "to": 27}, {"from": 64, "label": "rdf:type", "to": 3}, {"from": 29, "label": "sh:resultSeverity", "to": 61}, {"from": 0, "label": "rdf:type", "to": 3}, {"from": 60, "label": "sh:resultMessage", "to": 76}, {"from": 10, "label": "sh:value", "to": 77}, {"from": 16, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 0, "label": "sh:resultSeverity", "to": 8}, {"from": 55, "label": "sh:sourceShape", "to": 65}, {"from": 52, "label": "rdf:type", "to": 3}, {"from": 14, "label": "sh:result", "to": 19}, {"from": 14, "label": "sh:result", "to": 0}, {"from": 11, "label": "sh:path", "to": 69}, {"from": 78, "label": "sh:resultMessage", "to": 23}, {"from": 27, "label": "sh:sourceConstraintComponent", "to": 79}, {"from": 27, "label": "sh:value", "to": 46}, {"from": 55, "label": "sh:focusNode", "to": 46}, {"from": 67, "label": "sh:focusNode", "to": 46}, {"from": 14, "label": "sh:result", "to": 48}, {"from": 20, "label": "sh:sourceShape", "to": 80}, {"from": 52, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 31, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 2, "label": "sh:resultMessage", "to": 81}, {"from": 2, "label": "sh:resultPath", "to": 82}, {"from": 74, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 16, "label": "sh:resultMessage", "to": 83}, {"from": 14, "label": "sh:result", "to": 52}, {"from": 9, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 64, "label": "sh:focusNode", "to": 35}, {"from": 14, "label": "sh:result", "to": 20}, {"from": 41, "label": "sh:sourceShape", "to": 73}, {"from": 7, "label": "sh:focusNode", "to": 35}, {"from": 64, "label": "sh:resultSeverity", "to": 8}, {"from": 84, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 14, "label": "sh:result", "to": 78}, {"from": 50, "label": "rdf:type", "to": 3}, {"from": 84, "label": "sh:resultPath", "to": 62}, {"from": 47, "label": "sh:resultSeverity", "to": 38}, {"from": 55, "label": "sh:resultSeverity", "to": 8}, {"from": 4, "label": "sh:focusNode", "to": 35}, {"from": 52, "label": "sh:resultSeverity", "to": 8}, {"from": 10, "label": "sh:sourceConstraintComponent", "to": 51}, {"from": 33, "label": "sh:focusNode", "to": 35}, {"from": 41, "label": "sh:resultSeverity", "to": 8}, {"from": 66, "label": "sh:severity", "to": 61}, {"from": 78, "label": "sh:focusNode", "to": 85}, {"from": 48, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 47, "label": "sh:resultMessage", "to": 86}, {"from": 59, "label": "sh:resultPath", "to": 87}, {"from": 44, "label": "sh:resultMessage", "to": 86}, {"from": 59, "label": "sh:focusNode", "to": 46}, {"from": 74, "label": "sh:sourceShape", "to": 88}, {"from": 14, "label": "rdf:type", "to": 89}, {"from": 55, "label": "sh:resultPath", "to": 90}, {"from": 50, "label": "sh:resultMessage", "to": 58}, {"from": 7, "label": "rdf:type", "to": 3}, {"from": 14, "label": "sh:result", "to": 50}, {"from": 39, "label": "sh:resultMessage", "to": 91}, {"from": 48, "label": "sh:focusNode", "to": 46}, {"from": 14, "label": "sh:result", "to": 16}, {"from": 36, "label": "sh:resultPath", "to": 30}, {"from": 14, "label": "sh:result", "to": 7}, {"from": 72, "label": "sh:resultPath", "to": 92}, {"from": 14, "label": "sh:result", "to": 31}, {"from": 39, "label": "sh:focusNode", "to": 46}, {"from": 67, "label": "sh:resultSeverity", "to": 8}, {"from": 52, "label": "sh:sourceShape", "to": 93}, {"from": 67, "label": "rdf:type", "to": 3}, {"from": 39, "label": "sh:sourceShape", "to": 63}, {"from": 36, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 31, "label": "rdf:type", "to": 3}, {"from": 37, "label": "sh:focusNode", "to": 94}, {"from": 66, "label": "sh:message", "to": 76}, {"from": 59, "label": "rdf:type", "to": 3}, {"from": 50, "label": "sh:resultSeverity", "to": 61}, {"from": 48, "label": "sh:resultMessage", "to": 45}, {"from": 31, "label": "sh:resultPath", "to": 13}, {"from": 72, "label": "sh:resultSeverity", "to": 8}, {"from": 10, "label": "sh:focusNode", "to": 46}, {"from": 14, "label": "sh:result", "to": 84}, {"from": 14, "label": "sh:result", "to": 59}, {"from": 48, "label": "rdf:type", "to": 3}, {"from": 78, "label": "sh:resultSeverity", "to": 61}, {"from": 27, "label": "sh:sourceShape", "to": 95}, {"from": 67, "label": "sh:resultPath", "to": 18}, {"from": 14, "label": "sh:result", "to": 60}, {"from": 39, "label": "sh:resultPath", "to": 96}, {"from": 33, "label": "rdf:type", "to": 3}, {"from": 2, "label": "sh:resultSeverity", "to": 38}, {"from": 40, "label": "sh:sourceShape", "to": 95}, {"from": 11, "label": "sh:node", "to": 97}, {"from": 24, "label": "sh:focusNode", "to": 46}, {"from": 98, "label": "sh:node", "to": 99}, {"from": 64, "label": "sh:resultPath", "to": 90}, {"from": 29, "label": "sh:focusNode", "to": 35}, {"from": 44, "label": "sh:focusNode", "to": 46}, {"from": 66, "label": "sh:path", "to": 30}, {"from": 41, "label": "sh:focusNode", "to": 94}, {"from": 78, "label": "sh:sourceShape", "to": 22}, {"from": 59, "label": "sh:resultMessage", "to": 100}, {"from": 44, "label": "sh:resultPath", "to": 101}, {"from": 47, "label": "sh:sourceShape", "to": 102}, {"from": 47, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 29, "label": "sh:resultMessage", "to": 76}, {"from": 52, "label": "sh:resultMessage", "to": 68}, {"from": 72, "label": "sh:resultMessage", "to": 42}, {"from": 11, "label": "sh:message", "to": 58}, {"from": 24, "label": "rdf:type", "to": 3}, {"from": 33, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 40, "label": "sh:sourceConstraintComponent", "to": 79}, {"from": 14, "label": "sh:conforms", "to": 103}, {"from": 72, "label": "sh:focusNode", "to": 85}, {"from": 20, "label": "rdf:type", "to": 3}, {"from": 0, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 14, "label": "sh:result", "to": 33}, {"from": 60, "label": "sh:sourceShape", "to": 66}, {"from": 24, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 47, "label": "sh:focusNode", "to": 35}, {"from": 39, "label": "rdf:type", "to": 3}, {"from": 93, "label": "sh:message", "to": 68}, {"from": 12, "label": "sh:resultMessage", "to": 32}, {"from": 39, "label": "sh:resultSeverity", "to": 38}, {"from": 14, "label": "sh:result", "to": 41}, {"from": 2, "label": "sh:sourceShape", "to": 43}, {"from": 14, "label": "sh:result", "to": 64}, {"from": 41, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 78, "label": "sh:resultPath", "to": 70}, {"from": 60, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 74, "label": "sh:focusNode", "to": 35}, {"from": 29, "label": "rdf:type", "to": 3}, {"from": 93, "label": "sh:minCount", "to": 104}, {"from": 20, "label": "sh:focusNode", "to": 46}, {"from": 84, "label": "sh:focusNode", "to": 46}, {"from": 55, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 14, "label": "sh:result", "to": 55}, {"from": 64, "label": "sh:resultMessage", "to": 56}, {"from": 72, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 22, "label": "sh:qualifiedValueShape", "to": 98}, {"from": 0, "label": "sh:sourceShape", "to": 80}, {"from": 15, "label": "sh:resultPath", "to": 96}, {"from": 16, "label": "sh:focusNode", "to": 46}, {"from": 50, "label": "sh:focusNode", "to": 35}, {"from": 52, "label": "sh:resultPath", "to": 18}, {"from": 72, "label": "rdf:type", "to": 3}, {"from": 19, "label": "sh:resultPath", "to": 70}, {"from": 47, "label": "rdf:type", "to": 3}, {"from": 39, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 36, "label": "sh:resultSeverity", "to": 8}, {"from": 40, "label": "rdf:type", "to": 3}, {"from": 47, "label": "sh:resultPath", "to": 101}, {"from": 19, "label": "sh:sourceConstraintComponent", "to": 105}, {"from": 16, "label": "sh:resultSeverity", "to": 8}, {"from": 0, "label": "sh:resultMessage", "to": 21}, {"from": 40, "label": "sh:resultSeverity", "to": 8}, {"from": 84, "label": "rdf:type", "to": 3}, {"from": 19, "label": "sh:focusNode", "to": 94}, {"from": 24, "label": "sh:resultPath", "to": 106}, {"from": 67, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 37, "label": "sh:resultPath", "to": 82}, {"from": 37, "label": "rdf:type", "to": 3}, {"from": 19, "label": "sh:resultSeverity", "to": 61}, {"from": 48, "label": "sh:resultSeverity", "to": 8}, {"from": 74, "label": "sh:resultMessage", "to": 100}, {"from": 6, "label": "sh:focusNode", "to": 35}, {"from": 14, "label": "sh:result", "to": 9}, {"from": 14, "label": "sh:result", "to": 37}, {"from": 50, "label": "sh:sourceShape", "to": 11}, {"from": 74, "label": "sh:resultPath", "to": 87}, {"from": 59, "label": "sh:resultSeverity", "to": 8}, {"from": 9, "label": "sh:resultSeverity", "to": 8}, {"from": 6, "label": "sh:sourceShape", "to": 54}, {"from": 6, "label": "sh:resultPath", "to": 49}, {"from": 40, "label": "sh:resultMessage", "to": 28}, {"from": 14, "label": "sh:result", "to": 36}, {"from": 44, "label": "sh:sourceShape", "to": 102}, {"from": 84, "label": "sh:resultMessage", "to": 107}, {"from": 22, "label": "sh:qualifiedMinCount", "to": 104}, {"from": 67, "label": "sh:sourceShape", "to": 93}, {"from": 19, "label": "sh:resultMessage", "to": 23}, {"from": 31, "label": "sh:resultSeverity", "to": 8}, {"from": 74, "label": "sh:resultSeverity", "to": 8}, {"from": 93, "label": "sh:severity", "to": 8}, {"from": 60, "label": "rdf:type", "to": 3}, {"from": 29, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 74, "label": "rdf:type", "to": 3}, {"from": 33, "label": "sh:resultPath", "to": 30}, {"from": 14, "label": "sh:result", "to": 6}, {"from": 4, "label": "sh:resultPath", "to": 106}, {"from": 11, "label": "sh:severity", "to": 61}, {"from": 15, "label": "sh:resultMessage", "to": 91}, {"from": 78, "label": "rdf:type", "to": 3}, {"from": 93, "label": "sh:path", "to": 18}, {"from": 66, "label": "sh:minCount", "to": 104}, {"from": 36, "label": "rdf:type", "to": 3}, {"from": 55, "label": "rdf:type", "to": 3}, {"from": 2, "label": "sh:focusNode", "to": 85}, {"from": 4, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 9, "label": "sh:resultMessage", "to": 83}, {"from": 78, "label": "sh:sourceConstraintComponent", "to": 105}, {"from": 60, "label": "sh:focusNode", "to": 46}, {"from": 20, "label": "sh:resultPath", "to": 1}, {"from": 22, "label": "sh:severity", "to": 61}, {"from": 7, "label": "sh:resultMessage", "to": 107}, {"from": 27, "label": "rdf:type", "to": 3}, {"from": 59, "label": "sh:sourceShape", "to": 88}, {"from": 14, "label": "sh:result", "to": 4}, {"from": 41, "label": "sh:resultPath", "to": 92}, {"from": 37, "label": "sh:resultMessage", "to": 81}, {"from": 2, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 37, "label": "sh:sourceConstraintComponent", "to": 26}, {"from": 14, "label": "sh:result", "to": 72}, {"from": 84, "label": "sh:resultSeverity", "to": 8}, {"from": 16, "label": "rdf:type", "to": 3}, {"from": 33, "label": "sh:sourceShape", "to": 53}, {"from": 14, "label": "sh:result", "to": 67}, {"from": 9, "label": "sh:resultPath", "to": 18}, {"from": 50, "label": "sh:resultPath", "to": 69}, {"from": 15, "label": "sh:focusNode", "to": 35}, {"from": 84, "label": "sh:sourceShape", "to": 75}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+        network.on("stabilizationProgress", function(params) {
+      		document.getElementById('loadingBar').removeAttribute("style");
+	        var maxWidth = 496;
+	        var minWidth = 20;
+	        var widthFactor = params.iterations/params.total;
+	        var width = Math.max(minWidth,maxWidth * widthFactor);
+
+	        document.getElementById('bar').style.width = width + 'px';
+	        document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+	    });
+	    network.once("stabilizationIterationsDone", function() {
+	        document.getElementById('text').innerHTML = '100%';
+	        document.getElementById('bar').style.width = '496px';
+	        document.getElementById('loadingBar').style.opacity = 0;
+	        // really clean the dom element
+	        setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+	    });
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

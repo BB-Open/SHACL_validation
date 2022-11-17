@@ -1,0 +1,147 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://publications.europa.eu/ontology/cdm#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:j.1="http://www.w3.org/2004/02/skos/core#"
+    xmlns:j.2="http://publications.europa.eu/ontology/cdm/cmr#" > 
+  <rdf:Description rdf:about="http://publications.europa.eu/resource/cellar/9464b814-581c-11ec-91ac-01aa75ed71a1">
+    <owl:sameAs rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://publications.europa.eu/resource/documentation/planned-availability/20220715-0">
+    <j.0:work_explains_work rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+    <j.0:explains rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+    <j.0:documents rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+    <j.0:documentation_documents_work_dataset rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#documentation"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#work"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://publications.europa.eu/resource/dataset/release/20211208-0">
+    <j.0:work_publishes_work rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+    <j.0:publishes rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://publications.europa.eu/ontology/cdm#datetime_transmission">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://publications.europa.eu/resource/dataset/planned-availability">
+    <j.0:keyword>controlled vocabulary</j.0:keyword>
+    <j.0:created_by rdf:resource="http://publications.europa.eu/resource/authority/corporate-body/PUBL"/>
+    <j.0:published_in rdf:resource="http://publications.europa.eu/resource/dataset/release/20220715-0"/>
+    <j.0:has_frequency rdf:resource="http://publications.europa.eu/resource/authority/frequency/OTHER"/>
+    <j.0:datetime_transmission rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2022-07-15T00:01:00</j.0:datetime_transmission>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#work"/>
+    <j.0:keyword>Authority Tables</j.0:keyword>
+    <j.0:description_editorial rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            &lt;p xmlns="http://www.w3.org/1999/xhtml"&gt;The Planned availability authority table is a controlled vocabulary specifying planned availability of DCAT-AP defined resources, namely distribution, dataset and data service. The list, originally included in the DCAT-AP standard as means to describe availability of DCAT distributions, is managed by the EU Vocabularies team of the Publications Office on the EU Vocabularies website. &lt;/p&gt;
+            &lt;p xmlns="http://www.w3.org/1999/xhtml"&gt;The Planned availability authority table is updated based on the stakeholders' needs.&lt;/p&gt;
+            &lt;p xmlns="http://www.w3.org/1999/xhtml"&gt;Contributions to it are accepted following a review made by EU Vocabularies team of the Publications Office of the EU.&lt;/p&gt;
+            &lt;p xmlns="http://www.w3.org/1999/xhtml"&gt; &lt;/p&gt;
+         </j.0:description_editorial>
+    <j.0:work_published_in_work rdf:resource="http://publications.europa.eu/resource/dataset/release/20220715-0"/>
+    <j.0:has_type rdf:resource="http://publications.europa.eu/resource/authority/dataset-type/NAL"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#work_dataset"/>
+    <j.0:published_by rdf:resource="http://publications.europa.eu/resource/authority/corporate-body/PUBL"/>
+    <j.0:has_member rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+    <j.0:work_dataset_version>20220715-0</j.0:work_dataset_version>
+    <j.0:work_title xml:lang="en">Planned availability</j.0:work_title>
+    <j.0:work_dataset_has_type_concept_type_dataset rdf:resource="http://publications.europa.eu/resource/authority/dataset-type/NAL"/>
+    <j.0:work_dataset_keyword>planned-availability</j.0:work_dataset_keyword>
+    <j.0:id_document rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://publications.europa.eu/resource/authority/planned-availability</j.0:id_document>
+    <j.0:work_dataset_date_modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2022-07-11</j.0:work_dataset_date_modified>
+    <j.0:keyword>planned-availability</j.0:keyword>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#evolutive_work"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#serial_work"/>
+    <j.0:title xml:lang="en">Planned availability</j.0:title>
+    <j.0:work_date_creation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2022-07-15</j.0:work_date_creation>
+    <j.0:work_created_by_agent rdf:resource="http://publications.europa.eu/resource/authority/corporate-body/PUBL"/>
+    <j.0:work_id_document rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://publications.europa.eu/resource/authority/planned-availability</j.0:work_id_document>
+    <j.0:version>20220715-0</j.0:version>
+    <j.0:complex_work_has_member_work rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+    <j.0:work_explained_by_work rdf:resource="http://publications.europa.eu/resource/documentation/planned-availability/20220715-0"/>
+    <j.0:date_modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2022-07-11</j.0:date_modified>
+    <j.0:work_dataset_keyword>authority data</j.0:work_dataset_keyword>
+    <j.0:datetime_negotiation rdf:resource="http://publications.europa.eu/ontology/cdm#datetime_transmission"/>
+    <j.0:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://publications.europa.eu/resource/authority/planned-availability</j.0:id>
+    <j.0:work_dataset_has_frequency_publication_frequency rdf:resource="http://publications.europa.eu/resource/authority/frequency/OTHER"/>
+    <j.0:work_date_document rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2022-07-15</j.0:work_date_document>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#complex_work"/>
+    <j.0:work_dataset_published_by_agent rdf:resource="http://publications.europa.eu/resource/authority/corporate-body/PUBL"/>
+    <j.0:work_dataset_keyword>controlled vocabulary</j.0:work_dataset_keyword>
+    <j.0:work_has_expression rdf:resource="http://publications.europa.eu/resource/expression/planned-availability"/>
+    <j.0:do_not_index rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</j.0:do_not_index>
+    <j.0:date_document rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2022-07-15</j.0:date_document>
+    <j.0:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://publications.europa.eu/resource/authority/planned-availability</j.0:identifier>
+    <j.0:work_dataset_keyword>Authority Tables</j.0:work_dataset_keyword>
+    <j.0:date rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2022-07-15</j.0:date>
+    <j.0:work_dataset_description_editorial rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+            &lt;p xmlns="http://www.w3.org/1999/xhtml"&gt;The Planned availability authority table is a controlled vocabulary specifying planned availability of DCAT-AP defined resources, namely distribution, dataset and data service. The list, originally included in the DCAT-AP standard as means to describe availability of DCAT distributions, is managed by the EU Vocabularies team of the Publications Office on the EU Vocabularies website. &lt;/p&gt;
+            &lt;p xmlns="http://www.w3.org/1999/xhtml"&gt;The Planned availability authority table is updated based on the stakeholders' needs.&lt;/p&gt;
+            &lt;p xmlns="http://www.w3.org/1999/xhtml"&gt;Contributions to it are accepted following a review made by EU Vocabularies team of the Publications Office of the EU.&lt;/p&gt;
+            &lt;p xmlns="http://www.w3.org/1999/xhtml"&gt; &lt;/p&gt;
+         </j.0:work_dataset_description_editorial>
+    <j.0:has_member rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+    <j.0:complex_work_has_member_work rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+    <j.0:explained_by rdf:resource="http://publications.europa.eu/resource/documentation/planned-availability/20220715-0"/>
+    <j.0:date_creation rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2022-07-15</j.0:date_creation>
+    <j.0:work_dataset_date_start rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2021-11-26</j.0:work_dataset_date_start>
+    <j.0:evolutive_work_asset_content rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://publications.europa.eu/resource/authority/planned-availability</j.0:evolutive_work_asset_content>
+    <j.0:has_documentation rdf:resource="http://publications.europa.eu/resource/documentation/planned-availability/20220715-0"/>
+    <j.0:work_dataset_has_documentation_documentation rdf:resource="http://publications.europa.eu/resource/documentation/planned-availability/20220715-0"/>
+    <j.0:date_start rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2021-11-26</j.0:date_start>
+    <j.0:work_id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://publications.europa.eu/resource/authority/planned-availability</j.0:work_id>
+    <j.0:keyword>authority data</j.0:keyword>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://publications.europa.eu/resource/authority/dataset-type/NAL">
+    <j.0:concept_type_dataset_is_type_of_work_dataset rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+    <j.0:concept_type_dataset_is_type_of_work_dataset rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#concept_type_dataset"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#concept"/>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#concept_decoding"/>
+    <j.0:concept_type_dataset_is_type_of_work_dataset rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://publications.europa.eu/resource/cellar/52fbb229-581f-11ec-91ac-01aa75ed71a1">
+    <owl:sameAs rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability"/>
+    <j.2:lastModificationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2022-07-13T10:31:53.293+02:00</j.2:lastModificationDate>
+    <j.2:creationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-12-08T13:06:50.059+01:00</j.2:creationDate>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://publications.europa.eu/resource/cellar/3753df08-0286-11ed-acce-01aa75ed71a1">
+    <owl:sameAs rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://publications.europa.eu/resource/documentation/planned-availability/20211208-0">
+    <j.0:work_explains_work rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+    <j.0:explains rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+    <j.0:documents rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+    <j.0:documentation_documents_work_dataset rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0">
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#work_dataset"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#work"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://publications.europa.eu/resource/authority/corporate-body/PUBL">
+    <j.0:creates rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+    <j.0:agent_publishes_work_dataset rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+    <j.0:agent_creates_work rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+    <j.0:creates rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+    <j.0:agent_publishes_work_dataset rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+    <j.0:agent_creates_work rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#agent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://publications.europa.eu/resource/dataset/release/20220715-0">
+    <j.0:work_publishes_work rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+    <j.0:publishes rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#work"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0">
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#work_dataset"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#work"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://publications.europa.eu/resource/authority/frequency/OTHER">
+    <j.0:publication_frequency_is_frequency_of_work_dataset rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20220715-0"/>
+    <j.0:publication_frequency_is_frequency_of_work_dataset rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability/20211208-0"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#publication_frequency"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#concept_decoding"/>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <rdf:type rdf:resource="http://publications.europa.eu/ontology/cdm#concept"/>
+    <j.0:publication_frequency_is_frequency_of_work_dataset rdf:resource="http://publications.europa.eu/resource/dataset/planned-availability"/>
+  </rdf:Description>
+</rdf:RDF>

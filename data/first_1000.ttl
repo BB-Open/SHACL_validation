@@ -1,0 +1,1000 @@
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcatde: <http://dcat-ap.de/def/dcatde/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix adms: <http://www.w3.org/ns/adms#> .
+@prefix owl: <http://www.w3.org/2002/07/owl> .
+@prefix schema: <http://schema.org/> .
+@prefix spdx: <http://spdx.org/rdf/terms#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions#> .
+
+<https://mik.brandenburg.de/mik/de/> a foaf:Agent;
+  dct:description "Ministerium des Innern und für Kommunales (MIK)"@de;
+  dct:identifier "https://mik.brandenburg.de/mik/de/";
+  rdfs:isDefinedBy "https://mik.brandenburg.de/mik/de/";
+  adms:identifier "https://mik.brandenburg.de/mik/de/";
+  foaf:name "Ministerium des Innern und für Kommunales (MIK)"@de .
+
+foaf:Agent skos:prefLabel "Agent"@en, "Verantwortliche Stelle"@de .
+
+dct:description skos:prefLabel "Description"@en, "Beschreibung"@de .
+
+rdfs:isDefinedBy a rdf:Property;
+  rdfs:isDefinedBy <http://www.w3.org/2000/01/rdf-schema#>;
+  rdfs:label "isDefinedBy";
+  rdfs:comment "The defininition of the subject resource.";
+  rdfs:range rdfs:Resource;
+  rdfs:domain rdfs:Resource;
+  rdfs:subPropertyOf rdfs:seeAlso .
+
+adms:identifier a rdf:Property, <http://www.w3.org/2002/07/owl#ObjectProperty>;
+  dct:identifier "adms:identifier";
+  rdfs:isDefinedBy <http://www.w3.org/TR/vocab-adms>;
+  rdfs:label "identifier"@en;
+  rdfs:comment "adms:identifier is used to link any resource to an instance of adms:Identifier which is its range. N.B. it is not appropriate to use dcterms:identifer to link to the Identifier class as its range is rdfs:Literal. ADMS uses this to provide any identifier for the Asset."@en;
+  rdfs:range adms:Identifier .
+
+<https://backend.datenadler.de/harvester-intern/mik/metadaten/dcat_catalog> a dcat:Catalog;
+  dct:description "Gesamtkatalog des MIK"@de;
+  dct:identifier "https://backend.datenadler.de/harvester-intern/mik/metadaten/dcat_catalog";
+  adms:identifier "https://backend.datenadler.de/harvester-intern/mik/metadaten/dcat_catalog";
+  dct:modified "2021-12-12";
+  dct:publisher <https://mik.brandenburg.de/mik/de/>;
+  dct:title "MIK"@de .
+
+dcat:Catalog a rdfs:Class, <http://www.w3.org/2002/07/owl#Class>;
+  rdfs:isDefinedBy <http://www.w3.org/TR/vocab-dcat/>;
+  rdfs:label "Catalog"@en, "Catalogo"@it, "Catalogue"@fr, "Catálogo"@es, "Katalog"@cs,
+    "Κατάλογος"@el, "فهرس قوائم البيانات"@ar, "カタログ"@ja, "Katalog"@da;
+  rdfs:comment "A curated collection of metadata about resources (e.g., datasets and data services in the context of a data catalog)."@en,
+    "Una colección curada de metadatos sobre recursos (por ejemplo, conjuntos de datos y servicios de datos en el contexto de un catálogo de datos)."@es,
+    "Una raccolta curata di metadati sulle risorse (ad es. sui dataset e relativi servizi nel contesto di cataloghi di dati)."@it,
+    "Une collection élaborée de métadonnées sur les jeux de données"@fr, "Řízená kolekce metadat o datových sadách a datových službách"@cs,
+    "Μια επιμελημένη συλλογή μεταδεδομένων περί συνόλων δεδομένων"@el, "مجموعة من توصيفات قوائم البيانات"@ar,
+    "データ・カタログは、データセットに関するキュレートされたメタデータの集合です。"@ja, "En udvalgt og arrangeret samling af metadata om ressourcer (fx datasæt og datatjenester i kontekst af et datakatalog). "@da;
+  rdfs:subClassOf dcat:Dataset;
+  skos:prefLabel "Catalog"@en, "Katalog"@de;
+  skos:editorialNote "English, Italian, Spanish definitions updated in this revision. Multilingual text not yet updated."@en;
+  skos:definition "A curated collection of metadata about resources (e.g., datasets and data services in the context of a data catalog)."@en,
+    "Una colección curada de metadatos sobre recursos (por ejemplo, conjuntos de datos y servicios de datos en el contexto de un catálogo de datos)."@es,
+    "Una raccolta curata di metadati sulle risorse (ad es. sui dataset e relativi servizi nel contesto di cataloghi di dati)."@it,
+    "مجموعة من توصيفات قوائم البيانات"@ar, "データ・カタログは、データセットに関するキュレートされたメタデータの集合です。"@ja,
+    "Une collection élaborée de métadonnées sur les jeux de données."@fr, "Řízená kolekce metadat o datových sadách a datových službách."@cs,
+    "Μια επιμελημένη συλλογή μεταδεδομένων περί συνόλων δεδομένων."@el, "En samling af metadata om ressourcer (fx datasæt og datatjenester i kontekst af et datakatalog)."@da;
+  skos:scopeNote "A web-based data catalog is typically represented as a single instance of this class."@en,
+    "Normalmente, un catalogo di dati nel web viene rappresentato come una singola istanza di questa classe."@it,
+    "Normalmente, un catálogo de datos disponible en la web se representa como una única instancia de esta clase."@es,
+    "Webový datový katalog je typicky reprezentován jako jedna instance této třídy."@cs,
+    "Συνήθως, ένας κατάλογος δεδομένων στον Παγκόσμιο Ιστό αναπαρίσταται ως ένα στιγμιότυπο αυτής της κλάσης."@el,
+    "通常、ウェブ・ベースのデータ・カタログは、このクラスの1つのインスタンスとして表わされます。"@ja, "Et webbaseret datakatalog repræsenteres typisk ved en enkelt instans af denne klasse."@da .
+
+dct:modified skos:prefLabel "Modified"@en, "Geändert"@de .
+
+dct:title skos:prefLabel "Title"@en, "Titel"@de .
+
+<https://mwfk.brandenburg.de> a foaf:Agent;
+  dct:description "Ministerium für Wissenschaft, Forschung und Kultur des Landes Brandenburg (MWFK)\\r\\n"@de;
+  dct:identifier "https://backend.datenadler.de/publishers/foaf_agent-5";
+  rdfs:isDefinedBy "https://mwfk.brandenburg.de";
+  adms:identifier "https://backend.datenadler.de/publishers/foaf_agent-5";
+  foaf:name "Ministerium für Wissenschaft, Forschung  und Kultur"@de .
+
+<https://backend.datenadler.de/harvester-intern/mwfk/metadaten/dcat_catalog> a dcat:Catalog;
+  dct:description "Gesamtkatalog des MWFK"@de;
+  dct:identifier "https://backend.datenadler.de/harvester-intern/mwfk/metadaten/dcat_catalog";
+  adms:identifier "https://backend.datenadler.de/harvester-intern/mwfk/metadaten/dcat_catalog";
+  dct:modified "2021-12-12";
+  dct:publisher <https://mwfk.brandenburg.de>;
+  dct:title "MWFK"@de;
+  foaf:homepage "https://mwfk.brandenburg.de";
+  dcat:dataset <https://backend.datenadler.de/harvester-intern/mwfk/metadaten/dcat_catalog/katalog-open-data-des-ministeriums-fuer-wissenschaft-forschung-und-kultur-des-landes-brandenburg> .
+
+foaf:homepage a <http://www.w3.org/2002/07/owl#ObjectProperty>;
+  rdfs:comment "This axiom needed so that Protege loads DCAT2 without errors.";
+  skos:prefLabel "Homepage"@en, "Webseite"@de .
+
+dcat:dataset a rdf:Property, <http://www.w3.org/2002/07/owl#ObjectProperty>;
+  rdfs:isDefinedBy <http://www.w3.org/TR/vocab-dcat/>;
+  rdfs:label "قائمة بيانات"@ar, "データセット"@ja, "conjunto de datos"@es, "dataset"@en, "dataset"@it,
+    "datová sada"@cs, "jeu de données"@fr, "σύνολο δεδομένων"@el, "datasæt"@da;
+  rdfs:comment "A collection of data that is listed in the catalog."@en, "Kolekce dat, která je katalogizována v katalogu."@cs,
+    "Relie un catalogue à un jeu de données faisant partie de ce catalogue."@fr, "Un conjunto de datos que se lista en el catálogo."@es,
+    "Una raccolta di dati che è elencata nel catalogo."@it, "Συνδέει έναν κατάλογο με ένα σύνολο δεδομένων το οποίο ανήκει στον εν λόγω κατάλογο."@el,
+    "تربط الفهرس بقائمة بيانات ضمنه"@ar, "カタログの一部であるデータセット。"@ja, "En samling af data som er opført i kataloget."@da;
+  rdfs:range dcat:Dataset;
+  rdfs:domain dcat:Catalog;
+  rdfs:subPropertyOf dct:hasPart, rdfs:member;
+  skos:editorialNote "Status: English Definition text modified by DCAT revision team, Italian, Spanish and Czech translation provided, other translations pending."@en;
+  skos:definition "A collection of data that is listed in the catalog."@en, "Kolekce dat, která je katalogizována v katalogu."@cs,
+    "Relie un catalogue à un jeu de données faisant partie de ce catalogue."@fr, "Un conjunto de datos que se lista en el catálogo."@es,
+    "Una raccolta di dati che è elencata nel catalogo."@it, "Συνδέει έναν κατάλογο με ένα σύνολο δεδομένων το οποίο ανήκει στον εν λόγω κατάλογο."@el,
+    "تربط الفهرس بقائمة بيانات ضمنه"@ar, "カタログの一部であるデータセット。"@ja, "En samling af data som er opført i kataloget."@da;
+  skos:altLabel "har datasæt"@da, "datasamling"@da .
+
+<https://backend.datenadler.de/harvester-intern/mwfk/metadaten/dcat_catalog/katalog-open-data-des-ministeriums-fuer-wissenschaft-forschung-und-kultur-des-landes-brandenburg>
+  a dcat:Dataset;
+  dct:identifier "https://backend.datenadler.de/harvester-intern/mwfk/metadaten/dcat_catalog/katalog-open-data-des-ministeriums-fuer-wissenschaft-forschung-und-kultur-des-landes-brandenburg";
+  adms:identifier "https://backend.datenadler.de/harvester-intern/mwfk/metadaten/dcat_catalog/katalog-open-data-des-ministeriums-fuer-wissenschaft-forschung-und-kultur-des-landes-brandenburg";
+  dct:modified "2022-03-08";
+  dct:publisher <https://mwfk.brandenburg.de>;
+  dct:title "Open Data des Ministeriums für Wissenschaft, Forschung und Kultur des Landes Brandenburg"@de;
+  dcat:contactPoint <https://backend.datenadler.de/harvester-intern/datenzensus/metadaten/dcat_catalog/mwfk>;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/TECH>;
+  dcat:distribution <https://backend.datenadler.de/harvester-intern/mwfk/metadaten/dcat_catalog/katalog-open-data-des-ministeriums-fuer-wissenschaft-forschung-und-kultur-des-landes-brandenburg/open-data-des-mwfk-uebersicht>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg> .
+
+dcat:Dataset a rdfs:Class, <http://www.w3.org/2002/07/owl#Class>;
+  rdfs:isDefinedBy <http://www.w3.org/TR/vocab-dcat/>;
+  rdfs:label "Conjunto de datos"@es, "Dataset"@en, "Dataset"@it, "Datová sada"@cs, "Jeu de données"@fr,
+    "Σύνολο Δεδομένων"@el, "قائمة بيانات"@ar, "データセット"@ja, "Datasæt"@da;
+  rdfs:comment "1つのエージェントによって公開またはキュレートされ、1つ以上の形式でアクセスまたはダウンロードできるデータの集合。"@ja, "A collection of data, published or curated by a single source, and available for access or download in one or more representations."@en,
+    "Kolekce dat poskytovaná či řízená jedním zdrojem, která je k dispozici pro přístup či stažení v jednom či více formátech."@cs,
+    "Raccolta di dati, pubblicati o curati da un'unica fonte, disponibili per l'accesso o il download in uno o più formati."@it,
+    "Una colección de datos, publicados o conservados por una única fuente, y disponibles para ser accedidos o descargados en uno o más formatos."@es,
+    "Une collection de données, publiée ou élaborée par une seule source, et disponible pour accès ou téléchargement dans un ou plusieurs formats."@fr,
+    "Μία συλλογή από δεδομένα, δημοσιευμένη ή επιμελημένη από μία και μόνο πηγή, διαθέσιμη δε προς πρόσβαση ή μεταφόρτωση σε μία ή περισσότερες μορφές."@el,
+    "قائمة بيانات منشورة أو مجموعة من قبل مصدر ما و متاح الوصول إليها أو تحميلها"@ar,
+    "En samling af data, udgivet eller udvalgt og arrangeret af en enkelt kilde og som er til råde for adgang til eller download af i en eller flere repræsentationer."@da;
+  rdfs:subClassOf dcat:Resource;
+  skos:prefLabel "Dataset"@en, "Datenstruktur"@de;
+  skos:editorialNote "2020-03-16 A new scopenote added and need to be translated"@en;
+  skos:definition "1つのエージェントによって公開またはキュレートされ、1つ以上の形式でアクセスまたはダウンロードできるデータの集合。"@ja, "Kolekce dat poskytovaná či řízená jedním zdrojem, která je k dispozici pro přístup či stažení v jednom či více formátech."@cs,
+    "Raccolta di dati, pubblicati o curati da un'unica fonte, disponibili per l'accesso o il download in uno o più formati."@it,
+    "Una colección de datos, publicados o conservados por una única fuente, y disponibles para ser accedidos o descargados en uno o más formatos."@es,
+    "Une collection de données, publiée ou élaborée par une seule source, et disponible pour accès ou téléchargement dans un ou plusieurs formats."@fr,
+    "Μία συλλογή από δεδομένα, δημοσιευμένη ή επιμελημένη από μία και μόνο πηγή, διαθέσιμη δε προς πρόσβαση ή μεταφόρτωση σε μία ή περισσότερες μορφές."@el,
+    "قائمة بيانات منشورة أو مجموعة من قبل مصدر ما و متاح الوصول إليها أو تحميلها"@ar,
+    "A collection of data, published or curated by a single source, and available for access or download in one or more represenations."@en,
+    "En samling a data, udgivet eller udvalgt og arrangeret af en enkelt kilde og som der er adgang til i en eller flere repræsentationer."@da;
+  skos:scopeNote "Cette classe représente le jeu de données publié par le fournisseur de données. Dans les cas où une distinction est nécessaire entre le jeu de donénes et son entrée dans le catalogue, la classe registre de données peut être utilisée pour ce dernier."@fr,
+    "Esta clase representa el conjunto de datos publicados. En los casos donde es necesario distinguir entre el conjunto de datos y su entrada en el catálogo de datos, se debe utilizar la clase 'registro del catálogo'."@es,
+    "Questa classe rappresenta il dataset come pubblicato dall’editore. Nel caso in cui sia necessario operare  una distinzione fra i metadati originali del dataset e il record dei metadati ad esso associato nel catalogo (ad esempio, per distinguere la data di modifica del dataset da quella del dataset nel catalogo) si può impiegare la classe catalog record."@it,
+    "Tato třída reprezentuje datovou sadu tak, jak je publikována poskytovatelem dat. V případě potřeby rozlišení datové sady a jejího katalogizačního záznamu (jelikož metadata jako datum modifikace se mohou lišit) pro něj může být použita třída \"katalogizační záznam\"."@cs,
+    "This class describes the conceptual dataset. One or more representations might be available, with differing schematic layouts and formats or serializations."@en,
+    "Questa classe descrive il dataset dal punto di vista concettuale. Possono essere disponibili una o più rappresentazioni, con diversi layout e formati schematici o serializzazioni."@it,
+    "This class represents the actual dataset as published by the dataset provider. In cases where a distinction between the actual dataset and its entry in the catalog is necessary (because metadata such as modification date and maintainer might differ), the catalog record class can be used for the latter."@en,
+    "Η κλάση αυτή αναπαριστά το σύνολο δεδομένων αυτό καθ'εαυτό, όπως έχει δημοσιευθεί από τον εκδότη. Σε περιπτώσεις όπου είναι απαραίτητος ο διαχωρισμός μεταξύ του συνόλου δεδομένων και της καταγραφής αυτού στον κατάλογο (γιατί μεταδεδομένα όπως η ημερομηνία αλλαγής και ο συντηρητής μπορεί να διαφέρουν) η κλάση της καταγραφής καταλόγου μπορεί να χρησιμοποιηθεί για το τελευταίο."@el,
+    "このクラスは、データセットの公開者が公開する実際のデータセットを表わします。カタログ内の実際のデータセットとそのエントリーとの区別が必要な場合（修正日と維持者などのメタデータが異なるかもしれないので）は、後者にcatalog recordというクラスを使用できます。"@ja,
+    "The notion of dataset in DCAT is broad and inclusive, with the intention of accommodating resource types arising from all communities. Data comes in many forms including numbers, text, pixels, imagery, sound and other multi-media, and potentially other types, any of which might be collected into a dataset."@en,
+    "Denne klasse repræsenterer det konkrete datasæt som det udgives af datasætleverandøren. I de tilfælde hvor det er nødvendigt at skelne mellem det konkrete datasæt og dets registrering i kataloget (fordi metadata såsom ændringsdato og vedligeholder er forskellige), så kan klassen katalogpost anvendes. "@da,
+    "Denne klasse beskriver det konceptuelle datasæt. En eller flere repræsentationer kan være tilgængelige med forskellige skematiske opsætninger, formater eller serialiseringer."@da;
+  skos:altLabel "Datasamling"@da;
+  skos:changeNote "2018-02 - odstraněno tvrzení o podtřídě dctype:Dataset, jelikož rozsah dcat:Dataset zahrnuje několik dalších typů ze slovníku dctype."@cs,
+    "2018-02 - se eliminó el axioma de subclase con dctype:Dataset porque el alcance de dcat:Dataset incluye muchos otros tipos del vocabulario dctype."@es,
+    "2018-02 - subclass of dctype:Dataset removed because scope of dcat:Dataset includes several other types from the dctype vocabulary."@en,
+    "2018-02 - sottoclasse di dctype:Dataset rimosso perché l'ambito di dcat:Dataset include diversi altri tipi dal vocabolario dctype."@it,
+    "2018-02 - subklasse af dctype:Dataset fjernet da scope af dcat:Dataset omfatter flere forskellige typer fra dctype-vokabularet."@da .
+
+dcat:contactPoint a rdf:Property, <http://www.w3.org/2002/07/owl#ObjectProperty>;
+  rdfs:isDefinedBy <http://www.w3.org/TR/vocab-dcat/>;
+  rdfs:label "Punto de contacto"@es, "contact point"@en, "kontaktní bod"@cs, "point de contact"@fr,
+    "punto di contatto"@it, "σημείο επικοινωνίας"@el, "عنوان اتصال"@ar, "窓口"@ja, "kontaktpunkt"@da;
+  rdfs:comment "Información relevante de contacto para el recurso catalogado. Se recomienda el uso de vCard."@es,
+    "Informazioni di contatto rilevanti per la risorsa catalogata. Si raccomanda l'uso di vCard."@it,
+    "Relevant contact information for the catalogued resource. Use of vCard is recommended."@en,
+    "Relevantní kontaktní informace pro katalogizovaný zdroj. Doporučuje se použít slovník VCard."@cs,
+    "Relie un jeu de données à une information de contact utile en utilisant VCard."@fr,
+    "Συνδέει ένα σύνολο δεδομένων με ένα σχετικό σημείο επικοινωνίας, μέσω VCard."@el,
+    "تربط قائمة البيانات بعنوان اتصال موصف  باستخدام VCard"@ar, "データセットを、VCardを用いて提供されている適切な連絡先情報にリンクします。"@ja,
+    "Relevante kontaktoplysninger for den katalogiserede ressource. Anvendelse af vCard anbefales."@da;
+  rdfs:range vcard:Kind;
+  skos:editorialNote "Status: English Definition text modified by DCAT revision team, Italian, Spanish and Czech translations provided, other translations pending."@en;
+  skos:definition "Información relevante de contacto para el recurso catalogado. Se recomienda el uso de vCard."@es,
+    "Informazioni di contatto rilevanti per la risorsa catalogata. Si raccomanda l'uso di vCard."@it,
+    "Relevant contact information for the catalogued resource. Use of vCard is recommended."@en,
+    "Relevantní kontaktní informace pro katalogizovaný zdroj. Doporučuje se použít slovník VCard."@cs,
+    "Relie un jeu de données à une information de contact utile en utilisant VCard."@fr,
+    "Συνδέει ένα σύνολο δεδομένων με ένα σχετικό σημείο επικοινωνίας, μέσω VCard."@el,
+    "تربط قائمة البيانات بعنوان اتصال موصف  باستخدام VCard"@ar, "データセットを、VCardを用いて提供されている適切な連絡先情報にリンクします。"@ja,
+    "Relevante kontaktoplysninger for den katalogiserede ressource. Anvendelse af vCard anbefales."@da .
+
+<https://backend.datenadler.de/harvester-intern/datenzensus/metadaten/dcat_catalog/mwfk>
+  a vcard:Kind;
+  dct:description "Open Data Kontakt des Ministerium für Wissenschaft, Forschung \\r\\nund Kultur des Landes Brandenburg\\r\\n"@de;
+  dct:identifier "https://backend.datenadler.de/harvester-intern/datenzensus/metadaten/dcat_catalog/mwfk";
+  adms:identifier "https://backend.datenadler.de/harvester-intern/datenzensus/metadaten/dcat_catalog/mwfk";
+  vcard:fn "MWFK Kontakt"@de;
+  vcard:hasEmail "referat25@mwfk.brandenburg.de" .
+
+dcat:theme a rdf:Property, <http://www.w3.org/2002/07/owl#ObjectProperty>;
+  rdfs:isDefinedBy <http://www.w3.org/TR/vocab-dcat/>;
+  rdfs:label "tema"@es, "tema"@it, "theme"@en, "thème"@fr, "téma"@cs, "Θέμα"@el, "التصنيف"@ar,
+    "テーマ/カテゴリー"@ja, "emne"@da;
+  rdfs:comment "A main category of the resource. A resource can have multiple themes."@en,
+    "Hlavní téma zdroje. Zdroj může mít více témat."@cs, "La categoria principale della risorsa. Una risorsa può avere più temi."@it,
+    "La categoría principal del recurso. Un recurso puede tener varios temas."@es, "La catégorie principale de la ressource. Une ressource peut avoir plusieurs thèmes."@fr,
+    "Η κύρια κατηγορία του συνόλου δεδομένων. Ένα σύνολο δεδομένων δύναται να έχει πολλαπλά θέματα."@el,
+    "التصنيف الرئيسي لقائمة البيانات. قائمة البيانات يمكن أن تملك أكثر من تصنيف رئيسي واحد."@ar,
+    "データセットの主要カテゴリー。データセットは複数のテーマを持つことができます。"@ja, "Et centralt emne for ressourcen. En ressource kan have flere centrale emner."@da;
+  rdfs:range skos:Concept;
+  rdfs:subPropertyOf dct:subject;
+  skos:editorialNote "Status: English Definition text modified by DCAT revision team, all except for Italian and Czech translations are pending."@en;
+  skos:definition "A main category of the resource. A resource can have multiple themes."@en,
+    "Hlavní téma zdroje. Zdroj může mít více témat."@cs, "La categoria principale della risorsa. Una risorsa può avere più temi."@it,
+    "La categoría principal del recurso. Un recurso puede tener varios temas."@es, "La catégorie principale de la ressource. Une ressource peut avoir plusieurs thèmes."@fr,
+    "Η κύρια κατηγορία του συνόλου δεδομένων. Ένα σύνολο δεδομένων δύναται να έχει πολλαπλά θέματα."@el,
+    "التصنيف الرئيسي لقائمة البيانات. قائمة البيانات يمكن أن تملك أكثر من تصنيف رئيسي واحد."@ar,
+    "データセットの主要カテゴリー。データセットは複数のテーマを持つことができます。"@ja, "Et centralt emne for ressourcen. En ressource kan have flere centrale emner."@da;
+  skos:scopeNote "El conjunto de skos:Concepts utilizados para categorizar los recursos están organizados en un skos:ConceptScheme que describe todas las categorías y sus relaciones en el catálogo."@es,
+    "Il set di concetti skos usati per categorizzare le risorse sono organizzati in skos:ConceptScheme che descrive tutte le categorie e le loro relazioni nel catalogo."@it,
+    "Sada instancí třídy skos:Concept použitá pro kategorizaci zdrojů je organizována do schématu konceptů skos:ConceptScheme, které popisuje všechny kategorie v katalogu a jejich vztahy."@cs,
+    "The set of skos:Concepts used to categorize the resources are organized in a skos:ConceptScheme describing all the categories and their relations in the catalog."@en,
+    "Un ensemble de skos:Concepts utilisés pour catégoriser les ressources sont organisés en un skos:ConceptScheme décrivant toutes les catégories et ses relations dans le catalogue."@fr,
+    "Το σετ των skos:Concepts που χρησιμοποιείται για να κατηγοριοποιήσει τα σύνολα δεδομένων είναι οργανωμένο εντός ενός skos:ConceptScheme που περιγράφει όλες τις κατηγορίες και τις σχέσεις αυτών στον κατάλογο."@el,
+    "データセットを分類するために用いられるskos:Conceptの集合は、カタログのすべてのカテゴリーとそれらの関係を記述しているskos:ConceptSchemeで組織化されます。"@ja,
+    "Samlingen af begreber (skos:Concept) der anvendes til at emneinddele ressourcer organiseres i et begrebssystem (skos:ConceptScheme) som beskriver alle emnerne og deres relationer i kataloget."@da;
+  skos:altLabel "tema"@da .
+
+<http://publications.europa.eu/resource/authority/data-theme/TECH> a skos:Concept;
+  dct:identifier "https://new.backend.datenadler.de/concepts/TECH";
+  rdfs:isDefinedBy "http://publications.europa.eu/resource/authority/data-theme/TECH";
+  adms:identifier "https://new.backend.datenadler.de/concepts/TECH";
+  dct:title "Ciencia y tecnología"@spa, "Wetenschap en technologie"@nld, "Xjenza u teknoloġija"@mlt,
+    "Videnskab og teknologi"@dan, "Eolaíocht agus teicneolaíocht"@gle, "Znanost in tehnologija"@slv,
+    "Science and technology"@en, "Teadus ja tehnoloogia"@eth, "Science et technologie"@fr,
+    "Vetenskap och teknik"@swe, "Mokslas ir technologijos"@lit, "Znanost i tehnologija"@hrv,
+    "Ciência e tecnologia"@por, "Tiede ja teknologia"@fin, "Věda a technika"@cs, "Nauka i technologia"@pl,
+    "Wissenschaft und Technologie"@de, "Vitenskap og teknologi"@nor, "Ştiinţă şi tehnologie"@ron,
+    "Scienza e tecnologia"@ita, "Zinātne un tehnoloģija"@lav, "Tudomány és technológia"@hun,
+    "Veda a technika"@slk, "Επιστήμη και τεχνολογία"@ell, "Наука и tехнологии"@bul;
+  skos:inScheme "http://publications.europa.eu/resource/authority/data-theme";
+  foaf:depiction "fa-microchip" .
+
+dcat:distribution a rdf:Property, <http://www.w3.org/2002/07/owl#ObjectProperty>;
+  rdfs:isDefinedBy <http://www.w3.org/TR/vocab-dcat/>;
+  rdfs:label "distribuce"@cs, "distribución"@es, "distribution"@en, "distribution"@fr,
+    "distribuzione"@it, "distribution"@da, "διανομή"@el, "توزيع"@ar, "データセット配信"@ja;
+  rdfs:comment "An available distribution of the dataset."@en, "Connecte un jeu de données à des distributions disponibles."@fr,
+    "Dostupná distribuce datové sady."@cs, "Una distribución disponible del conjunto de datos."@es,
+    "Una distribuzione disponibile per il set di dati."@it, "Συνδέει ένα σύνολο δεδομένων με μία από τις διαθέσιμες διανομές του."@el,
+    "تربط قائمة البيانات بطريقة أو بشكل يسمح  الوصول الى البيانات"@ar, "データセットを、その利用可能な配信に接続します。"@ja,
+    "En tilgængelig repræsentation af datasættet."@da;
+  rdfs:range dcat:Distribution;
+  rdfs:domain dcat:Dataset;
+  rdfs:subPropertyOf dct:relation;
+  skos:editorialNote "Status: English Definition text modified by DCAT revision team, translations pending (except for Italian, Spanish and Czech)."@en;
+  skos:definition "An available distribution of the dataset."@en, "Connecte un jeu de données à des distributions disponibles."@fr,
+    "Dostupná distribuce datové sady."@cs, "Una distribución disponible del conjunto de datos."@es,
+    "Una distribuzione disponibile per il set di dati."@it, "Συνδέει ένα σύνολο δεδομένων με μία από τις διαθέσιμες διανομές του."@el,
+    "تربط قائمة البيانات بطريقة أو بشكل يسمح  الوصول الى البيانات"@ar, "データセットを、その利用可能な配信に接続します。"@ja,
+    "En tilgængelig repræsentation af datasættet."@da;
+  skos:altLabel "har distribution"@da .
+
+<https://backend.datenadler.de/harvester-intern/mwfk/metadaten/dcat_catalog/katalog-open-data-des-ministeriums-fuer-wissenschaft-forschung-und-kultur-des-landes-brandenburg/open-data-des-mwfk-uebersicht>
+  a dcat:Distribution;
+  dct:description "Open Data des MWFK - Übersicht"@de;
+  dct:identifier "https://backend.datenadler.de/harvester-intern/mwfk/metadaten/dcat_catalog/katalog-open-data-des-ministeriums-fuer-wissenschaft-forschung-und-kultur-des-landes-brandenburg/open-data-des-mwfk-uebersicht";
+  adms:identifier "https://backend.datenadler.de/harvester-intern/mwfk/metadaten/dcat_catalog/katalog-open-data-des-ministeriums-fuer-wissenschaft-forschung-und-kultur-des-landes-brandenburg/open-data-des-mwfk-uebersicht";
+  dct:modified "2022-04-07";
+  dct:title "Open Data des MWFK - Übersicht"@de;
+  dct:format <https://www.iana.org/assignments/media-types/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet>;
+  dct:issued "2022-03-09";
+  dct:license <http://dcat-ap.de/def/licenses/other-open>;
+  dcat:accessURL "https://backend.datenadler.de/harvester-intern/mwfk/metadaten/dcat_catalog/katalog-open-data-des-ministeriums-fuer-wissenschaft-forschung-und-kultur-des-landes-brandenburg/open-data-des-mwfk-uebersicht";
+  dcat:downloadURL "https://backend.datenadler.de/harvester-intern/mwfk/metadaten/dcat_catalog/katalog-open-data-des-ministeriums-fuer-wissenschaft-forschung-und-kultur-des-landes-brandenburg/open-data-des-mwfk-uebersicht/@@download/local_file" .
+
+skos:Concept a <http://www.w3.org/2002/07/owl#Class>;
+  rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core>;
+  rdfs:label "Concept"@en;
+  skos:prefLabel "Category"@en, "Kategorie"@de;
+  skos:definition "An idea or notion; a unit of thought."@en .
+
+skos:inScheme a rdf:Property, <http://www.w3.org/2002/07/owl#ObjectProperty>;
+  rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core>;
+  rdfs:label "is in scheme"@en;
+  rdfs:range skos:ConceptScheme;
+  skos:definition "Relates a resource (for example a concept) to a concept scheme in which it is included."@en;
+  skos:scopeNote "A concept may be a member of more than one concept scheme."@en .
+
+vcard:Kind a <http://www.w3.org/2002/07/owl#Class>;
+  rdfs:isDefinedBy <http://www.w3.org/2006/vcard/ns>;
+  rdfs:label "Kind"@en;
+  rdfs:comment "The parent class for all objects"@en;
+  skos:prefLabel "Kind"@en, "Kontakt"@de;
+  <http://www.w3.org/2002/07/owl#equivalentClass> vcard:VCard, _:genid-7cf1773655d14fb9a5b55258ebbdb52c-node1gi2j9dc3x114 .
+
+vcard:fn a <http://www.w3.org/2002/07/owl#DatatypeProperty>;
+  rdfs:isDefinedBy <http://www.w3.org/2006/vcard/ns>;
+  rdfs:label "formatted name"@en;
+  rdfs:comment "The formatted text corresponding to the name of the object"@en;
+  rdfs:range xsd:string .
+
+vcard:hasEmail a <http://www.w3.org/2002/07/owl#ObjectProperty>;
+  rdfs:isDefinedBy <http://www.w3.org/2006/vcard/ns>;
+  rdfs:label "has email"@en;
+  rdfs:comment "To specify the electronic mail address for communication with the object"@en;
+  rdfs:range vcard:Email .
+
+dcat:Distribution a rdfs:Class, <http://www.w3.org/2002/07/owl#Class>;
+  rdfs:isDefinedBy <http://www.w3.org/TR/vocab-dcat/>;
+  rdfs:label "Distribuce"@cs, "Distribución"@es, "Distribution"@en, "Distribution"@fr,
+    "Distribuzione"@it, "Διανομή"@el, "التوزيع"@ar, "配信"@ja, "Distribution"@da;
+  rdfs:comment "A specific representation of a dataset. A dataset might be available in multiple serializations that may differ in various ways, including natural language, media-type or format, schematic organization, temporal and spatial resolution, level of detail or profiles (which might specify any or all of the above)."@en,
+    "Konkrétní reprezentace datové sady. Datová sada může být dostupná v různých serializacích, které se mohou navzájem lišit různými způsoby, mimo jiné přirozeným jazykem, media-typem či formátem, schematickou organizací, časovým a prostorovým rozlišením, úrovní detailu či profily (které mohou specifikovat některé či všechny tyto rozdíly)."@cs,
+    "Rappresenta una forma disponibile e specifica del dataset. Ciascun dataset può essere disponibile in forme differenti, che possono rappresentare formati diversi o diversi punti di accesso per un dataset. Esempi di distribuzioni sono un file CSV scaricabile, una API o un RSS feed."@it,
+    "Représente une forme spécifique d'un jeu de données. Caque jeu de données peut être disponible sous différentes formes, celles-ci pouvant représenter différents formats du jeu de données ou différents endpoint. Des exemples de distribution sont des fichirs CSV, des API ou des flux RSS."@fr,
+    "Una representación específica de los datos. Cada conjunto de datos puede estar disponible en formas diferentes, las cuáles pueden variar en distintas formas, incluyendo el idioma, 'media-type' o formato, organización esquemática, resolución temporal y espacial, nivel de detalle o perfiles (que pueden especificar cualquiera o todas las diferencias anteriores)."@es,
+    "Αναπαριστά μία συγκεκριμένη διαθέσιμη μορφή ενός συνόλου δεδομένων. Κάθε σύνολο δεδομενων μπορεί να είναι διαθέσιμο σε διαφορετικές μορφές, οι μορφές αυτές μπορεί να αναπαριστούν διαφορετικές μορφές αρχείων ή διαφορετικά σημεία διάθεσης. Παραδείγματα διανομών συμπεριλαμβάνουν ένα μεταφορτώσιμο αρχείο μορφής CSV, ένα API ή ένα RSS feed."@el,
+    "شكل محدد لقائمة البيانات يمكن الوصول إليه. قائمة بيانات ما يمكن أن تكون متاحه باشكال و أنواع متعددة.  ملف يمكن تحميله أو واجهة برمجية يمكن من خلالها الوصول إلى البيانات هي أمثلة على ذلك."@ar,
+    "データセットの特定の利用可能な形式を表わします。各データセットは、異なる形式で利用できることがあり、これらの形式は、データセットの異なる形式や、異なるエンドポイントを表わす可能性があります。配信の例には、ダウンロード可能なCSVファイル、API、RSSフィードが含まれます。"@ja,
+    "En specifik repræsentation af et datasæt. Et datasæt kan være tilgængelig i mange serialiseringer der kan variere på forskellige vis, herunder sprog, medietype eller format, systemorganisering, tidslig- og geografisk opløsning, detaljeringsniveau eller profiler (der kan specificere en eller flere af ovenstående)."@da;
+  skos:prefLabel "Distribution"@en, "Distribution"@de;
+  skos:definition "A specific representation of a dataset. A dataset might be available in multiple serializations that may differ in various ways, including natural language, media-type or format, schematic organization, temporal and spatial resolution, level of detail or profiles (which might specify any or all of the above)."@en,
+    "Konkrétní reprezentace datové sady. Datová sada může být dostupná v různých serializacích, které se mohou navzájem lišit různými způsoby, mimo jiné přirozeným jazykem, media-typem či formátem, schematickou organizací, časovým a prostorovým rozlišením, úrovní detailu či profily (které mohou specifikovat některé či všechny tyto rozdíly)."@cs,
+    "Rappresenta una forma disponibile e specifica del dataset. Ciascun dataset può essere disponibile in forme differenti, che possono rappresentare formati diversi o diversi punti di accesso per un dataset. Esempi di distribuzioni sono un file CSV scaricabile, una API o un RSS feed."@it,
+    "Représente une forme spécifique d'un jeu de données. Caque jeu de données peut être disponible sous différentes formes, celles-ci pouvant représenter différents formats du jeu de données ou différents endpoint. Des exemples de distribution sont des fichirs CSV, des API ou des flux RSS."@fr,
+    "Una representación específica de los datos. Cada conjunto de datos puede estar disponible en formas diferentes, las cuáles pueden variar en distintas formas, incluyendo el idioma, 'media-type' o formato, organización esquemática, resolución temporal y espacial, nivel de detalle o perfiles (que pueden especificar cualquiera o todas las diferencias anteriores)."@es,
+    "Αναπαριστά μία συγκεκριμένη διαθέσιμη μορφή ενός συνόλου δεδομένων. Κάθε σύνολο δεδομενων μπορεί να είναι διαθέσιμο σε διαφορετικές μορφές, οι μορφές αυτές μπορεί να αναπαριστούν διαφορετικές μορφές αρχείων ή διαφορετικά σημεία διάθεσης. Παραδείγματα διανομών συμπεριλαμβάνουν ένα μεταφορτώσιμο αρχείο μορφής CSV, ένα API ή ένα RSS feed."@el,
+    "شكل محدد لقائمة البيانات يمكن الوصول إليه. قائمة بيانات ما يمكن أن تكون متاحه باشكال و أنواع متعددة.  ملف يمكن تحميله أو واجهة برمجية يمكن من خلالها الوصول إلى البيانات هي أمثلة على ذلك."@ar,
+    "データセットの特定の利用可能な形式を表わします。各データセットは、異なる形式で利用できることがあり、これらの形式は、データセットの異なる形式や、異なるエンドポイントを表わす可能性があります。配信の例には、ダウンロード可能なCSVファイル、API、RSSフィードが含まれます。"@ja,
+    "En specifik repræsentation af et datasæt. Et datasæt kan være tilgængelig i mange serialiseringer der kan variere på forskellige vis, herunder sprog, medietype eller format, systemorganisering, tidslig- og geografisk opløsning, detaljeringsniveau eller profiler (der kan specificere en eller flere af ovenstående)."@da;
+  skos:scopeNote "Ceci représente une disponibilité générale du jeu de données, et implique qu'il n'existe pas d'information sur la méthode d'accès réelle des données, par exple, si c'est un lien de téléchargement direct ou à travers une page Web."@fr,
+    "Esta clase representa una disponibilidad general de un conjunto de datos, e implica que no existe información acerca del método de acceso real a los datos, i.e., si es un enlace de descarga directa o a través de una página Web."@es,
+    "Questa classe rappresenta una disponibilità generale di un dataset e non implica alcuna informazione sul metodo di accesso effettivo ai dati, ad esempio se si tratta di un accesso a download diretto, API, o attraverso una pagina Web. L'utilizzo della proprietà dcat:downloadURL indica distribuzioni direttamente scaricabili."@it,
+    "This represents a general availability of a dataset it implies no information about the actual access method of the data, i.e. whether by direct download, API, or through a Web page. The use of dcat:downloadURL property indicates directly downloadable distributions."@en,
+    "Toto popisuje obecnou dostupnost datové sady. Neimplikuje žádnou informaci o skutečné metodě přístupu k datům, tj. zda jsou přímo ke stažení, skrze API či přes webovou stránku. Použití vlastnosti dcat:downloadURL indikuje přímo stažitelné distribuce."@cs,
+    "Αυτό αναπαριστά μία γενική διαθεσιμότητα ενός συνόλου δεδομένων και δεν υπονοεί τίποτα περί του πραγματικού τρόπου πρόσβασης στα δεδομένα, αν είναι άμεσα μεταφορτώσιμα, μέσω API ή μέσω μίας ιστοσελίδας. Η χρήση της ιδιότητας dcat:downloadURL δείχνει μόνο άμεσα μεταφορτώσιμες διανομές."@el,
+    "これは、データセットの一般的な利用可能性を表わし、データの実際のアクセス方式に関する情報（つまり、直接ダウンロードなのか、APIなのか、ウェブページを介したものなのか）を意味しません。dcat:downloadURLプロパティーの使用は、直接ダウンロード可能な配信を意味します。"@ja,
+    "Denne klasse repræsenterer datasættets overordnede tilgængelighed og giver ikke oplysninger om hvilken metode der kan anvendes til at få adgang til data, dvs. om adgang til datasættet realiseres ved direkte download, API eller via et websted. Anvendelsen af egenskaben dcat:downloadURL indikerer at distributionen kan downloades direkte."@da;
+  skos:altLabel "Datadistribution"@da, "Datarepræsentation"@da, "Datamanifestation"@da,
+    "Dataudstilling"@da .
+
+dct:format skos:prefLabel "File Format"@en, "Dateiformat"@de .
+
+<https://www.iana.org/assignments/media-types/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet>
+  a dct:MediaTypeOrExtent;
+  dct:identifier "https://www.iana.org/assignments/media-types/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+  rdfs:isDefinedBy "https://www.iana.org/assignments/media-types/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+  adms:identifier "https://www.iana.org/assignments/media-types/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+  dct:title "XLSX"@de .
+
+dct:license skos:prefLabel "License"@en, "Lizenz"@de .
+
+<http://dcat-ap.de/def/licenses/other-open> a dct:LicenseDocument;
+  dct:description "Andere offene Lizenz"@de;
+  dct:identifier "http://dcat-ap.de/def/licenses/other-open";
+  rdfs:isDefinedBy "http://dcat-ap.de/def/licenses/other-open";
+  adms:identifier "https://new.backend.datenadler.de/licenses/rdflib-term-literal-other-open";
+  dct:title "other-open"@de;
+  skos:prefLabel "Andere offene Lizenz"@de .
+
+dcat:accessURL a rdf:Property, <http://www.w3.org/2002/07/owl#ObjectProperty>;
+  rdfs:isDefinedBy <http://www.w3.org/TR/vocab-dcat/>;
+  rdfs:label "URL d'accès"@fr, "URL de acceso"@es, "URL πρόσβασης"@el, "access address"@en,
+    "indirizzo di accesso"@it, "přístupová adresa"@cs, "رابط وصول"@ar, "アクセスURL"@ja, "adgangsadresse"@da;
+  rdfs:comment "A URL of a resource that gives access to a distribution of the dataset. E.g. landing page, feed, SPARQL endpoint. Use for all cases except a simple download link, in which case downloadURL is preferred."@en,
+    "Ceci peut être tout type d'URL qui donne accès à une distribution du jeu de données. Par exemple, un lien à une page HTML contenant un lien au jeu de données, un Flux RSS, un point d'accès SPARQL. Utilisez le lorsque votre catalogue ne contient pas d'information sur quoi il est ou quand ce n'est pas téléchargeable."@fr,
+    "Puede ser cualquier tipo de URL que de acceso a una distribución del conjunto de datos, e.g., página de destino, descarga, URL feed, punto de acceso SPARQL. Esta propriedad se debe usar cuando su catálogo de datos no tiene información sobre donde está o cuando no se puede descargar."@es,
+    "URL zdroje, přes které je přístupná distribuce datové sady. Příkladem může být vstupní stránka, RSS kanál či SPARQL endpoint. Použijte ve všech případech kromě URL souboru ke stažení, pro které je lepší použít dcat:downloadURL."@cs,
+    "Un URL di una risorsa che consente di accedere a una distribuzione del set di dati. Per esempio, pagina di destinazione, feed, endpoint SPARQL. Da utilizzare per tutti i casi, tranne  quando  si tratta di un semplice link per il download nel qual caso è preferito downloadURL."@it,
+    "Μπορεί να είναι οποιουδήποτε είδους URL που δίνει πρόσβαση στη διανομή ενός συνόλου δεδομένων. Π.χ. ιστοσελίδα αρχικής πρόσβασης, μεταφόρτωση, feed URL, σημείο διάθεσης SPARQL. Να χρησιμοποιείται όταν ο κατάλογος δεν περιέχει πληροφορίες εαν πρόκειται ή όχι για μεταφορτώσιμο αρχείο."@el,
+    "أي رابط يتيح الوصول إلى البيانات. إذا كان الرابط هو ربط مباشر لملف يمكن تحميله استخدم الخاصية downloadURL"@ar,
+    "データセットの配信にアクセス権を与えるランディング・ページ、フィード、SPARQLエンドポイント、その他の種類の資源。"@ja, "En URL for en ressource som giver adgang til en repræsentation af datsættet. Fx destinationsside, feed, SPARQL-endpoint. Anvendes i alle sammenhænge undtagen til angivelse af et simpelt download link hvor anvendelse af egenskaben downloadURL foretrækkes."@da;
+  rdfs:range rdfs:Resource;
+  rdfs:domain dcat:Distribution;
+  skos:editorialNote "Status: English Definition text modified by DCAT revision team, updated Italian and Czech translation provided, translations for other languages pending."@en,
+    "rdfs:label, rdfs:comment and skos:scopeNote have been modified. Non-english versions except for Italian must be updated."@en;
+  skos:definition "A URL of a resource that gives access to a distribution of the dataset. E.g. landing page, feed, SPARQL endpoint. Use for all cases except a simple download link, in which case downloadURL is preferred."@en,
+    "Ceci peut être tout type d'URL qui donne accès à une distribution du jeu de données. Par exemple, un lien à une page HTML contenant un lien au jeu de données, un Flux RSS, un point d'accès SPARQL. Utilisez le lorsque votre catalogue ne contient pas d'information sur quoi il est ou quand ce n'est pas téléchargeable."@fr,
+    "Puede ser cualquier tipo de URL que de acceso a una distribución del conjunto de datos, e.g., página de destino, descarga, URL feed, punto de acceso SPARQL. Esta propriedad se debe usar cuando su catálogo de datos no tiene información sobre donde está o cuando no se puede descargar."@es,
+    "URL zdroje, přes které je přístupná distribuce datové sady. Příkladem může být vstupní stránka, RSS kanál či SPARQL endpoint. Použijte ve všech případech kromě URL souboru ke stažení, pro které je lepší použít dcat:downloadURL."@cs,
+    "Un URL di una risorsa che consente di accedere a una distribuzione del set di dati. Per esempio, pagina di destinazione, feed, endpoint SPARQL. Da utilizzare per tutti i casi, tranne  quando  si tratta di un semplice link per il download nel qual caso è preferito downloadURL."@it,
+    "Μπορεί να είναι οποιουδήποτε είδους URL που δίνει πρόσβαση στη διανομή ενός συνόλου δεδομένων. Π.χ. ιστοσελίδα αρχικής πρόσβασης, μεταφόρτωση, feed URL, σημείο διάθεσης SPARQL. Να χρησιμοποιείται όταν ο κατάλογος δεν περιέχει πληροφορίες εαν πρόκειται ή όχι για μεταφορτώσιμο αρχείο."@el,
+    "أي رابط يتيح الوصول إلى البيانات. إذا كان الرابط هو ربط مباشر لملف يمكن تحميله استخدم الخاصية downloadURL"@ar,
+    "データセットの配信にアクセス権を与えるランディング・ページ、フィード、SPARQLエンドポイント、その他の種類の資源。"@ja, "En URL for en ressource som giver adgang til en repræsentation af datsættet. Fx destinationsside, feed, SPARQL-endpoint. Anvendes i alle sammenhænge undtagen til angivelse af et simpelt download link hvor anvendelse af egenskaben downloadURL foretrækkes."@da;
+  skos:scopeNote "El rango es una URL. Si la distribución es accesible solamente través de una página de destino (es decir, si no se conoce una URL de descarga directa), entonces el enlance a la página de destino debe ser duplicado como accessURL en la distribución."@es,
+    "If the distribution(s) are accessible only through a landing page (i.e. direct download URLs are not known), then the landing page link should be duplicated as accessURL on a distribution."@en,
+    "La valeur est une URL. Si la distribution est accessible seulement au travers d'une page d'atterrissage (c-à-dire on n'ignore une URL de téléchargement direct), alors le lien à la page d'atterrissage doit être dupliqué comee accessURL sur la distribution."@fr,
+    "Pokud jsou distribuce přístupné pouze přes vstupní stránku (tj. URL pro přímé stažení nejsou známa), pak by URL přístupové stránky mělo být duplikováno ve vlastnosti distribuce accessURL."@cs,
+    "Se le distribuzioni sono accessibili solo attraverso una pagina web (ad esempio, gli URL per il download diretto non sono noti), allora il link della pagina web deve essere duplicato come accessURL sulla distribuzione."@it,
+    "Η τιμή είναι ένα URL. Αν η/οι διανομή/ές είναι προσβάσιμη/ες μόνο μέσω μίας ιστοσελίδας αρχικής πρόσβασης (δηλαδή αν δεν υπάρχουν γνωστές διευθύνσεις άμεσης μεταφόρτωσης), τότε ο σύνδεσμος της ιστοσελίδας αρχικής πρόσβασης πρέπει να αναπαραχθεί ως accessURL σε μία διανομή."@el,
+    "確実にダウンロードでない場合や、ダウンロードかどうかが不明である場合は、downloadURLではなく、accessURLを用いてください。ランディング・ページを通じてしか配信にアクセスできない場合（つまり、直接的なダウンロードURLが不明）は、配信におけるaccessURLとしてランディング・ページのリンクをコピーすべきです（SHOULD）。"@ja,
+    "Hvis en eller flere distributioner kun er tilgængelige via en destinationsside (dvs. en URL til direkte download er ikke kendt), så bør destinationssidelinket gentages som adgangsadresse for distributionen."@da;
+  skos:altLabel "adgangsURL"@da;
+  <http://www.w3.org/2002/07/owl#propertyChainAxiom> _:genid-7cf1773655d14fb9a5b55258ebbdb52c-node1gi2j9dc3x32 .
+
+dcat:downloadURL a rdf:Property, <http://www.w3.org/2002/07/owl#ObjectProperty>;
+  rdfs:isDefinedBy <http://www.w3.org/TR/vocab-dcat/>;
+  rdfs:label "URL de descarga"@es, "URL de téléchargement"@fr, "URL di scarico"@it,
+    "URL souboru ke stažení"@cs, "URL μεταφόρτωσης"@el, "download URL"@en, "رابط تحميل"@ar,
+    "ダウンロードURL"@ja, "downloadURL"@da;
+  rdfs:comment "Ceci est un lien direct à un fichier téléchargeable en un format donnée. Exple fichier CSV ou RDF. Le format est décrit par les propriétés de distribution dct:format et/ou dcat:mediaType."@fr,
+    "La URL de un archivo descargable en el formato dato. Por ejemplo, archivo CSV o archivo RDF. El formato se describe con las propiedades de la distribución dct:format y/o dcat:mediaType."@es,
+    "Questo è un link diretto al file scaricabile in un dato formato. E.g. un file CSV o un file RDF. Il formato è descritto dal dct:format e/o dal dcat:mediaType della distribuzione."@it,
+    "The URL of the downloadable file in a given format. E.g. CSV file or RDF file. The format is indicated by the distribution's dct:format and/or dcat:mediaType."@en,
+    "URL souboru ke stažení v daném formátu, například CSV nebo RDF soubor. Formát je popsán vlastností distribuce dct:format a/nebo dcat:mediaType."@cs,
+    "dcat:downloadURLはdcat:accessURLの特定の形式です。しかし、DCATプロファイルが非ダウンロード・ロケーションに対してのみaccessURLを用いる場合には、より強い分離を課すことを望む可能性があるため、この含意を強化しないように、DCATは、dcat:downloadURLをdcat:accessURLのサブプロパティーであると定義しません。"@ja,
+    "Είναι ένας σύνδεσμος άμεσης μεταφόρτωσης ενός αρχείου σε μια δεδομένη μορφή. Π.χ. ένα αρχείο CSV ή RDF. Η μορφη αρχείου περιγράφεται από τις ιδιότητες dct:format ή/και dcat:mediaType της διανομής."@el,
+    "رابط مباشر لملف يمكن تحميله. نوع الملف يتم توصيفه باستخدام الخاصية dct:format dcat:mediaType "@ar,
+    "URL til fil der kan downloades i et bestemt format. Fx en CSV-fil eller en RDF-fil. Formatet for distributionen angives ved hjælp af egenskaberne dct:format og/eller dcat:mediaType."@da;
+  rdfs:range rdfs:Resource;
+  rdfs:domain dcat:Distribution;
+  skos:editorialNote "Status: English  Definition text modified by DCAT revision team, Italian, Spanish and Czech translation updated, other translations pending."@en,
+    "rdfs:label, rdfs:comment and/or skos:scopeNote have been modified. Non-english versions must be updated."@en;
+  skos:definition "Ceci est un lien direct à un fichier téléchargeable en un format donnée. Exple fichier CSV ou RDF. Le format est décrit par les propriétés de distribution dct:format et/ou dcat:mediaType."@fr,
+    "La URL de un archivo descargable en el formato dato. Por ejemplo, archivo CSV o archivo RDF. El formato se describe con las propiedades de la distribución dct:format y/o dcat:mediaType."@es,
+    "Questo è un link diretto al file scaricabile in un dato formato. E.g. un file CSV o un file RDF. Il formato è descritto dal dct:format e/o dal dcat:mediaType della distribuzione."@it,
+    "The URL of the downloadable file in a given format. E.g. CSV file or RDF file. The format is indicated by the distribution's dct:format and/or dcat:mediaType."@en,
+    "URL souboru ke stažení v daném formátu, například CSV nebo RDF soubor. Formát je popsán vlastností distribuce dct:format a/nebo dcat:mediaType."@cs,
+    "dcat:downloadURLはdcat:accessURLの特定の形式です。しかし、DCATプロファイルが非ダウンロード・ロケーションに対してのみaccessURLを用いる場合には、より強い分離を課すことを望む可能性があるため、この含意を強化しないように、DCATは、dcat:downloadURLをdcat:accessURLのサブプロパティーであると定義しません。"@ja,
+    "Είναι ένας σύνδεσμος άμεσης μεταφόρτωσης ενός αρχείου σε μια δεδομένη μορφή. Π.χ. ένα αρχείο CSV ή RDF. Η μορφη αρχείου περιγράφεται από τις ιδιότητες dct:format ή/και dcat:mediaType της διανομής."@el,
+    "رابط مباشر لملف يمكن تحميله. نوع الملف يتم توصيفه باستخدام الخاصية dct:format dcat:mediaType "@ar,
+    "URL til fil der kan downloades i et bestemt format. Fx en CSV-fil eller en RDF-fil. Formatet for distributionen angives ved hjælp af egenskaberne dct:format og/eller dcat:mediaType."@da;
+  skos:scopeNote "El valor es una URL."@es, "La valeur est une URL."@fr, "dcat:downloadURL BY MĚLA být použita pro adresu, ze které je distribuce přímo přístupná, typicky skrze požadavek HTTP Get."@cs,
+    "dcat:downloadURL DOVREBBE essere utilizzato per l'indirizzo a cui questa distribuzione è disponibile direttamente, in genere attraverso una richiesta Get HTTP."@it,
+    "dcat:downloadURL SHOULD be used for the address at which this distribution is available directly, typically through a HTTP Get request."@en,
+    "Η τιμή είναι ένα URL."@el, "dcat:downloadURL BØR anvendes til angivelse af den adresse hvor distributionen er tilgængelig direkte, typisk gennem et HTTP Get request."@da .
+
+dct:LicenseDocument skos:prefLabel "Licence Document"@en, "Lizenzdokument"@de .
+
+dct:MediaTypeOrExtent skos:prefLabel "Media Type or Extent"@en, "Medientyp oder Erweiterung"@de .
+
+<https://backend.datenadler.de/publishers/msgiv> a foaf:Agent;
+  dct:identifier "https://backend.datenadler.de/publishers/msgiv";
+  adms:identifier "https://backend.datenadler.de/publishers/msgiv";
+  foaf:name "Ministerium für Soziales, Gesundheit, Integration und Verbraucherschutz (MSGIV)"@de .
+
+<http://dcat-ap.de/def/licenses/dl-zero-de/2.0> a dct:LicenseDocument;
+  dct:description "Datenlizenz Deutschland – Zero – Version 2.0"@de;
+  dct:identifier "http://dcat-ap.de/def/licenses/dl-zero-de/2.0";
+  rdfs:isDefinedBy "http://dcat-ap.de/def/licenses/dl-zero-de/2.0";
+  adms:identifier "https://new.backend.datenadler.de/licenses/rdflib-term-literal-dl-zero-de-2-0";
+  dct:title "dl-zero-de/2.0"@de;
+  skos:prefLabel "Datenlizenz Deutschland – Zero – Version 2.0"@de .
+
+<https://backend.datenadler.de/harvester-intern/misgv/metadaten/dcat_catalog> a dcat:Catalog;
+  dct:description "Land Brandenburg: Adresssammlungen des Ministeriums für Arbeit, Soziales, Gesundheit, Frauen und Familie. Auch für Govdata.de\\r\\n"@de;
+  dct:identifier "https://backend.datenadler.de/harvester-intern/misgv/metadaten/dcat_catalog";
+  adms:identifier "https://backend.datenadler.de/harvester-intern/misgv/metadaten/dcat_catalog";
+  dct:modified "2021-09-21";
+  dct:publisher <https://backend.datenadler.de/publishers/msgiv>;
+  dct:title "Gesamtkatalog des MSGIV"@de;
+  foaf:homepage "https://msigv.brandenburg.de/";
+  dct:license <http://dcat-ap.de/def/licenses/dl-zero-de/2.0> .
+
+<https://geobasis-bb.de#foaf_Agent> a foaf:Agent;
+  dct:description "Landesvermessung und Geobasisinformation Brandenburg - LGB"@de;
+  dct:identifier "https://geobasis-bb.de#foaf_Agent";
+  rdfs:isDefinedBy "https://geobasis-bb.de#foaf_Agent";
+  adms:identifier "https://geobasis-bb.de#foaf_Agent";
+  foaf:name "Landesvermessung und Geobasisinformation Brandenburg (LGB)"@de .
+
+<https://backend.datenadler.de/harvester-intern/lgb/metadaten/dcat_catalog> a dcat:Catalog;
+  dct:description "Gesamtkatalog der LGB"@de;
+  dct:identifier "https://backend.datenadler.de/harvester-intern/lgb/metadaten/dcat_catalog";
+  adms:identifier "https://backend.datenadler.de/harvester-intern/lgb/metadaten/dcat_catalog";
+  dct:modified "2022-01-09";
+  dct:publisher <https://geobasis-bb.de#foaf_Agent>;
+  dct:title "LGB"@de;
+  foaf:homepage "https://geobasis-bb.de/lgb/de/" .
+
+<https://datenadler.de/publishers/lasv> a foaf:Agent;
+  foaf:name "Landesamt für Soziales und Versorgung Brandenburg (LASV)"@de .
+
+<https://lasv.brandenburg.de/OpenData/lasv> a dcat:Catalog;
+  dct:description "Fachdaten des Landesamt für Soziales und Versorgung Brandenburg (LASV). Auch für Govdata.de."@de;
+  dct:publisher <https://datenadler.de/publishers/lasv>;
+  dct:title "Fachdaten des LASV"@de;
+  foaf:homepage "https://lasv.brandenburg.de";
+  dcat:dataset <https://lasv.brandenburg.de/OpenData/lasv/AuW1>, <https://lasv.brandenburg.de/OpenData/lasv/Schweb1>;
+  dct:license <http://dcat-ap.de/def/licenses/dl-zero-de/2.0> .
+
+<https://lasv.brandenburg.de/OpenData/lasv/AuW1> a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet die Bezeichnung der Wohnform, Leistungsanbieter, Kapazität, die Anschrift (Straße, Postleitzahl, Ort), Ortsteil, Landkreis, Telefon und E-Mail."@de,
+    "The address collection contains the name of the type of housing, service providers, capacity, address (street, postcode, city), district, commune, telephone and e-mail."@en;
+  dct:identifier <https://lasv.brandenburg.de/OpenData/lasv/AuW1>;
+  dct:publisher <https://datenadler.de/publishers/lasv>;
+  dct:title "Einrichtungsverzeichnis - Aufsicht für unterstützende Wohnformen"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://lasv.brandenburg.de/OpenData/lasv/AuW1/CSV1>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://lasv.brandenburg.de/OpenData/lasv/Schweb1> a dcat:Dataset;
+  dct:description "Die Datenbereitstellung der behinderten und schwerbehinderten Menschen gibt Auskunft über die Anzahl der betroffenen Menschen im Land Brandenburg. Es werden die Merkmale nach Grad und Art der Behinderung, sowie das Alter angezeigt. Dazu kommt die Aufschlüsselung in Landkreise und kreisfreien Städte. Die Daten werden im Jahresintervall zum Ende des Jahres aktualisiert. Die Datenbereitstellung erfolgt über das Landesamt für Soziales und Versorgung des Land Brandenburg."@de,
+    "The provision of data on disabled and severely disabled people provides information on the number of people affected in the state of Brandenburg. The characteristics are displayed according to the degree and type of disability, as well as the age. In addition, there is a breakdown into administrative districts and independent cities. The data is updated in annual intervals at the end of the year. The data is provided by the State Office for Social Affairs and Care of the State of Brandenburg. "@en;
+  dct:identifier <https://lasv.brandenburg.de/OpenData/lasv/Schweb1>;
+  dct:publisher <https://datenadler.de/publishers/lasv>;
+  dct:title "Behinderte und Schwerbehinderte Menschen im Land Brandenburg"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/SOCI>;
+  dcat:distribution <https://lasv.brandenburg.de/OpenData/lasv/Schweb1/CSV1>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<http://publications.europa.eu/resource/authority/data-theme/GOVE> a skos:Concept;
+  dct:identifier "https://new.backend.datenadler.de/concepts/GOVE";
+  rdfs:isDefinedBy "http://publications.europa.eu/resource/authority/data-theme/GOVE";
+  adms:identifier "https://new.backend.datenadler.de/concepts/GOVE";
+  dct:title "Regierung und öffentlicher Sektor"@de, "Κυβέρνηση και δημόσιος τομέας"@ell,
+    "Gobierno y sector público"@spa, "Forvaltning og offentlig sektor"@nor, "Vyriausybė ir viešasis sektorius"@lit,
+    "Vláda a veřejný sektor"@cs, "Vlada in javni sektor"@slv, "Government and public sector"@en,
+    "Guvern şi sector public"@ron, "Regeringen och den offentliga sektorn"@swe, "Valtioneuvosto ja julkinen sektori"@fin,
+    "Overheid en publieke sector"@nld, "Valitsus ja avalik sektor"@eth, "Vláda a verejný sektor"@slk,
+    "Governo e settore pubblico"@ita, "Valdība un sabiedriskais sektors"@lav, "Правителство и публичен сектор"@bul,
+    "Governo e setor público"@por, "Gouvernement et secteur public"@fr, "Rialtas agus earnáil phoiblí"@gle,
+    "Regeringen og den offentlige sektor"@dan, "Kormányzat és közszféra"@hun, "Vlada i javni sektor"@hrv,
+    "Rząd i sektor publiczny"@pl, "Gvern u settur pubbliku"@mlt;
+  skos:inScheme "http://publications.europa.eu/resource/authority/data-theme", "{http://publications.europa.eu/resource/authority/data-theme : http://www.w3.org/2004/02/skos/core#ConceptScheme}";
+  foaf:depiction "fa-inbox" .
+
+<http://dcat-ap.de/def/politicalGeocoding/stateKey/12> skos:prefLabel "Brandenburg"@de .
+
+<http://dcat-ap.de/def/politicalGeocoding/Level/state> skos:prefLabel "Ebene der Bundesländer"@de .
+
+dcat:keyword a rdf:Property, <http://www.w3.org/2002/07/owl#DatatypeProperty>;
+  rdfs:isDefinedBy <http://www.w3.org/TR/vocab-dcat/>;
+  rdfs:label "keyword"@en, "klíčové slovo"@cs, "mot-clés "@fr, "palabra clave"@es, "parola chiave"@it,
+    "λέξη-κλειδί"@el, "كلمة  مفتاحية "@ar, "キーワード/タグ"@ja, "nøgleord"@da;
+  rdfs:comment "A keyword or tag describing a resource."@en, "Klíčové slovo nebo značka popisující zdroj."@cs,
+    "Un mot-clé ou étiquette décrivant une ressource."@fr, "Una palabra clave o etiqueta que describe un recurso."@es,
+    "Una parola chiave o un'etichetta per descrivere la risorsa."@it, "Μία λέξη-κλειδί ή μία ετικέτα που περιγράφει το σύνολο δεδομένων."@el,
+    "كلمة  مفتاحيه توصف قائمة البيانات"@ar, "データセットを記述しているキーワードまたはタグ。"@ja, "Et nøgleord eller tag til beskrivelse af en ressource."@da;
+  skos:prefLabel "Keyword"@en, "Schlagwort"@de;
+  rdfs:range rdfs:Literal;
+  rdfs:subPropertyOf dct:subject;
+  skos:definition "A keyword or tag describing a resource."@en, "Klíčové slovo nebo značka popisující zdroj."@cs,
+    "Un mot-clé ou étiquette décrivant une ressource."@fr, "Una palabra clave o etiqueta que describe un recurso."@es,
+    "Una parola chiave o un'etichetta per descrivere la risorsa."@it, "Μία λέξη-κλειδί ή μία ετικέτα που περιγράφει το σύνολο δεδομένων."@el,
+    "كلمة  مفتاحيه توصف قائمة البيانات"@ar, "データセットを記述しているキーワードまたはタグ。"@ja, "Et nøgleord eller tag til beskrivelse af en ressource."@da .
+
+<https://lasv.brandenburg.de/OpenData/lasv/AuW1/CSV1> a dcat:Distribution;
+  dct:title "Einrichtungsverzeichnis - Aufsicht für unterstützende Wohnformen"@de;
+  dct:format "text/csv"@de;
+  dct:license <http://dcat-ap.de/def/licenses/dl-zero-de/2.0>;
+  dcat:accessURL "https://auw.brandenburg.de/";
+  dcat:downloadURL "https://lasv.brandenburg.de/daten/AuW_Einrichtungsverzeichnis.csv" .
+
+<http://publications.europa.eu/resource/authority/data-theme/SOCI> a skos:Concept;
+  dct:identifier "https://new.backend.datenadler.de/concepts/SOCI";
+  rdfs:isDefinedBy "http://publications.europa.eu/resource/authority/data-theme/SOCI";
+  adms:identifier "https://new.backend.datenadler.de/concepts/SOCI";
+  dct:title "Bevölkerung und Gesellschaft"@de, "Populace a společnost"@cs, "Ludność i społeczeństwo"@pl,
+    "Population and society"@en, "Population et société"@fr;
+  skos:inScheme "http://publications.europa.eu/resource/authority/data-theme", "{http://publications.europa.eu/resource/authority/data-theme : http://www.w3.org/2004/02/skos/core#ConceptScheme}";
+  foaf:depiction "fa-users" .
+
+<https://lasv.brandenburg.de/OpenData/lasv/Schweb1/CSV1> a dcat:Distribution;
+  dct:title "Übersicht der behinderten und schwerbehinderten Menschen im Land Brandenburg"@de;
+  dct:format "text/csv"@de;
+  dct:license <http://dcat-ap.de/def/licenses/dl-zero-de/2.0>;
+  dcat:accessURL "https://lasv.brandenburg.de/daten/Schweb_behinderte_und_schwerbehinderte_Menschen_Brandenburg.csv";
+  dcat:downloadURL "https://lasv.brandenburg.de/daten/Schweb_behinderte_und_schwerbehinderte_Menschen_Brandenburg.csv" .
+
+<https://datenadler.de/publisher/mik> a foaf:Agent;
+  foaf:name "Ministerium des Innern und für Kommunales (MIK)"@de, "Ministry of the Interior and Municipal Affairs"@en .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~AZ>
+  a dcat:Catalog;
+  dct:description "65 Adresssammlungen der Behörden des Landes Brandenburg. Auch für Govdata.de."@de;
+  dct:publisher <https://datenadler.de/publisher/mik>;
+  dct:title "Fachadressen aus dem Service-Portal"@de;
+  foaf:homepage "https://service.brandenburg.de/";
+  dcat:dataset <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~wasserbehoerde-obere>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~wasser-und-bodenverbaende-gewaesserunterhaltungsverbaende>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umweltpartnerschaft-brandenburg-bereiche-abfall-und-wasser>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umweltpartnerschaft-brandenburg-bereich-immissionsschutz>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umweltpartnerschaft-brandenburg>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umweltbehoerden-untere>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umwelt-und-naturschutzvereingungen-anerkannte>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~tierfunde-pflegestationen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~suchtpraevention-fachstellen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~sozialpaedagogik-ausbildungsstaetten-fuer-fachberufe>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~sozialaemter>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~schwangerschafts-und-schwangerschaftskonfliktberatungsstellen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~schulverwaltungsaemter>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~schulmilchlieferanten-laender-berlinbrandenburg>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~schulden-und-insolvenzberatungsstellen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~rehabilitationskliniken-stationaer>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~rehabilitationskliniken-ambulant>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~pflegestuetzpunkte>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~pflanzenschutzdienst-dienststellen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~patientenberatungsstellen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~oeffentlich-rechtliche-entsorgungstraeger>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~naturlandschaften-brandenburger>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~milchtankstellen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~medizinische-massagen-und-baeder-praxisstaetten>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~landwirtschaftsaemter>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~landwirtschaft-sachverstaendige>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~landwirtschaft-dienststellen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~landwirtschaft-beraterinnen-und-berater>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~landesbeauftragte>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~krankenhaeuser>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~kinder-und-jugendpsychiatrie>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~katasterbehoerden>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~jugendhilfe-freie-traeger>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~jugendaemter>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~jagdbehoerden-untere>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~jagdbehoerde-oberste>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~immissionsschutzrechtliche-genehmigungsverfahren-zustaendige-stellen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~hiv-pep-notfalldepot>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~haertefallkommission-mitglieder>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~gleichstellungsbeauftragte-kommunale>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~gleichstellungsbeauftragte-der-obersten-landesbehoerden>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~gleichgeschlechtliche-lebensweisen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~gesundheitsaemter>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~gemeinsame-behoerden-und-gerichte-berlin-brandenburg>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~gartenbau-sachverstaendige>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~freiwilliges-oekologisches-jahr-traeger>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~frauenhaeuser>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~forstwirtschaftliche-vereinigungen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~forstwirtschaft-sachverstaendige>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~forstwirtschaft-beraterinnen-und-berater>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~forstbetriebsgemeinschaften>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~forensische-kliniken-massregelvollzug>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~foerderung-leader-dienststellen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~fischereibehoerden-untere>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~fischereibehoerde-oberste>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~fischerei-sachverstaendige>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~entwoehnungskliniken-stationaer>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~elterngeldstellen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~bodenuntersuchungen-nach-duengeverordnung-labore>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~bodenordnung-dienststellen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~bienenbelegstellen>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~behindertenbeauftragte-kommunale>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~antikorruptionsbeauftragte-staatskanzlei-ministerien-und-landtagsverwaltung>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~antikorruptionsbeauftragte-landkreise-kreisfreie-staedte-und-weitere-staedte>,
+    <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~agrarforschungsstandorte>;
+  dct:license <http://dcat-ap.de/def/licenses/dl-zero-de/2.0> .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~wasserbehoerde-obere>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~wasserbehoerde-obere>;
+  dct:publisher <https://datenadler.de/publisher/lfu>;
+  dct:title "Obere Wasserbehörde"@de, "upper water authority"@en;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/wasserbehoerde_obere.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~wasser-und-bodenverbaende-gewaesserunterhaltungsverbaende>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~wasser-und-bodenverbaende-gewaesserunterhaltungsverbaende>;
+  dct:publisher <https://datenadler.de/publisher/mluk>;
+  dct:title "Wasser- und Bodenverbände, Gewässerunterhaltungsverbände"@de, "Water and soil associations, water conservation associations"@en;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/wasser_und_bodenverbaende_gewaesserunterhaltungsverbaende.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umweltpartnerschaft-brandenburg-bereiche-abfall-und-wasser>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umweltpartnerschaft-brandenburg-bereiche-abfall-und-wasser>;
+  dct:publisher <https://datenadler.de/publisher/mluk>;
+  dct:title "Umweltparnterschaft in den Unteren Vollzugsbehörden in den Bereichen Abfall- und Wasserwirtschaft"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/umweltpartnerschaft_abfall_und_wasser.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umweltpartnerschaft-brandenburg-bereich-immissionsschutz>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umweltpartnerschaft-brandenburg-bereich-immissionsschutz>;
+  dct:publisher <https://datenadler.de/publisher/mluk>;
+  dct:title "Umweltparnterschaft in den Unteren Vollzugsbehörden im Bereich Immissionsschutz"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/umweltpartnerschaft_immissionsschutz.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umweltpartnerschaft-brandenburg>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umweltpartnerschaft-brandenburg>;
+  dct:publisher <https://datenadler.de/publisher/mluk>;
+  dct:title "Ansprechpartner zur Umweltpartnerschaft in Brandenburg"@de, "Environmental Partnership"@en;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/umweltpartnerschaft.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umweltbehoerden-untere>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umweltbehoerden-untere>;
+  dct:publisher <https://datenadler.de/publisher/mluk>;
+  dct:title "Untere Umweltbehörden"@de, "Lower environmental authorities"@en;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/umweltbehoerden_untere.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umwelt-und-naturschutzvereingungen-anerkannte>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~umwelt-und-naturschutzvereingungen-anerkannte>;
+  dct:publisher <https://datenadler.de/publisher/mluk>;
+  dct:title "Anerkannte Naturschutz- und Umweltvereinigungen "@de, "Recognized conservation and environmental associations in the state of Brandenburg"@en;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/umweltnaturschutzvereingungen_anerkannte.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~tierfunde-pflegestationen>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~tierfunde-pflegestationen>;
+  dct:publisher <https://datenadler.de/publisher/lfu>;
+  dct:title "Tierfunde: Pflegestationen"@de, "animal care stations"@en;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/tierfunde_pflegestationen.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~suchtpraevention-fachstellen>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~suchtpraevention-fachstellen>;
+  dct:publisher <https://datenadler.de/publisher/msgiv>;
+  dct:title "Suchpräventionsfachstellen, landesweit und überregional"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/suchtpraevention_fachstellen.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~sozialpaedagogik-ausbildungsstaetten-fuer-fachberufe>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~sozialpaedagogik-ausbildungsstaetten-fuer-fachberufe>;
+  dct:publisher <https://datenadler.de/publisher/mbjs>;
+  dct:title "Sozialpädagogik, Ausbildungsstätten für Fachberufe"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/sozialpaedagogik_ausbildungsstaetten_fuer_fachberufe.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~sozialaemter>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~sozialaemter>;
+  dct:publisher <https://datenadler.de/publisher/msgiv>;
+  dct:title "Sozialämter in den kreisfreien Städten und Landkreisen des Landes Brandenburg"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/sozialaemter.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~schwangerschafts-und-schwangerschaftskonfliktberatungsstellen>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~schwangerschafts-und-schwangerschaftskonfliktberatungsstellen>;
+  dct:publisher <https://datenadler.de/publisher/msgiv>;
+  dct:title "Übersicht von anerkannten Schwangerschaftsskonfliktberatungsstellen und sonstigen Schwangerschaftsberatungsstellen im Land Brandenburg"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/schwangerschafts_und_schwangerschaftskonfliktberatungsstellen.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~schulverwaltungsaemter>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~schulverwaltungsaemter>;
+  dct:publisher <https://datenadler.de/publisher/mbjs>;
+  dct:title "Schulverwaltungsämter/Bürgerservice"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/schulverwaltungsaemter.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~schulmilchlieferanten-laender-berlinbrandenburg>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~schulmilchlieferanten-laender-berlinbrandenburg>;
+  dct:publisher <https://datenadler.de/publisher/lelf>;
+  dct:title "Schulmilchlieferanten Länder Berlin/Brandenburg"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/schulmilchlieferanten_laender_berlinbrandenburg.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~schulden-und-insolvenzberatungsstellen>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~schulden-und-insolvenzberatungsstellen>;
+  dct:publisher <https://datenadler.de/publisher/msgiv>;
+  dct:title "Anerkannte Schulden- und Insolvenzberatungsstellen"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/schulden_und_insolvenzberatungsstellen.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~rehabilitationskliniken-stationaer>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~rehabilitationskliniken-stationaer>;
+  dct:publisher <https://datenadler.de/publisher/msgiv>;
+  dct:title "Stationäre Rehabilitationskliniken (Reha)"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/rehabilitationskliniken_stationaer.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~rehabilitationskliniken-ambulant>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~rehabilitationskliniken-ambulant>;
+  dct:publisher <https://datenadler.de/publisher/msgiv>;
+  dct:title "Ambulante Rehabilitationskliniken (Reha)"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/rehabilitationskliniken_ambulant.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~pflegestuetzpunkte>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~pflegestuetzpunkte>;
+  dct:publisher <https://datenadler.de/publisher/msgiv>;
+  dct:title "Pflegestützpunkte"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/pflegestuetzpunkte.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~pflanzenschutzdienst-dienststellen>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~pflanzenschutzdienst-dienststellen>;
+  dct:publisher <https://datenadler.de/publisher/lelf>;
+  dct:title "LELF Abteilung Pflanzenschutzdienst - Dienststellen"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/pflanzenschutzdienst_dienststellen.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~patientenberatungsstellen>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~patientenberatungsstellen>;
+  dct:publisher <https://datenadler.de/publisher/msgiv>;
+  dct:title "Beratungsstellen für Patientinnen und Patienten"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/patientenberatungsstellen.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~oeffentlich-rechtliche-entsorgungstraeger>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~oeffentlich-rechtliche-entsorgungstraeger>;
+  dct:publisher <https://datenadler.de/publisher/mluk>;
+  dct:title "Öffentlich-rechtliche Entsorgungsträger und Sonderabfallgesellschaft"@de,
+    "Public-law disposal carrier and hazardous waste company"@en;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/oeffentlich_rechtliche_entsorgungstraeger.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~naturlandschaften-brandenburger>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~naturlandschaften-brandenburger>;
+  dct:publisher <https://datenadler.de/publisher/lfu>;
+  dct:title "Brandenburger Naturlandschaften"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/brandenburger_naturlandschaften.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~milchtankstellen>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~milchtankstellen>;
+  dct:publisher <https://datenadler.de/publisher/mluk>;
+  dct:title "Milcherzeugerbetriebe mit Automaten-Zapfstellen (Milchtankstellen)"@de,
+    "Milk producers (milk filling stations)"@en;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/milchtankstellen.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~medizinische-massagen-und-baeder-praxisstaetten>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~medizinische-massagen-und-baeder-praxisstaetten>;
+  dct:publisher <https://datenadler.de/publisher/msgiv>;
+  dct:title "Medizinische Massagen und Bäder, Praxisstätten"@de;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/medizinische_massagen_und_baeder_praxisstaetten.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
+
+<https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~landwirtschaftsaemter>
+  a dcat:Dataset;
+  dct:description "Die Adresssammlung beinhaltet den Namen, die Anschrift (Straße, Postleitzahl, Ort), Telefon, Telefax, E-Mail und Website."@de,
+    "The address collection contains the name, address (street, postcode, city), telephone, fax, e-mail and website."@en;
+  dct:identifier <https://service.brandenburg.de/service/de/adressen/weitere-verzeichnisse/verzeichnisliste/~landwirtschaftsaemter>;
+  dct:publisher <https://datenadler.de/publisher/mluk>;
+  dct:title "Ämter für Landwirtschaft der Kreise und kreisfreien Städte  "@de, "Agricultural offices"@en;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE>;
+  dcat:distribution <https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/landwirtschaftsaemter.csv>;
+  dcatde:contributorID <https://www.dcat-ap.de/def/contributors/20211108#landBrandenburg>;
+  dcatde:1_0politicalGeocodingURI <http://dcat-ap.de/def/politicalGeocoding/stateKey/12>;
+  dcatde:1_0politicalGeocodingLevelURI <http://dcat-ap.de/def/politicalGeocoding/Level/state>;
+  dcat:keyword "Adresse", "Ansprechpartner" .
