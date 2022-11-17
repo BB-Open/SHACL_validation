@@ -1,58 +1,55 @@
-import kglab
-from os.path import join
-import pandas as pd
-#pd.set_option("max_rows", None)
+import sys
+from pathlib import Path
 
+import kglab
+import pyshacl
+import rdflib
 
 # Where are the files living
-BASE_DIR = '/home/volker/workspace/PYTHON2/shacl/shapes'
+BASE_DIR = Path('/home/volker/workspace/PYTHON5/SHACL_validation')
 
 # Data files
 DCAT_FILES = [
-    'dcat-ap-de-imports.ttl',
-    'dcat-ap-spec-german-additions.ttl',
-    'dcat-ap-spec-german-messages.ttl',
-    'dcat-ap_2.1.1_shacl_shapes.ttl',
 #    'nal-lists.ttl',
 ]
 
 # SHACL rules
 SHAPE_FILES = [
+    'dcat-ap_2.1.1_shacl_shapes.ttl',
+    'dcat-ap-spec-german-additions.ttl',
+    'dcat-ap-spec-german-messages.ttl',
 ]
 
 # The data to be validated (In this case the postdam dataset)
-# DATA_URL = 'https://opendata.potsdam.de/api/v2/catalog/exports/ttl?limit=1'
-# DATA_URL = 'https://flask.datenadler.de/download'
-DATA_URL = 'file:///home/volker/workspace/PYTHON2/shacl/data/first_1000.ttl'
+DATA_URL = 'first_1000.ttl'
 
 
-validator = kglab.KnowledgeGraph(
-    name = "A DCAT-AP.de validator",
-    base_uri = "https://dcat.validator",
-    use_gpus =False,
-    )
-
-# Import the DCAT files
-for filename in DCAT_FILES:
-    validator.load_rdf(join(BASE_DIR, filename),format='turtle')
 
 # Import the SHACL rules
-for filename in SHAPE_FILES:
-    validator.load_rdf(join(BASE_DIR, filename), format='turtle')
+
+validator = pyshacl.rdfutil.load_from_source(str(BASE_DIR / 'shapes' / SHAPE_FILES[0]))
+
+if len(SHAPE_FILES) > 1:
+    for filename in SHAPE_FILES[1:]:
+        validator = pyshacl.rdfutil.load_from_source(str(BASE_DIR / 'shapes' / filename), g=validator)
 
 
-data = kglab.KnowledgeGraph(
-    name = "Potsdam Data",
-    base_uri = "https://potsdam",
-    use_gpus =False,
-    )
+graph_data = open(BASE_DIR / 'data' / DATA_URL, 'rb')
 
 
-data.load_rdf(DATA_URL, format='turtle')
-
-conforms, report_graph, report_text = data.validate(shacl_graph=validator.rdf_graph())
+conforms, report_graph, report_text = pyshacl.validate(
+    data_graph=graph_data,
+    shacl_graph=validator,
+    ont_graph=str(BASE_DIR / 'shapes' / 'dcat-ap-de-imports.ttl'),
+    do_owl_imports=True,
+    ont_graph_format='turtle',
+    data_graph_format='turtle',
+    meta_shacl= True,
+)
 
 print(report_text)
+
+sys.exit(0)
 
 sparql = """
 SELECT DISTINCT ?severity ?focus ?path ?value ?message
