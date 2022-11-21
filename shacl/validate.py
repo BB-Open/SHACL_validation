@@ -1,17 +1,10 @@
 import sys
 from pathlib import Path
 
-import kglab
 import pyshacl
-import rdflib
 
 # Where are the files living
 BASE_DIR = Path('/home/volker/workspace/PYTHON5/SHACL_validation')
-
-# Data files
-DCAT_FILES = [
-#    'nal-lists.ttl',
-]
 
 # SHACL rules
 SHAPE_FILES = [
@@ -22,8 +15,6 @@ SHAPE_FILES = [
 
 # The data to be validated (In this case the postdam dataset)
 DATA_URL = 'first_1000.ttl'
-
-
 
 # Import the SHACL rules
 
@@ -44,49 +35,9 @@ conforms, report_graph, report_text = pyshacl.validate(
     do_owl_imports=True,
     ont_graph_format='turtle',
     data_graph_format='turtle',
-    meta_shacl= True,
+    meta_shacl= False,
 )
 
 print(report_text)
 
 sys.exit(0)
-
-sparql = """
-SELECT DISTINCT ?severity ?focus ?path ?value ?message
-  WHERE {
-    VALUES (?severity ?severity_idx) { 
-        (sh:Violation  0)
-        (sh:Warning 1)
-        (sh:Info 2)
-    }
-    bind("<nicht vorhanden>" as ?default_value)
-    
-    ?id a sh:ValidationResult .
-    ?id sh:resultSeverity ?severity .
-    ?id sh:focusNode ?focus .
-    ?id sh:resultPath ?path .
-    ?id sh:resultMessage ?message .
-    OPTIONAL {
-        ?id sh:value ?value .
-    }
-    
-    bind(coalesce(?value, ?default_value) as ?value)
-  }
-  ORDER BY ?severity_idx ?focus ?path 
-"""
-#sparql = """SELECT ?s ?o ?p WHERE {?s ?o ?p} ORDER BY ?s"""
-
-
-report_graph.use_gpus = False
-
-
-
-pyvis_graph = kglab.SubgraphTensor(report_graph).build_pyvis_graph(notebook=True)
-pyvis_graph.show_buttons()
-pyvis_graph.force_atlas_2based()
-pyvis_graph.show("result_graph.html")
-
-
-
-df = report_graph.query_as_df(sparql)
-df.to_html('table.html')

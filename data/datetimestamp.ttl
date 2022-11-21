@@ -1,0 +1,46 @@
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcatde: <http://dcat-ap.de/def/dcatde/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix adms: <http://www.w3.org/ns/adms#> .
+@prefix owl: <http://www.w3.org/2002/07/owl> .
+@prefix schema: <http://schema.org/> .
+@prefix spdx: <http://spdx.org/rdf/terms#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions#> .
+
+
+xsd:dateTimeStamp rdfs:subClassOf xsd:dateTime .
+
+
+<https://geobasis-bb.de#dcat_Dataset_568978c5-fa73-48d1-a6f9-487aabdc1aef> a dcat:Dataset;
+  dct:description "Für die Digitalen Topographischen Karten werden Vektordaten aus dem Basis-DLM generalisiert und nach dem ATKIS-Signaturenkatalog bearbeitet. Die digitalen Daten können per Download oder auf anderen Medienträgern abgegeben werden. Sie liegen in max. 22 Inhaltsebenen (nach dem techn. Regelwerk der AdV) in drei Ausprägungen (Einzelebenen, Graukombination und Farbkombination) vor. Es gilt zu beachten, dass ein UTM-Gitter nur in den Einzelebenen ausgegeben wird. Die Standardauflösung beträgt 200L/cm = 508dpi. Eine Kartenausgabe gleichen Inhalts stellt die TK (ATKIS) als gedruckte Karte dar. Die Daten werden über automatisierte Verfahren oder durch Selbstentnahme kostenfrei bereitgestellt. Bei Nutzung der Daten sind die Lizenzbedingungen zu beachten."@de;
+  dct:identifier "568978c5-fa73-48d1-a6f9-487aabdc1aef";
+  adms:identifier "568978c5-fa73-48d1-a6f9-487aabdc1aef";
+  dct:modified "2022-11-17T09:37:25.626789"^^xsd:dateTimeStamp;
+  dct:publisher <https://geobasis-bb.de#foaf_Agent_568978c5-fa73-48d1-a6f9-487aabdc1aef>;
+  dct:title "Digitale Topographische Karte 1 : 10 000 - 3846-SO Zossen - Neuhof"@de;
+  dcat:contactPoint <https://geobasis-bb.de#vcard_Kind_568978c5-fa73-48d1-a6f9-487aabdc1aef>;
+  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/TECH>, <http://publications.europa.eu/resource/authority/data-theme/GOVE>,
+    <http://publications.europa.eu/resource/authority/data-theme/REGI>, <http://publications.europa.eu/resource/authority/data-theme/ENVI>,
+    <http://publications.europa.eu/resource/authority/data-theme/AGRI>, <http://inspire.ec.europa.eu/theme/lc>;
+  dcat:distribution <https://geobasis-bb.de/lgb/de/geodaten/topographische-karten/top-karten-1-10000/>,
+    <https://data.geobasis-bb.de/geobasis/information/legenden/legende_dtk10.pdf>, <https://geobroker.geobasis-bb.de/gbss.php?MODE=GetProductInformation&PRODUCTID=84579219-6849-4c89-90d0-aa7db3f26fa8>,
+    <https://data.geobasis-bb.de/geobasis/daten/dtk/dtk10/ebenen/dtk10_ebenen_3846-so.zip>,
+    <https://data.geobasis-bb.de/geobasis/daten/dtk/dtk10/kombination/dtk10_3846-so.zip>;
+  dcatde:contributorID <http://dcat-ap.de/def/contributors/landBrandenburg>;
+  dct:issued "2022-11-17T09:37:25.626872"^^xsd:dateTimeStamp;
+  dcat:keyword "opendata"@de, "Vermessung"@de, "Karte"@de, "Verkehr"@de, "1:10.000"@de,
+    "Bodenbedeckung"@de, "Rasterdaten"@de, "DTK10"@de, "DTK10FAR"@de, "DTK10GRA"@de, "3846-SO"@de;
+  foaf:page <https://geobasis-bb.de/lgb/de/geodaten/topographische-karten/top-karten-1-10000/>,
+    <https://data.geobasis-bb.de/geobasis/information/legenden/legende_dtk10.pdf>;
+  <http://inqbus.de/nspriority> 30;
+  dct:spatial <https://geobasis-bb.de#dct_Location_568978c5-fa73-48d1-a6f9-487aabdc1aef>;
+  dct:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/CONT>;
+  dct:isPartOf <https://geobasis-bb.de#dcat_Dataset_84579219-6849-4c89-90d0-aa7db3f26fa8> .
