@@ -8,9 +8,12 @@ import os
 import rdflib
 from rdflib import URIRef
 
+from shacl.timeit import catchtime, timeit
+
 os.environ['http_proxy'] = 'http://localhost:3128'
 os.environ['https_proxy'] = 'http://localhost:3128'
-
+os.environ["REQUESTS_CA_BUNDLE"] = '/usr/local/share/ca-certificates/myCA.pem'
+os.environ["SSL_CERT_FILE"] = '/usr/local/share/ca-certificates/myCA.pem'
 
 REMOVE_SPARQL = """
 PREFIX sh: <http://www.w3.org/ns/shacl#>
@@ -143,6 +146,8 @@ steps = 1
 while not conforms:
     conforms, report_graph, report_text = validator.validate(graph_data)
 
+    report_graph.serialize(BASE_DIR / 'results' / f'report_graph{steps}.ttl', 'turtle')
+
     print(f'\nstep: {steps}')
     steps += 1
 
@@ -166,6 +171,6 @@ while not conforms:
 
 
 
-graph_data.serialize(BASE_DIR / 'data' / 'validated_output.ttl', 'turtle')
+graph_data.serialize(BASE_DIR / 'results' / 'validated_output.ttl', 'turtle')
 
 sys.exit(0)
