@@ -6,14 +6,14 @@ import pyshacl
 import os
 
 import rdflib
-from rdflib import URIRef
+from rdflib import URIRef, Namespace
 
 from shacl.timeit import catchtime, timeit
 
-os.environ['http_proxy'] = 'http://localhost:3128'
-os.environ['https_proxy'] = 'http://localhost:3128'
-os.environ["REQUESTS_CA_BUNDLE"] = '/usr/local/share/ca-certificates/myCA.pem'
-os.environ["SSL_CERT_FILE"] = '/usr/local/share/ca-certificates/myCA.pem'
+# os.environ['http_proxy'] = 'http://localhost:3128'
+# os.environ['https_proxy'] = 'http://localhost:3128'
+# os.environ["REQUESTS_CA_BUNDLE"] = '/usr/local/share/ca-certificates/myCA.pem'
+# os.environ["SSL_CERT_FILE"] = '/usr/local/share/ca-certificates/myCA.pem'
 
 REMOVE_SPARQL = """
 PREFIX sh: <http://www.w3.org/ns/shacl#>
@@ -75,7 +75,7 @@ WHERE
 """
 
 # Where are the files living
-BASE_DIR = Path('/home/volker/workspace/PYTHON5/SHACL_validation')
+BASE_DIR = Path('/home/sandra/workspace/SHACL_validation')
 
 # SHACL rules
 SHAPE_FILES = [
@@ -86,7 +86,7 @@ SHAPE_FILES = [
 
 # The data to be validated (In this case the postdam dataset)
 DATA_URL = 'first_1000.ttl'
-#DATA_URL = 'datenadler.ttl'
+# DATA_URL = 'datenadler.ttl'
 
 
 def statistic( stage, graph ):
@@ -134,16 +134,20 @@ class Validator:
         self.first_run = False
         return conforms, report_graph, report_text
 
-
+print("Creating validator")
 validator = Validator()
 
 graph = rdflib.graph.Graph()
+print('Parsing Input')
 graph_data = graph.parse(open(BASE_DIR / 'data' / DATA_URL, 'rb'))
 
-conforms = False
+data_conforms = False
 steps = 1
 
-while not conforms:
+SH = Namespace('http://www.w3.org/ns/shacl#')
+
+while not data_conforms:
+    print("validating")
     conforms, report_graph, report_text = validator.validate(graph_data)
 
     report_graph.serialize(BASE_DIR / 'results' / f'report_graph{steps}.ttl', 'turtle')
@@ -159,16 +163,28 @@ while not conforms:
 
     shacl_results = report_graph.query(SHACL_RESULTS)
 
+    data_conforms = True
     for shacl_result in shacl_results.bindings:
-        if 'value' in shacl_result:
-            graph_data.remove((shacl_result['node'], shacl_result['path'], shacl_result['value']) )
+        if 'severity' in shacl_result:
+            sev = shacl_result['severity']
+            if sev == SH.Violation:
+                # something will be removed, check again with the rest
+                data_conforms = False
+                if 'value' in shacl_result:
+                    graph_data.remove((shacl_result['node'], shacl_result['path'], shacl_result['value']))
+                else:
+                    graph_data.remove((shacl_result['node'], None, None))
+                    graph_data.remove((None, shacl_result['node'], None))
+                    graph_data.remove((None, None, shacl_result['node']))
+            else:
+                print(sev)
+                print('No Violation')
         else:
-            graph_data.remove((shacl_result['node'], None, None) )
+            print('No severity')
 
     graph_data.commit()
 
     statistic('\nValidated Data', graph_data)
-
 
 
 graph_data.serialize(BASE_DIR / 'results' / 'validated_output.ttl', 'turtle')
