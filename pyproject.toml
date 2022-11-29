@@ -7,6 +7,8 @@ authors = ["volker <volker.jaenisch@inqbus.de>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 kglab = "^0.6.1"
+colorlog = "^6.7.0"
+"zope.component" = "^5.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
