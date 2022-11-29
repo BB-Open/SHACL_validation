@@ -1,4 +1,4 @@
-Problems concerning the data
+# Problems concerning the data
 
 # Violation
 
@@ -20,6 +20,7 @@ sh:result    [ rdf:type                      sh:ValidationResult ;
 
 We need a mapping from inspire frequencies to http://publications.europa.eu/resource/authority/frequency/
 
+Responsible for action: Inqbus, Iso2Dcat 
 
 ---
 
@@ -41,6 +42,7 @@ We need a mapping from inspire frequencies to http://publications.europa.eu/reso
 
 We have to use a real adms:Identifier structure.
 
+Responsible for action: Inqbus, Iso2Dcat
 
 ---
 
@@ -63,6 +65,8 @@ We have to use a real adms:Identifier structure.
 
 There is a ToDo on the shape file which will fix this in the future
 
+Responsible for action: GovData, fix shapes
+
 ---
 
 ### dct:issued, dct:modified
@@ -82,6 +86,8 @@ There is a ToDo on the shape file which will fix this in the future
 ```
 
 xsd:dateTimeStamp problem 
+
+Responsible for action: GovData/EU, fix shapes
 
 ---
 
@@ -103,6 +109,8 @@ xsd:dateTimeStamp problem
 
 This is an issue with the GovData shapes. They know nothing about dcat:DataService 
 
+Responsible for action: GovData/EU, fix shapes
+
 ---
 
 ### dcat:servesDataset
@@ -120,7 +128,9 @@ This is an issue with the GovData shapes. They know nothing about dcat:DataServi
                ] ;
 ```
 
-Inconsistent Data. ToDo: More research needed 
+Inconsistent Data. Dataset is linked, but not created in store.
+
+Responsible for action: LGB, provide/fix Dataset information
 
 ---
 
@@ -142,6 +152,18 @@ Inconsistent Data. ToDo: More research needed
 ```
 URI in quotes ... Educate BBG
 
+Responsible for action: BBG, fix data
+
+<https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/tierfunde_pflegestationen.csv>
+<http://www.w3.org/ns/dcat#downloadURL>
+"https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/tierfunde_pflegestationen.csv"
+
+to
+
+<https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/tierfunde_pflegestationen.csv>
+<http://www.w3.org/ns/dcat#downloadURL>
+<https://service.brandenburg.de/service/de/adressen/kommunalverzeichnis/tierfunde_pflegestationen.csv>
+
 ---
 
 ### dct:format
@@ -162,6 +184,8 @@ URI in quotes ... Educate BBG
 
 Needs to be from vocabulary.
 
+Responsible for action: BBG, fix data
+
 ---
 
 ### dct:identifier
@@ -181,6 +205,8 @@ Needs to be from vocabulary.
 
 Identifier is not an IRI.
 
+Responsible for action: BBG, fix data
+
 ### dcat:Datase dct:description
 #### 12 errors
 
@@ -199,6 +225,8 @@ Identifier is not an IRI.
 
 Missing description
 
+Responsible for action: BBG, fix data and Inqbus, make description required (easy fix)
+
 ---
 
 ### dcatde:Catalog_dcat_themeTaxonomy_v_Fixed
@@ -216,6 +244,7 @@ Missing description
                ] ;
 ```
 
+Responsible for action: data provider, fix data
 
 
 ### dcatde:Distribution_dct_license_w_List
@@ -236,6 +265,8 @@ Missing description
 
 License mismatch
 
+Responsible for action: data provider, fix data
+
 ---
 
 
@@ -255,7 +286,18 @@ License mismatch
                ] ;
 ```
 
-Wrong lang vocab.
+Wrong lang information. Literal instead of URI.
+
+Responsible for action: Inqbus, fix backend
+<https://backend.datenadler.de/harvester-intern/afs/metadaten/dcat_catalog>
+<http://purl.org/dc/terms/language>
+"de"
+
+to
+
+<https://backend.datenadler.de/harvester-intern/afs/metadaten/dcat_catalog>
+<http://purl.org/dc/terms/language>
+<http://publications.europa.eu/resource/authority/language/DEU>
 
 
 ---
@@ -279,3 +321,5 @@ Wrong lang vocab.
 ```
 
 We point to a dct:Location. This is IMHO correct
+
+Responsible for action: GovData/EU, fix shapes
