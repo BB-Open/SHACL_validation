@@ -6,23 +6,21 @@ from zope import component
 from shacl.constants import BASE_DIR, SHAPE_FILES, NUMBER_OF_DATASETS, SHACL_RESULTS
 from shacl.log.log import ILogger
 from shacl.namespaces import SH
+from shacl.preprocess import Preprocess
+from shacl.results import ResultWriter
 
 
 class Validator:
     """Validator instance"""
 
-    def __init__(self):
+    def __init__(self, mode):
         # todo: get shacl as store
         self.first_run = True
         # Import the SHACL rules
-        self.validator = pyshacl.rdfutil.load_from_source(str(BASE_DIR / 'shapes' / SHAPE_FILES[0]))
 
-        if len(SHAPE_FILES) > 1:
-            for filename in SHAPE_FILES[1:]:
-                self.validator = pyshacl.rdfutil.load_from_source(str(BASE_DIR / 'shapes' / filename), g=self.validator)
+        prep = Preprocess(mode=mode)
 
-        self.ont_graph = rdflib.graph.Graph()
-        self.ont_graph.parse(str(BASE_DIR / 'shapes' / 'dcat-ap-de-imports.ttl'))
+        self.validator, self.ont_graph = prep.load_shacl()
 
     def validate(self, input):
 
@@ -50,30 +48,33 @@ class ValidationRun:
     Handle one Run
     """
 
-    def __init__(self, input, output, output_error, visitor=None):
-        # todo: Shacl as store
-        self.input = input
-        self.output = output
-        self.output_error = output_error
+    def __init__(self, input_file, output_file, output_error_file, visitor=None):
+        self.input_file = input_file
+        self.output_file = output_file
+        self.output_error_file = output_error_file
         self.logger = component.queryUtility(ILogger)
 
-    def run(self):
+    def run(self, mode='file'):
+        self.logger.info("Preprocess")
+        prep = Preprocess(mode=mode)
+        input_data = prep.load_data(self.input_file)
+        error_data = rdflib.graph.Graph()
+
         self.logger.info("Creating validator")
-        validator = Validator()
+        validator = Validator(mode)
 
         data_conforms = False
         steps = 1
 
         while not data_conforms:
-            self.logger.info("validating")
-            conforms, report_graph, report_text = validator.validate(self.input)
+            self.logger.info(f"validating Step {steps}")
+            conforms, report_graph, report_text = validator.validate(input_data)
 
-            report_graph.serialize(str(self.output_error).format(steps=steps), 'turtle')
+            error_data += report_graph
 
-            self.logger.info(f'\nstep: {steps}')
             steps += 1
 
-            self.statistic('\nInput Data: ', self.input)
+            self.statistic('\nInput Data: ', input_data)
 
             self.logger.info('\nViolations: ' + str(len([i for i in report_graph.triples(
                 (None, None, URIRef('http://www.w3.org/ns/shacl#ValidationResult')))])))
@@ -90,22 +91,25 @@ class ValidationRun:
                         # something will be removed, check again with the rest
                         data_conforms = False
                         if 'value' in shacl_result:
-                            self.input.remove((shacl_result['node'], shacl_result['path'], shacl_result['value']))
+                            input_data.remove((shacl_result['node'], shacl_result['path'], shacl_result['value']))
                         else:
-                            self.input.remove((shacl_result['node'], None, None))
-                            self.input.remove((None, shacl_result['node'], None))
-                            self.input.remove((None, None, shacl_result['node']))
+                            input_data.remove((shacl_result['node'], None, None))
+                            input_data.remove((None, shacl_result['node'], None))
+                            input_data.remove((None, None, shacl_result['node']))
                     else:
                         self.logger.info(sev)
                         self.logger.info('No Violation')
                 else:
                     self.logger.info('No severity')
 
-            self.input.commit()
+            input_data.commit()
 
-            self.statistic('\nValidated Data', self.input)
+            self.statistic('\nValidated Data', input_data)
 
-        self.input.serialize(self.output, 'turtle')
+        writer = ResultWriter(mode=mode)
+
+        writer.write_results(input_data, self.output_file)
+        writer.write_results(error_data, self.output_error_file)
 
     def statistic(self, stage, graph):
         self.logger.info(stage)
