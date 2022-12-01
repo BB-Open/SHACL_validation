@@ -17,7 +17,6 @@ class Validator:
     """Validator instance"""
 
     def __init__(self, mode):
-        # todo: get shacl as store
         self.first_run = True
         # Import the SHACL rules
 

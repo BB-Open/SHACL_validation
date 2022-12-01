@@ -115,7 +115,6 @@ class Logger:
         File logger
         Has to be setup when the output filename is known
         """
-        # todo: cfg
         if not os.path.exists(self.cfg.PKAN_LOG_DIR):
             msg = """Log file directory "{path}" does not exists""".format(path=self.cfg.PKAN_LOG_DIR)
 
