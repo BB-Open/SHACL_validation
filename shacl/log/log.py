@@ -153,7 +153,7 @@ class Logger:
             )
 
 
-def register_logger(visitor=None):
+def get_logger(visitor=None):
     # prohibit more than one logger instance
     logger = component.queryUtility(ILogger)
     if logger is not None:

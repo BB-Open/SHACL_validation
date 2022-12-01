@@ -1,7 +1,9 @@
 import pyshacl
 import rdflib
 from pkan_config.config import get_config
+from pyrdf4j.rdf4j import RDF4J
 from rdflib import URIRef
+from requests.auth import HTTPBasicAuth
 from zope import component
 
 from shacl.constants import NUMBER_OF_DATASETS, SHACL_RESULTS
@@ -50,17 +52,24 @@ class ValidationRun:
     """
 
     def __init__(self, input_file, output_file, output_error_file, visitor=None):
+        self.logger = component.queryUtility(ILogger)
         self.input_file = input_file
         self.output_file = output_file
         self.output_error_file = output_error_file
-        self.logger = component.queryUtility(ILogger)
         self.cfg = get_config()
+        mode = self.cfg.SHACL_MODE
+        if mode == 'store':
+            self.rdf4j = RDF4J(rdf4j_base=self.cfg.RDF4J_BASE)
+            self.auth = HTTPBasicAuth(self.cfg.ADMIN_USER, self.cfg.ADMIN_PASS)
+        else:
+            self.rdf4j = None
+            self.auth = None
 
     def run(self):
         mode = self.cfg.SHACL_MODE
 
         self.logger.info("Preprocess")
-        prep = Preprocess(mode=mode)
+        prep = Preprocess(mode=mode, auth=self.auth, rdf4j=self.rdf4j)
         input_data = prep.load_data(self.input_file)
         error_data = rdflib.graph.Graph()
 
@@ -110,7 +119,7 @@ class ValidationRun:
 
             self.statistic('\nValidated Data', input_data)
 
-        writer = ResultWriter(mode=mode)
+        writer = ResultWriter(mode=mode, auth=self.auth, rdf4j=self.rdf4j)
 
         writer.write_results(input_data, self.output_file)
         writer.write_results(error_data, self.output_error_file)

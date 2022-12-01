@@ -11,6 +11,7 @@ colorlog = "^6.7.0"
 "zope.component" = "^5.0.1"
 pyrdf4j = { path = "../pyrdf4j", develop = true }
 pkan_config = {path="../pkan_config", develop=true}
+weasyprint = "^57.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
