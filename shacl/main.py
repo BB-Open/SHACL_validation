@@ -33,9 +33,9 @@ html_file = BASE_DIR / 'results' / 'report_rdf4j_table.html'
 pdf_file2 = BASE_DIR / 'results' / 'report_rdf4j.pdf'
 html_file2 = BASE_DIR / 'results' / 'report_rdf4j.html'
 
-# validation = ValidationRun(input_data, output, output_error)
+validation = ValidationRun(input_data, output, output_error)
 #
-# validation.run()
+validation.run()
 
 # just one report needed in live system
 # reports will be generated on demand, so stores are reloaded
