@@ -2,16 +2,6 @@ import os
 from logging import DEBUG
 from pathlib import Path
 
-# todo: config to pkan_config
-
-RDF_BASE = 'http://10.1.0.161:8080/rdf4j-server/'
-TEST_STORE = 'complete_store'
-SHACL_STORE = 'shacl'
-RESULT_STORE = 'res_store'
-ERROR_STORE = 'error_store'
-
-MODE = 'file'
-
 REMOVE_SPARQL = """
 PREFIX sh: <http://www.w3.org/ns/shacl#>
 prefix dct: <http://purl.org/dc/terms/>
@@ -75,4 +65,3 @@ SHAPE_FILES = [
 #    'dcat-ap-spec-german-additions.ttl',
 #    'dcat-ap-spec-german-messages.ttl',
 ]
-LOG_LEVEL = DEBUG

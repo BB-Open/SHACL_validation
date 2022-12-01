@@ -6,7 +6,7 @@ import rdflib
 # os.environ['https_proxy'] = 'http://localhost:3128'
 # os.environ["REQUESTS_CA_BUNDLE"] = '/usr/local/share/ca-certificates/myCA.pem'
 # os.environ["SSL_CERT_FILE"] = '/usr/local/share/ca-certificates/myCA.pem'
-from shacl.constants import BASE_DIR, MODE
+from shacl.constants import BASE_DIR
 from shacl.log.log import register_logger
 from shacl.validate import ValidationRun
 
@@ -24,8 +24,8 @@ graph_file = BASE_DIR / 'data' / DATA_URL
 register_logger()
 
 # todo: Replace paths by database
-validation = ValidationRun(graph_file, BASE_DIR / 'results' / 'validated_output.ttl', BASE_DIR / 'results' / 'report_graph{steps}.ttl')
+validation = ValidationRun(graph_file, BASE_DIR / 'results' / 'validated_output.ttl', BASE_DIR / 'results' / 'report_graph.ttl')
 
-validation.run(mode=MODE)
+validation.run()
 
 sys.exit(0)

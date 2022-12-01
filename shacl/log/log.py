@@ -2,16 +2,17 @@
 import datetime
 import os
 from logging import ERROR, FileHandler, Formatter, StreamHandler, getLogger
+from pathlib import Path
 from sys import stdout
 
 import zope
+from pkan_config.config import get_config
 from zope import component
 from zope import interface
 
 
 # Log level codes according to DB-Definition and syslog
 import shacl
-from shacl.constants import LOG_LEVEL, BASE_DIR
 from shacl.ustils.errors import LogPathNotExists
 from shacl.ustils.helper import dir_not_found_hint
 
@@ -36,6 +37,7 @@ class Logger:
     db_log_level = None
 
     def __init__(self, visitor=None):
+        self.cfg = get_config()
         self.setup_logger()
         self.visitor = visitor
 
@@ -105,7 +107,7 @@ class Logger:
         console_handler = StreamHandler(stdout)
         console_formatter = formatter
         console_handler.setFormatter(console_formatter)
-        console_handler.setLevel(LOG_LEVEL)
+        console_handler.setLevel(self.cfg.log_level)
         self.logger.addHandler(console_handler)
 
     def setup_file_logger(self, formatter):
@@ -114,21 +116,20 @@ class Logger:
         Has to be setup when the output filename is known
         """
         # todo: cfg
-        if not os.path.exists(BASE_DIR / 'log'):
-            msg = """Log file directory "{path}" does not exists""".format(path=BASE_DIR / 'log')
+        if not os.path.exists(self.cfg.PKAN_LOG_DIR):
+            msg = """Log file directory "{path}" does not exists""".format(path=self.cfg.PKAN_LOG_DIR)
 
-            dir_not_found_hint(BASE_DIR / 'log')
+            dir_not_found_hint(self.cfg.PKAN_LOG_DIR )
             raise LogPathNotExists(msg)
 
         log_file_path = os.path.join(
-            BASE_DIR / 'log',
-            '{id}.log'.format(id='shacl'),
+            self.cfg.PKAN_LOG_DIR, self.cfg.SHACL_LOG_FILE,
         )
         print(f'Log file is {log_file_path}')
         file_handler = FileHandler(log_file_path)
         file_handler_formatter = formatter
         file_handler.setFormatter(file_handler_formatter)
-        file_handler.setLevel(LOG_LEVEL)
+        file_handler.setLevel(self.cfg.log_level)
         self.logger.addHandler(file_handler)
 
     def setup_logger(self):
@@ -139,7 +140,7 @@ class Logger:
         """
         get_logger, formatter = self.get_logger_formatter()
         self.logger = get_logger('shacl')
-        self.logger.setLevel(LOG_LEVEL)
+        self.logger.setLevel(self.cfg.log_level)
 
         self.setup_console_logger(formatter)
         self.setup_file_logger(formatter)

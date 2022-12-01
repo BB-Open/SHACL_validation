@@ -1,9 +1,10 @@
 import pyshacl
 import rdflib
+from pkan_config.config import get_config
 from rdflib import URIRef
 from zope import component
 
-from shacl.constants import BASE_DIR, SHAPE_FILES, NUMBER_OF_DATASETS, SHACL_RESULTS
+from shacl.constants import NUMBER_OF_DATASETS, SHACL_RESULTS
 from shacl.log.log import ILogger
 from shacl.namespaces import SH
 from shacl.preprocess import Preprocess
@@ -53,8 +54,11 @@ class ValidationRun:
         self.output_file = output_file
         self.output_error_file = output_error_file
         self.logger = component.queryUtility(ILogger)
+        self.cfg = get_config()
 
-    def run(self, mode='file'):
+    def run(self):
+        mode = self.cfg.SHACL_MODE
+
         self.logger.info("Preprocess")
         prep = Preprocess(mode=mode)
         input_data = prep.load_data(self.input_file)
