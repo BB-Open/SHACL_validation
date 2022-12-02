@@ -61,6 +61,7 @@ class Preprocess:
         else:
             NotAllCasesCovered('Unknown Mode')
 
+    # todo: cache this?
     def load_shacl(self):
         if self.mode == 'file':
             return fill_shacl_store_file()

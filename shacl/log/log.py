@@ -145,7 +145,8 @@ class Logger:
         self.setup_file_logger(formatter)
 
     def delete_formatter(self):
-        self.logger.handlers.clear()
+        for h in self.logger.handlers:
+            self.logger.removeHandler(h)
 
     def plone_log(self, level, msg):
         if self.visitor:
