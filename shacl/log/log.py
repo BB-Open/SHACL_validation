@@ -144,6 +144,9 @@ class Logger:
         self.setup_console_logger(formatter)
         self.setup_file_logger(formatter)
 
+    def delete_formatter(self):
+        self.logger.handlers.clear()
+
     def plone_log(self, level, msg):
         if self.visitor:
             self.visitor.scribe.write(
@@ -164,4 +167,7 @@ def get_logger(visitor=None):
 
 
 def unregister_logger():
+    logger = component.queryUtility(ILogger)
+    if logger:
+        logger.delete_formatter()
     component.provideUtility(None, ILogger)
