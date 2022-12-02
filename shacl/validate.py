@@ -80,7 +80,8 @@ class ValidationRun:
 
         while not data_conforms:
             self.logger.info(f"Validating Step {steps}")
-            self.statistic('\nInput Data: ', input_data)
+            self.statistic('Input Data: ', input_data)
+            self.logger.info('Call Validation for Input.')
 
             conforms, report_graph, report_text = validator.validate(input_data)
 
@@ -92,6 +93,8 @@ class ValidationRun:
             steps += 1
 
             shacl_results = report_graph.query(SHACL_RESULTS)
+
+            self.logger.info('Remove invalide nodes.')
 
             data_conforms = True
             for shacl_result in shacl_results.bindings:
@@ -114,7 +117,7 @@ class ValidationRun:
 
             input_data.commit()
 
-            self.statistic('\nValidated Data', input_data)
+            self.statistic('Validated Data: ', input_data)
 
         writer = ResultWriter(mode=mode, auth=self.auth, rdf4j=self.rdf4j)
 
