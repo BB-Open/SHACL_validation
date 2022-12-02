@@ -85,7 +85,7 @@ class ValidationRun:
 
             conforms, report_graph, report_text = validator.validate(input_data)
 
-            self.logger.info('\nViolations: ' + str(len([i for i in report_graph.triples(
+            self.logger.info('Violations: ' + str(len([i for i in report_graph.triples(
                 (None, None, URIRef('http://www.w3.org/ns/shacl#ValidationResult')))])))
 
             error_data += report_graph
