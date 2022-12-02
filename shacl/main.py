@@ -19,14 +19,14 @@ print('Parsing Input')
 
 get_logger()
 
-# input_data = 'complete_store'
-# output = 'complete_store_validate'
-# output_error = 'complete_store_error'
+input_data = 'potsdam_complete'
+output = 'complete_store_validate'
+output_error = 'complete_store_error'
 
 # input_data = BASE_DIR / 'data' / 'datenadler.ttl'
-input_data = BASE_DIR / 'data' / 'first_1000.ttl'
-output = BASE_DIR / 'results' / 'validated_output.ttl'
-output_error = BASE_DIR / 'results' / 'report_graph.ttl'
+# input_data = BASE_DIR / 'data' / 'first_1000.ttl'
+# output = BASE_DIR / 'results' / 'validated_output.ttl'
+# output_error = BASE_DIR / 'results' / 'report_graph.ttl'
 
 pdf_file = BASE_DIR / 'results' / 'report_rdf4j_table.pdf'
 html_file = BASE_DIR / 'results' / 'report_rdf4j_table.html'

@@ -8,11 +8,13 @@ from shacl.ustils.errors import NotAllCasesCovered
 def write_results_to_rdf4j(data, db_name, auth, rdf4j):
     cfg = get_config()
     rdf4j.create_repository(db_name, repo_type=cfg.RDF_REPO_TYPE, overwrite=True, auth=auth)
-    ser_data = data.serialize(format='text/turtle').encode('utf-8')
+    data = data.serialize(format='text/turtle')
+    if isinstance(data, str):
+        data = data.encode('utf-8')
 
     return rdf4j.add_data_to_repo(
         db_name,
-        ser_data,
+        data,
         'text/turtle',
         auth=auth
     )

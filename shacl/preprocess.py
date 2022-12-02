@@ -10,8 +10,10 @@ def load_store_from_rdf4j(database_path, auth, rdf4j):
     graph = rdflib.graph.Graph()
     data = rdf4j.get_triple_data_from_query(database_path,
                                             QUERY_ALL,
-                                            auth=auth)
-    graph_data = graph.parse(data)
+                                            auth=auth,
+                                            mime_type='application/x-turtle')
+
+    graph_data = graph.parse(data=data, format='turtle')
     return graph_data
 
 
@@ -34,7 +36,7 @@ def fill_shacl_store_file():
             validator = pyshacl.rdfutil.load_from_source(str(BASE_DIR / 'shapes' / filename), g=validator)
 
     ont_graph = rdflib.graph.Graph()
-    ont_graph.parse(str(BASE_DIR / 'shapes' / 'dcat-ap-de-imports.ttl'))
+    ont_graph.parse(str(BASE_DIR / 'shapes' / 'dcat-ap-de-imports.ttl'), format='turtle')
 
     return validator, ont_graph
 

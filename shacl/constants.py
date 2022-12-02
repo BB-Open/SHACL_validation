@@ -1,5 +1,4 @@
 import os
-from logging import DEBUG
 from pathlib import Path
 
 REMOVE_SPARQL = """

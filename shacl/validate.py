@@ -79,19 +79,17 @@ class ValidationRun:
         steps = 1
 
         while not data_conforms:
-            self.logger.info(f"validating Step {steps}")
-            conforms, report_graph, report_text = validator.validate(input_data)
-
-            error_data += report_graph
-
-            steps += 1
-
+            self.logger.info(f"Validating Step {steps}")
             self.statistic('\nInput Data: ', input_data)
+
+            conforms, report_graph, report_text = validator.validate(input_data)
 
             self.logger.info('\nViolations: ' + str(len([i for i in report_graph.triples(
                 (None, None, URIRef('http://www.w3.org/ns/shacl#ValidationResult')))])))
 
-            self.logger.info(report_text)
+            error_data += report_graph
+
+            steps += 1
 
             shacl_results = report_graph.query(SHACL_RESULTS)
 
@@ -109,10 +107,10 @@ class ValidationRun:
                             input_data.remove((None, shacl_result['node'], None))
                             input_data.remove((None, None, shacl_result['node']))
                     else:
-                        self.logger.info(sev)
-                        self.logger.info('No Violation')
+                        self.logger.debug(sev)
+                        self.logger.debug('No Violation')
                 else:
-                    self.logger.info('No severity')
+                    self.logger.debug('No severity')
 
             input_data.commit()
 
