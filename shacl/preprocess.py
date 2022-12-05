@@ -1,5 +1,6 @@
 import pyshacl
 import rdflib
+from pkan_config.config import get_config
 
 from shacl.constants import BASE_DIR, SHAPE_FILES, QUERY_ALL
 from shacl.log.log import get_logger
@@ -23,12 +24,14 @@ def load_store_from_file(file_path):
     return graph_data
 
 
-def fill_shacl_store_rdf4j():
-    # todo: do this via stores?
-    return fill_shacl_store_file()
+def load_shacl_store_from_rdf4j(auth, rdf4j):
+    cfg = get_config()
+    validator = load_store_from_rdf4j(cfg.SHACL_RULE_DB, auth, rdf4j)
+    onto_graph = load_store_from_rdf4j(cfg.SHACL_ONTO_DB, auth, rdf4j)
+    return validator, onto_graph
 
 
-def fill_shacl_store_file():
+def load_shacl_store_from_file():
     validator = pyshacl.rdfutil.load_from_source(str(BASE_DIR / 'shapes' / SHAPE_FILES[0]))
 
     if len(SHAPE_FILES) > 1:
@@ -64,8 +67,8 @@ class Preprocess:
     # todo: cache this?
     def load_shacl(self):
         if self.mode == 'file':
-            return fill_shacl_store_file()
+            return load_shacl_store_from_file()
         elif self.mode == 'store':
-            return fill_shacl_store_rdf4j()
+            return load_shacl_store_from_rdf4j(self.auth, self.rdf4j)
         else:
             NotAllCasesCovered('Unknown Mode')

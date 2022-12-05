@@ -16,11 +16,11 @@ from shacl.results import ResultWriter
 class Validator:
     """Validator instance"""
 
-    def __init__(self, mode):
+    def __init__(self, mode, auth, rdf4j):
         self.first_run = True
         # Import the SHACL rules
 
-        prep = Preprocess(mode=mode)
+        prep = Preprocess(mode=mode, auth=auth, rdf4j=rdf4j)
 
         self.validator, self.ont_graph = prep.load_shacl()
 
@@ -73,7 +73,7 @@ class ValidationRun:
         error_data = rdflib.graph.Graph()
 
         self.logger.info("Creating validator")
-        validator = Validator(mode)
+        validator = Validator(mode, self.auth, self.rdf4j)
 
         data_conforms = False
         steps = 1

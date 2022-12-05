@@ -9,15 +9,9 @@ import rdflib
 from shacl.constants import BASE_DIR
 from shacl.log.log import get_logger
 from shacl.report import HTMLTableReport, PDFTableReport, HTMLBlockReport, PDFBlockReport
+from shacl.shacl_db import fill_shacl_db
 from shacl.validate import ValidationRun
 
-# Where are the files living
-
-# SHACL rules
-
-print('Parsing Input')
-
-get_logger()
 
 input_data = 'potsdam_complete'
 output = 'complete_store_validate'
@@ -33,9 +27,22 @@ html_file = BASE_DIR / 'results' / 'report_rdf4j_table.html'
 pdf_file2 = BASE_DIR / 'results' / 'report_rdf4j.pdf'
 html_file2 = BASE_DIR / 'results' / 'report_rdf4j.html'
 
+logger = get_logger()
+
+logger.info('Starting Validation Process')
+
+logger.info('FILL SHACL STORES')
+
+# this will be done once on scheduler start
+fill_shacl_db()
+
+logger.info('VALIDATE INFORMATION')
+
 validation = ValidationRun(input_data, output, output_error)
 #
 validation.run()
+
+logger.info('GENERATE REPORTS')
 
 # just one report needed in live system
 # reports will be generated on demand, so stores are reloaded
