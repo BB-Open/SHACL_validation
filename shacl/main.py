@@ -1,17 +1,19 @@
 import sys
-
-import rdflib
+from datetime import datetime
 
 # os.environ['http_proxy'] = 'http://localhost:3128'
 # os.environ['https_proxy'] = 'http://localhost:3128'
 # os.environ["REQUESTS_CA_BUNDLE"] = '/usr/local/share/ca-certificates/myCA.pem'
 # os.environ["SSL_CERT_FILE"] = '/usr/local/share/ca-certificates/myCA.pem'
-from shacl.constants import BASE_DIR
+from pkan_config.config import get_config
+from pyrdf4j.errors import QueryFailed
+from pyrdf4j.rdf4j import RDF4J
+from requests.auth import HTTPBasicAuth
+
+from shacl.constants import BASE_DIR, NUMBER_OF_QUERY
 from shacl.log.log import get_logger
 from shacl.report import HTMLTableReport, PDFTableReport, HTMLBlockReport, PDFBlockReport
 from shacl.shacl_db import fill_shacl_db
-from shacl.validate import ValidationRun
-
 
 input_data = 'complete_store'
 output = 'complete_store_validate'
@@ -45,10 +47,46 @@ logger.info('VALIDATE INFORMATION')
 logger.info('GENERATE REPORTS')
 
 # just one report needed in live system
+
+# collect some additional data
+COMPARISON_FIELDS = {
+    'Triple Gesamt': '?s ?p ?o',
+    'Kataloge': '?s a dcat:Catalog',
+    'Datensätze': '?s a dcat:Dataset',
+    'Distributionen': '?s a dcat:Distribution'
+}
+
+cfg = get_config()
+comparison_fields = []
+if cfg.SHACL_MODE == 'store':
+    rdf4j = RDF4J(rdf4j_base=cfg.RDF4J_BASE)
+    auth = HTTPBasicAuth(cfg.ADMIN_USER, cfg.ADMIN_PASS)
+
+    for field, short_query in COMPARISON_FIELDS.items():
+        query = NUMBER_OF_QUERY.format(short_query)
+        try:
+            old = rdf4j.query_repository(input_data, query=query, auth=auth)
+            new = rdf4j.query_repository(output, query=query, auth=auth)
+        except QueryFailed:
+            continue
+        comparison_fields.append({
+            'field': field,
+            'old': old['results']['bindings'][0]['count']['value'],
+            'new': new['results']['bindings'][0]['count']['value']
+        })
+
+provider = 'Unbekannt'
+date = datetime.now()
+date_formatted = date.strftime('%Y-%m-%d %H:%M')
+
 # reports will be generated on demand, so stores are reloaded
-HTMLTableReport().generate(output_error, html_file, display_details=True)
-PDFTableReport().generate(output_error, pdf_file, display_details=True)
-HTMLBlockReport().generate(output_error, html_file2, display_details=True)
-PDFBlockReport().generate(output_error, pdf_file2, display_details=True)
+HTMLTableReport().generate(output_error, html_file, display_details=True, provider=provider,
+                           date=date_formatted, comparison_fields=comparison_fields)
+PDFTableReport().generate(output_error, pdf_file, display_details=True, provider=provider,
+                          date=date_formatted, comparison_fields=comparison_fields)
+HTMLBlockReport().generate(output_error, html_file2, display_details=True, provider=provider,
+                           date=date_formatted, comparison_fields=comparison_fields)
+PDFBlockReport().generate(output_error, pdf_file2, display_details=True, provider=provider,
+                          date=date_formatted, comparison_fields=comparison_fields)
 
 sys.exit(0)

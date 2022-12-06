@@ -51,7 +51,7 @@ WHERE
         } .
 }
 """
-NUMBER_OF_DATASETS = """
+NUMBER_OF_QUERY = """
 PREFIX dcat:   <http://www.w3.org/ns/dcat#>
 PREFIX dcatap: <http://data.europa.eu/r5r#>
 PREFIX dcatde: <http://dcat-ap.de/def/dcatde/>
@@ -94,8 +94,8 @@ TABLE_HEADER = """
     <th>Meldung</th>
     <th>Fälle</th>
     <th>Nachricht</th>
-    <th>Shape</th>
-    <th>Constraint</th>
+    <th>Regel</th>
+    <th>Bedingung</th>
     <th>Knoten</th>
     <th>Pfad</th>
     <th>Wert</th>
@@ -104,12 +104,28 @@ TABLE_HEADER = """
 
 HTML_STYLE = """
 table, th, td, div {
-  border: 1px solid;
-  margin: 5px;
-  padding: 5px;
+
 }
 
-h3, ul, h4, p {
+table, th, td, div {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td, div {
+    padding: 5px;
+}
+
+table, div {
+    margin: 5px;
+}
+
+h3, h4 {
+    margin-top: 12px;
+    margin-bottom: 5px;
+}
+
+ ul,  p {
     margin-top: 5px;
     margin-bottom: 5px;
 }
@@ -123,12 +139,20 @@ TABLE_PDF_STYLE = """
     size: A4 landscape; 
     margin: 1cm;
 }
+
+table {
+    width: 27cm;
+}
 """
 
 BLOCKS_PDF_STYLE = """
 @page { 
     size: A4; 
     margin: 1cm;
+}
+
+table {
+    width: 18.3cm;
 }
 """
 
@@ -140,7 +164,6 @@ body {
 
 table {
     table-layout: fixed;
-    width: 27cm;
     overflow-wrap: break-word
 }
 tr, div {
@@ -149,8 +172,17 @@ tr, div {
 
 """
 COLORS = {
-    'sh:Violation':'#ffe6e6',
-    'sh:Warning':'#ffeecc',
-    'sh:Info':'#f2ffcc',
+    'Fehler':'#ffe6e6',
+    'Warnung':'#ffeecc',
+    'Info':'#f2ffcc',
 }
-SEVS = ['sh:Violation', 'sh:Warning', 'sh:Info']
+SEVS = ['Fehler', 'Warnung', 'Info']
+
+COMPARISON_TABLE_HEADER = """
+<table>
+  <tr>
+    <th></th>
+    <th>Anzahl vor der Validierung</th>
+    <th>Anzahl nach der Validierung</th>
+  </tr>
+"""

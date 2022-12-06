@@ -4,16 +4,24 @@ from pyrdf4j.rdf4j import RDF4J
 from requests.auth import HTTPBasicAuth
 
 from shacl.constants import SHACL_RESULTS, TABLE_HEADER, HTML_STYLE, PDF_STYLE, TABLE_PDF_STYLE, BLOCKS_PDF_STYLE, \
-    COLORS, SEVS
+    COLORS, SEVS, COMPARISON_TABLE_HEADER
 from shacl.log.log import get_logger
+from shacl.namespaces import SH
 from shacl.preprocess import Preprocess
 
 
 def clear_entry(entry, ns_manager):
-    res = entry.n3(ns_manager)
-    res = res.replace('<', '&#60;')
-    res = res.replace('>', '&#62;')
-    return res
+    if entry == SH.Violation:
+        return 'Fehler'
+    elif entry == SH.Warning:
+        return 'Warnung'
+    elif entry == SH.Info:
+        return 'Info'
+    else:
+        res = entry.n3(ns_manager)
+        res = res.replace('<', '&#60;')
+        res = res.replace('>', '&#62;')
+        return res
 
 
 class HTMLTableReport:
@@ -29,14 +37,28 @@ class HTMLTableReport:
             self.rdf4j = None
             self.auth = None
 
-    def get_overview(self, overview_data):
-        overview_html = '<h3>Meldungen</h3><div>'
+    def get_overview(self, overview_data, provider, date, comparison_fields):
+        overview_html = ''
+        if provider or date:
+            overview_html += '<h3>Details der Erzeugung</h3><div>'
+            if provider:
+                overview_html += f"<p><i>Datenbereitsteller:</i> {provider}</p>"
+            if date:
+                overview_html += f"<p><i>Zeitpunkt der Erfassung:</i> {date}</p>"
+            overview_html += '</div>'
+        overview_html += '<h3>Meldungen</h3><div>'
         for sev in SEVS:
             if sev in overview_data:
-                overview_html += f"<p><i>{sev}:</i> {overview_data[sev]} Fälle</p>"
+                overview_html += f"<p><i>{sev}:</i> {overview_data[sev]}</p>"
             else:
-                overview_html += f"<p><i>{sev}:</i> 0 Fälle</p>"
+                overview_html += f"<p><i>{sev}:</i> 0</p>"
         overview_html += '</div>'
+        if comparison_fields:
+            overview_html += '<h3>Datenvergleich</h3>'
+            overview_html += COMPARISON_TABLE_HEADER
+            for field in comparison_fields:
+                overview_html += "<tr><td>{field}</td><td>{old}</td><td>{new}</td></tr>".format(**field)
+            overview_html += '</table>'
         return overview_html
 
     def get_row(self, data):
@@ -71,7 +93,8 @@ class HTMLTableReport:
                 overview_data[sev] = 1
             if not sev in report_data:
                 report_data[sev] = {}
-            sConstraintComponent = clear_entry(shacl_result['sourceConstraintComponent'], report_graph.namespace_manager)
+            sConstraintComponent = clear_entry(shacl_result['sourceConstraintComponent'],
+                                               report_graph.namespace_manager)
             if not sConstraintComponent in report_data[sev]:
                 report_data[sev][sConstraintComponent] = {}
             sShape = clear_entry(shacl_result['sourceShape'], report_graph.namespace_manager)
@@ -147,17 +170,21 @@ class HTMLTableReport:
         details = TABLE_HEADER + detail_rows + '</table>'
         return details, statistics
 
-    def generate(self, error_path, target_path=None, display_details=False, raw=True):
+    def generate(self, error_path, target_path=None, display_details=False, raw=True, comparison_fields=None,
+                 provider='', date='', title=''):
         self.logger.info('Generate HTML')
         report_data, overview_data = self.collect_data(error_path)
 
         # overview
-        overview = self.get_overview(overview_data)
+        overview = self.get_overview(overview_data, provider, date, comparison_fields)
         # render data
         details, statistics = self.render_report_data(report_data, display_details)
 
         if not display_details:
             details = '<p>Details wurden deaktiviert</p>'
+
+        if not title:
+            title = error_path
 
         html = f"""
             <html>
@@ -167,7 +194,7 @@ class HTMLTableReport:
                 </style>
             </head>
             <body>
-            <h1>Report für {error_path}</h1>
+            <h1>Report für {title}</h1>
             <h2>Übersicht</h2>
             {overview}
             <h2>Aggregierter Report</h2>
@@ -197,8 +224,8 @@ class HTMLBlockReport(HTMLTableReport):
         return """<div style="background-color: {color}">
         <h3>{occurrence_formatted}{severity}: {msg}</h3>
         <p style="font-weight: bold;">Test</p>
-        <p><i>Shape:</i> {sourceShape}</p>
-        <p><i>Constraint:</i> {sourceConstraintComponent}</p>
+        <p><i>Regel:</i> {sourceShape}</p>
+        <p><i>Bedingung:</i> {sourceConstraintComponent}</p>
         <p style="font-weight: bold;">Ort</p>
         <p><i>Knoten:</i> {node}</p>
         <p><i>Pfad:</i> {path}</p>
@@ -218,9 +245,11 @@ class PDFTableReport:
         self.html_report = HTMLTableReport()
         self.special_style = TABLE_PDF_STYLE
 
-    def generate(self, error_path, target_path=None, display_details=False):
+    def generate(self, error_path, target_path=None, display_details=False, comparison_fields=None, provider='',
+                 date='', title=''):
         # use html and convert it
-        html = self.html_report.generate(error_path, display_details=display_details, raw=False)
+        html = self.html_report.generate(error_path, display_details=display_details, raw=False,
+                                         comparison_fields=comparison_fields, provider=provider, date=date, title=title)
         self.logger.info('Convert HTML to PDF')
         common_style = weasyprint.CSS(string=PDF_STYLE)
         special_style = weasyprint.CSS(string=self.special_style)

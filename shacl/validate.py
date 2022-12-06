@@ -6,7 +6,7 @@ from rdflib import URIRef
 from requests.auth import HTTPBasicAuth
 from zope import component
 
-from shacl.constants import NUMBER_OF_DATASETS, SHACL_RESULTS
+from shacl.constants import NUMBER_OF_QUERY, SHACL_RESULTS
 from shacl.log.log import ILogger
 from shacl.namespaces import SH
 from shacl.preprocess import Preprocess
@@ -126,9 +126,9 @@ class ValidationRun:
 
     def statistic(self, stage, graph):
         self.logger.info(stage)
-        a = graph.query(NUMBER_OF_DATASETS.format('?s a dcat:Dataset'))
+        a = graph.query(NUMBER_OF_QUERY.format('?s a dcat:Dataset'))
         self.logger.info('datasets: ' + a.bindings[0]['count'])
-        a = graph.query(NUMBER_OF_DATASETS.format('?s a dcat:Distribution'))
+        a = graph.query(NUMBER_OF_QUERY.format('?s a dcat:Distribution'))
         self.logger.info('distributions: ' + a.bindings[0]['count'])
-        a = graph.query(NUMBER_OF_DATASETS.format('?s ?p ?o'))
+        a = graph.query(NUMBER_OF_QUERY.format('?s ?p ?o'))
         self.logger.info('nodes:' + a.bindings[0]['count'])
