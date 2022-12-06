@@ -3,10 +3,17 @@ from pkan_config.config import get_config
 from pyrdf4j.rdf4j import RDF4J
 from requests.auth import HTTPBasicAuth
 
-from shacl.constants import SHACL_RESULTS, TABLE_HEADER, HTML_STYLE, PDF_STYLE
+from shacl.constants import SHACL_RESULTS, TABLE_HEADER, HTML_STYLE, PDF_STYLE, TABLE_PDF_STYLE, BLOCKS_PDF_STYLE, \
+    COLORS, SEVS
 from shacl.log.log import get_logger
-from shacl.namespaces import SH
 from shacl.preprocess import Preprocess
+
+
+def clear_entry(entry, ns_manager):
+    res = entry.n3(ns_manager)
+    res = res.replace('<', '&#60;')
+    res = res.replace('>', '&#62;')
+    return res
 
 
 class HTMLTableReport:
@@ -22,13 +29,23 @@ class HTMLTableReport:
             self.rdf4j = None
             self.auth = None
 
+    def get_overview(self, overview_data):
+        overview_html = '<h3>Meldungen</h3><div>'
+        for sev in SEVS:
+            if sev in overview_data:
+                overview_html += f"<p><i>{sev}:</i> {overview_data[sev]} Fälle</p>"
+            else:
+                overview_html += f"<p><i>{sev}:</i> 0 Fälle</p>"
+        overview_html += '</div>'
+        return overview_html
+
     def get_row(self, data):
         return """<tr style="background-color: {color}">
     <td>{severity}</td>
-    <td>{amount}</td>
+    <td>{occurrence}</td>
     <td>{msg}</td>
-    <td>{sourceConstraintComponent}</td>
     <td>{sourceShape}</td>
+    <td>{sourceConstraintComponent}</td>
     <td>{node}</td>
     <td>{path}</td>
     <td>{value}</td></tr>
@@ -42,79 +59,87 @@ class HTMLTableReport:
         shacl_results = report_graph.query(SHACL_RESULTS)
 
         report_data = {}
+        overview_data = {}
 
         # collecting data
         for shacl_result in shacl_results.bindings:
 
-            sev = shacl_result['severity']
+            sev = clear_entry(shacl_result['severity'], report_graph.namespace_manager)
+            if sev in overview_data:
+                overview_data[sev] += 1
+            else:
+                overview_data[sev] = 1
             if not sev in report_data:
                 report_data[sev] = {}
-            sConstraintComponent = shacl_result['sourceConstraintComponent']
+            sConstraintComponent = clear_entry(shacl_result['sourceConstraintComponent'], report_graph.namespace_manager)
             if not sConstraintComponent in report_data[sev]:
                 report_data[sev][sConstraintComponent] = {}
-            sShape = shacl_result['sourceShape']
+            sShape = clear_entry(shacl_result['sourceShape'], report_graph.namespace_manager)
             if not sShape in report_data[sev][sConstraintComponent]:
-                report_data[sev][sConstraintComponent][sShape] = {}
+                report_data[sev][sConstraintComponent][sShape] = []
+
             if 'msg' in shacl_result:
-                msg = shacl_result['msg']
+                msg = clear_entry(shacl_result['msg'], report_graph.namespace_manager)
             else:
                 msg = ''
-            if not msg in report_data[sev][sConstraintComponent][sShape]:
-                report_data[sev][sConstraintComponent][sShape][msg] = []
 
-            node = shacl_result['node']
-            path = shacl_result['path']
+            node = clear_entry(shacl_result['node'], report_graph.namespace_manager)
+            path = clear_entry(shacl_result['path'], report_graph.namespace_manager)
             if 'value' in shacl_result:
-                value = shacl_result['value']
+                value = clear_entry(shacl_result['value'], report_graph.namespace_manager)
             else:
                 value = ''
-            report_data[sev][sConstraintComponent][sShape][msg].append({
+            report_data[sev][sConstraintComponent][sShape].append({
                 'node': node,
                 'path': path,
-                'value': value
+                'value': value,
+                'msg': msg
             })
-        return report_data
+        return report_data, overview_data
 
     def render_rows(self, report_data, display_details):
 
-        statistics_rows = ''
+        statistics_rows = {}
         detail_rows = ''
 
         for sev, sConstraintComponents in report_data.items():
             color = 'white'
-            sev_name = sev
-            if sev == SH.Violation:
-                sev_name = 'Violation'
-                color = '#ffe6e6'
-            elif sev == SH.Warning:
-                sev_name = 'Warning'
-                color = '#ffeecc'
-            elif sev == SH.Info:
-                sev_name = 'Info'
-                color = '#f2ffcc'
+            if sev in COLORS:
+                color = COLORS[sev]
             for sConstraintComponent, sShapes in sConstraintComponents.items():
-                for sShape, messages in sShapes.items():
-                    for message, data in messages.items():
-                        unpacked_data = {'severity': sev_name,
-                                         'color': color,
-                                         'msg': message,
-                                         'sourceConstraintComponent': sConstraintComponent,
-                                         'amount': len(data),
-                                         'sourceShape': sShape,
-                                         }
-                        unpacked_data.update(data[0])
-                        statistics_rows += self.get_row(
+                for sShape, data in sShapes.items():
+                    occurrence = len(data)
+                    unpacked_data = {'severity': sev,
+                                     'color': color,
+                                     'sourceConstraintComponent': sConstraintComponent,
+                                     'occurrence': len(data),
+                                     'sourceShape': sShape,
+                                     }
+                    unpacked_data.update(data[0])
+                    unpacked_data['occurrence_formatted'] = f'[{unpacked_data["occurrence"]} Fälle] '
+                    if occurrence in statistics_rows:
+                        statistics_rows[occurrence] += self.get_row(
                             unpacked_data
                         )
-                        if display_details:
-                            unpacked_data['amount'] = 1
-                            for detail in data:
-                                unpacked_data.update(detail)
-                                detail_rows += self.get_row(
-                                    unpacked_data
-                                )
+                    else:
+                        statistics_rows[occurrence] = self.get_row(unpacked_data)
+                    if display_details:
+                        unpacked_data['occurrence_formatted'] = ''
+                        unpacked_data['occurrence'] = 1
+                        for detail in data:
+                            unpacked_data.update(detail)
+                            detail_rows += self.get_row(
+                                unpacked_data
+                            )
+        # sort statistics_rows by occurences
+        occurrences = list(statistics_rows.keys())
+        occurrences_sorted = sorted(occurrences, reverse=True)
 
-        return detail_rows, statistics_rows
+        statistics_rows_sorted = ''
+        for occ in occurrences_sorted:
+            statistics_rows_sorted += statistics_rows[occ]
+
+        return detail_rows, statistics_rows_sorted
 
     def render_report_data(self, report_data, display_details):
         statistic_rows, detail_rows = self.render_rows(report_data, display_details)
@@ -124,24 +149,30 @@ class HTMLTableReport:
 
     def generate(self, error_path, target_path=None, display_details=False, raw=True):
         self.logger.info('Generate HTML')
-        report_data = self.collect_data(error_path)
+        report_data, overview_data = self.collect_data(error_path)
 
+        # overview
+        overview = self.get_overview(overview_data)
         # render data
         details, statistics = self.render_report_data(report_data, display_details)
 
         if not display_details:
-            details = '<p>Details deactivated</p>'
+            details = '<p>Details wurden deaktiviert</p>'
 
         html = f"""
             <html>
             <head>
+                <style>
                 {HTML_STYLE}
+                </style>
             </head>
             <body>
-            <h1>Report for {error_path}</h1>
-            <h2>Statistics</h2>
+            <h1>Report für {error_path}</h1>
+            <h2>Übersicht</h2>
+            {overview}
+            <h2>Aggregierter Report</h2>
             {statistics}
-            <h2>Detailed Report</h2>
+            <h2>Detaillierter Report</h2>
             {details}
             </body>
             </html>
@@ -164,15 +195,14 @@ class HTMLBlockReport(HTMLTableReport):
 
     def get_row(self, data):
         return """<div style="background-color: {color}">
-        <h3>{severity}: {msg} [{amount} occurrences]</h3>
-        <p>Details</p>
-        <ul>
-            <li>sourceConstraintComponent: {sourceConstraintComponent}</li>
-            <li>sourceShape: {sourceShape}</li>
-            <li>node: {node}</li>
-            <li>path: {path}</li>
-            <li>value: {value}</li>
-        </ul>
+        <h3>{occurrence_formatted}{severity}: {msg}</h3>
+        <p style="font-weight: bold;">Test</p>
+        <p><i>Shape:</i> {sourceShape}</p>
+        <p><i>Constraint:</i> {sourceConstraintComponent}</p>
+        <p style="font-weight: bold;">Ort</p>
+        <p><i>Knoten:</i> {node}</p>
+        <p><i>Pfad:</i> {path}</p>
+        <p><i>Wert:</i> {value}</p>
         </div>
         """.format(**data)
 
@@ -186,13 +216,15 @@ class PDFTableReport:
         self.cfg = get_config()
         self.logger = get_logger()
         self.html_report = HTMLTableReport()
+        self.special_style = TABLE_PDF_STYLE
 
     def generate(self, error_path, target_path=None, display_details=False):
         # use html and convert it
         html = self.html_report.generate(error_path, display_details=display_details, raw=False)
         self.logger.info('Convert HTML to PDF')
-        style = weasyprint.CSS(string=PDF_STYLE)
-        pdf = weasyprint.HTML(string=html).write_pdf(stylesheets=[style])
+        common_style = weasyprint.CSS(string=PDF_STYLE)
+        special_style = weasyprint.CSS(string=self.special_style)
+        pdf = weasyprint.HTML(string=html).write_pdf(stylesheets=[common_style, special_style])
 
         self.logger.info(f'Write Results to Path {target_path}')
         f = open(target_path, 'wb')
@@ -206,3 +238,4 @@ class PDFBlockReport(PDFTableReport):
     def __init__(self):
         super().__init__()
         self.html_report = HTMLBlockReport()
+        self.special_style = BLOCKS_PDF_STYLE

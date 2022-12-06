@@ -13,7 +13,7 @@ from shacl.shacl_db import fill_shacl_db
 from shacl.validate import ValidationRun
 
 
-input_data = 'potsdam_complete'
+input_data = 'complete_store'
 output = 'complete_store_validate'
 output_error = 'complete_store_error'
 
@@ -38,9 +38,9 @@ fill_shacl_db()
 
 logger.info('VALIDATE INFORMATION')
 
-validation = ValidationRun(input_data, output, output_error)
+# validation = ValidationRun(input_data, output, output_error)
 #
-validation.run()
+# validation.run()
 
 logger.info('GENERATE REPORTS')
 

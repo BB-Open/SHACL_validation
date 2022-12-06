@@ -66,8 +66,8 @@ WHERE
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__))) / '..'
 SHAPE_FILES = [
     'dcat-ap_2.1.1_shacl_shapes.ttl',
-#    'dcat-ap-spec-german-additions.ttl',
-#    'dcat-ap-spec-german-messages.ttl',
+    #    'dcat-ap-spec-german-additions.ttl',
+    #    'dcat-ap-spec-german-messages.ttl',
 ]
 QUERY_ALL = '''
 PREFIX sh: <http://www.w3.org/ns/shacl#>
@@ -91,40 +91,53 @@ CONSTRUCT { ?s ?p ?o } WHERE { ?s ?p ?o }
 TABLE_HEADER = """
 <table>
   <tr>
-    <th>Severity</th>
-    <th>#</th>
-    <th>Message</th>
-    <th>sourceConstraintComponent</th>
-    <th>sourceShape</th>
-    <th>Node</th>
-    <th>Path</th>
-    <th>Value</th>
+    <th>Meldung</th>
+    <th>Fälle</th>
+    <th>Nachricht</th>
+    <th>Shape</th>
+    <th>Constraint</th>
+    <th>Knoten</th>
+    <th>Pfad</th>
+    <th>Wert</th>
   </tr>
 """
+
 HTML_STYLE = """
-            <style>
 table, th, td, div {
   border: 1px solid;
   margin: 5px;
   padding: 5px;
 }
-</style>
-            """
-PDF_STYLE = """
+
+h3, ul, h4, p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+h3, h4, p {
+    padding: 0
+}
+
+"""
+TABLE_PDF_STYLE = """
 @page { 
     size: A4 landscape; 
     margin: 1cm;
 }
+"""
+
+BLOCKS_PDF_STYLE = """
+@page { 
+    size: A4; 
+    margin: 1cm;
+}
+"""
+
+PDF_STYLE = HTML_STYLE + """
 
 body {
     font-size: 0.7em;
 }
 
-table, th, td, div {
-    border: 1px solid;
-    margin: 5px;
-    padding: 5px;
-}
 table {
     table-layout: fixed;
     width: 27cm;
@@ -135,3 +148,9 @@ tr, div {
 }
 
 """
+COLORS = {
+    'sh:Violation':'#ffe6e6',
+    'sh:Warning':'#ffeecc',
+    'sh:Info':'#f2ffcc',
+}
+SEVS = ['sh:Violation', 'sh:Warning', 'sh:Info']

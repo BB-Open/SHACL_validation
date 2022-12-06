@@ -130,7 +130,7 @@ Responsible for action: GovData/EU, fix shapes
 
 Inconsistent Data. Dataset is linked, but not created in store.
 
-Responsible for action: LGB, provide/fix Dataset information
+Responsible for action: Inqbus, fix dataset creation
 
 ---
 
