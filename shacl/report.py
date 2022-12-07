@@ -128,6 +128,7 @@ class HTMLTableReport:
 
         statistics_rows = {}
         detail_rows = ''
+        counter = 0
 
         for sev, sConstraintComponents in report_data.items():
             color = 'white'
@@ -150,7 +151,7 @@ class HTMLTableReport:
                         )
                     else:
                         statistics_rows[occurrence] = self.get_row(unpacked_data)
-                    if display_details:
+                    if display_details and counter < self.cfg.MAXIMUM_DETAIL_ERROR:
                         unpacked_data['occurrence_formatted'] = ''
                         unpacked_data['occurrence'] = 1
                         for detail in data:
@@ -206,7 +207,7 @@ class HTMLTableReport:
             {overview}
             <h2>Aggregierter Report</h2>
             {statistics}
-            <h2>Detaillierter Report</h2>
+            <h2>Detaillierter Report [Maximal {self.cfg.MAXIMUM_DETAIL_ERROR} Fehler]</h2>
             {details}
             </body>
             </html>
