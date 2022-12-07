@@ -1,3 +1,5 @@
+import tempfile
+
 import weasyprint
 from pkan_config.config import get_config
 from pyrdf4j.rdf4j import RDF4J
@@ -253,12 +255,15 @@ class PDFTableReport:
     def generate(self, error_path, target_path=None, display_details=False, comparison_fields=None, provider='',
                  date='', title=''):
         # use html and convert it
-        html = self.html_report.generate(error_path, display_details=display_details, raw=False,
-                                         comparison_fields=comparison_fields, provider=provider, date=date, title=title)
+        html_file = tempfile.NamedTemporaryFile(suffix='.html')
+        self.html_report.generate(error_path, display_details=display_details, raw=False,
+                                         comparison_fields=comparison_fields, provider=provider, date=date, title=title,
+                                         target_path=html_file.name)
         self.logger.info('Convert HTML to PDF')
         common_style = weasyprint.CSS(string=PDF_STYLE)
         special_style = weasyprint.CSS(string=self.special_style)
-        pdf = weasyprint.HTML(string=html).write_pdf(stylesheets=[common_style, special_style])
+        pdf = weasyprint.HTML(filename=html_file.name).write_pdf(stylesheets=[common_style, special_style])
+        html_file.close()
 
         self.logger.info(f'Write Results to Path {target_path}')
         f = open(target_path, 'wb')
