@@ -118,6 +118,8 @@ class HTMLTableReport:
                 'value': value,
                 'msg': msg
             })
+        del report_graph
+        del shacl_result
         return report_data, overview_data
 
     def render_rows(self, report_data, display_details):
@@ -179,6 +181,9 @@ class HTMLTableReport:
         overview = self.get_overview(overview_data, provider, date, comparison_fields)
         # render data
         details, statistics = self.render_report_data(report_data, display_details)
+
+        del report_data
+        del overview_data
 
         if not display_details:
             details = '<p>Details wurden deaktiviert</p>'

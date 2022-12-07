@@ -123,6 +123,10 @@ class ValidationRun:
 
         writer.write_results(input_data, self.output_file)
         writer.write_results(error_data, self.output_error_file)
+        del input_data
+        del error_data
+        del validator
+        del writer
 
     def statistic(self, stage, graph):
         self.logger.info(stage)
