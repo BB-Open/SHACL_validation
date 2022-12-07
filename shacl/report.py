@@ -151,14 +151,18 @@ class HTMLTableReport:
                         )
                     else:
                         statistics_rows[occurrence] = self.get_row(unpacked_data)
-                    if display_details and counter < self.cfg.MAXIMUM_DETAIL_ERROR:
+                    if display_details:
                         unpacked_data['occurrence_formatted'] = ''
                         unpacked_data['occurrence'] = 1
                         for detail in data:
-                            unpacked_data.update(detail)
-                            detail_rows += self.get_row(
-                                unpacked_data
-                            )
+                            if counter < self.cfg.MAXIMUM_DETAIL_ERROR:
+                                unpacked_data.update(detail)
+                                detail_rows += self.get_row(
+                                    unpacked_data
+                                )
+                                counter += 1
+                            else:
+                                break
         # sort statistics_rows by occurences
         occurrences = list(statistics_rows.keys())
         occurrences_sorted = sorted(occurrences, reverse=True)
