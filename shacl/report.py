@@ -8,7 +8,7 @@ from requests.auth import HTTPBasicAuth
 from shacl.constants import SHACL_RESULTS, TABLE_HEADER, HTML_STYLE, PDF_STYLE, TABLE_PDF_STYLE, BLOCKS_PDF_STYLE, \
     COLORS, SEVS, COMPARISON_TABLE_HEADER
 from shacl.log.log import get_logger
-from shacl.namespaces import SH
+from pkan_config.namespaces import SH
 from shacl.preprocess import Preprocess
 
 
@@ -260,15 +260,12 @@ class PDFTableReport:
     def generate(self, error_path, target_path=None, display_details=False, comparison_fields=None, provider='',
                  date='', title=''):
         # use html and convert it
-        html_file = tempfile.NamedTemporaryFile(suffix='.html')
-        self.html_report.generate(error_path, display_details=display_details, raw=False,
-                                         comparison_fields=comparison_fields, provider=provider, date=date, title=title,
-                                         target_path=html_file.name)
+        html = self.html_report.generate(error_path, display_details=display_details, raw=False,
+                                         comparison_fields=comparison_fields, provider=provider, date=date, title=title)
         self.logger.info('Convert HTML to PDF')
         common_style = weasyprint.CSS(string=PDF_STYLE)
         special_style = weasyprint.CSS(string=self.special_style)
-        pdf = weasyprint.HTML(filename=html_file.name).write_pdf(stylesheets=[common_style, special_style])
-        html_file.close()
+        pdf = weasyprint.HTML(string=html).write_pdf(stylesheets=[common_style, special_style])
 
         self.logger.info(f'Write Results to Path {target_path}')
         f = open(target_path, 'wb')

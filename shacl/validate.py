@@ -8,7 +8,7 @@ from zope import component
 
 from shacl.constants import NUMBER_OF_QUERY, SHACL_RESULTS
 from shacl.log.log import ILogger
-from shacl.namespaces import SH
+from pkan_config.namespaces import SH
 from shacl.preprocess import Preprocess
 from shacl.results import ResultWriter
 

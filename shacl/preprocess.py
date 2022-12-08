@@ -1,16 +1,17 @@
 import pyshacl
 import rdflib
 from pkan_config.config import get_config
+from rdflib import Namespace
 
 from shacl.constants import BASE_DIR, SHAPE_FILES, QUERY_ALL
 from shacl.log.log import get_logger
-from shacl.namespaces import INIT_NS
+from pkan_config.namespaces import NAMESPACES
 from shacl.ustils.errors import NotAllCasesCovered
 
 
 def bind_namespaces(graph):
-    for namespace_short, namespace in INIT_NS.items():
-        graph.bind(namespace_short, namespace)
+    for namespace_short, namespace in NAMESPACES.items():
+        graph.bind(namespace_short, Namespace(namespace))
 
 
 def load_store_from_rdf4j(database_path, auth, rdf4j):
