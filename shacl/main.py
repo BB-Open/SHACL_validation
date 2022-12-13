@@ -1,10 +1,6 @@
 import sys
 from datetime import datetime
 
-# os.environ['http_proxy'] = 'http://localhost:3128'
-# os.environ['https_proxy'] = 'http://localhost:3128'
-# os.environ["REQUESTS_CA_BUNDLE"] = '/usr/local/share/ca-certificates/myCA.pem'
-# os.environ["SSL_CERT_FILE"] = '/usr/local/share/ca-certificates/myCA.pem'
 from pkan_config.config import get_config
 from pyrdf4j.errors import QueryFailed
 from pyrdf4j.rdf4j import RDF4J
