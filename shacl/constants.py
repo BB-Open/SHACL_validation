@@ -64,11 +64,36 @@ WHERE
 }}
 """
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__))) / '..'
+SHAPE_FILES_META = {
+    'dcat-ap_2.1.1_shacl_shapes.ttl': {
+        'version': '2.1.1',
+        'last_download': '2023-03-07',
+        'last_change': '2022-08-12'
+    },
+    'dcat-ap-spec-german-additions.ttl': {
+        'version': 'v2.0',
+        'last_download': '2023-03-07',
+        'last_change': '2023-01-23'
+    },
+    'dcat-ap-spec-german-messages.ttl': {
+        'version': 'v2.0',
+        'last_download': '2023-03-07',
+        'last_change': '2022-08-18'
+    },
+    'dcat-ap-de-imports.ttl': {
+        'version': 'v2.0',
+        'last_download': '2023-03-07',
+        'last_change': '2023-01-02'
+    },
+}
+
 SHAPE_FILES = [
     'dcat-ap_2.1.1_shacl_shapes.ttl',
-    #    'dcat-ap-spec-german-additions.ttl',
-    #    'dcat-ap-spec-german-messages.ttl',
+    'dcat-ap-spec-german-additions.ttl',
+    'dcat-ap-spec-german-messages.ttl',
+    'dcat-ap-de-imports.ttl',
 ]
+
 QUERY_ALL = '''
 PREFIX sh: <http://www.w3.org/ns/shacl#>
 prefix dct: <http://purl.org/dc/terms/>
@@ -184,5 +209,15 @@ COMPARISON_TABLE_HEADER = """
     <th></th>
     <th>Anzahl vor der Validierung</th>
     <th>Anzahl nach der Validierung</th>
+  </tr>
+"""
+
+SHACL_FILES_TABLE_HEADER = """
+<table>
+  <tr>
+    <th>Datei</th>
+    <th>Version</th>
+    <th>Letzte Aktualisierung im Repository</th>
+    <th>Letzter Download</th>
   </tr>
 """

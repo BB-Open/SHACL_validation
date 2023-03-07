@@ -6,7 +6,7 @@ from pyrdf4j.rdf4j import RDF4J
 from requests.auth import HTTPBasicAuth
 
 from shacl.constants import SHACL_RESULTS, TABLE_HEADER, HTML_STYLE, PDF_STYLE, TABLE_PDF_STYLE, BLOCKS_PDF_STYLE, \
-    COLORS, SEVS, COMPARISON_TABLE_HEADER
+    COLORS, SEVS, COMPARISON_TABLE_HEADER, SHACL_FILES_TABLE_HEADER, SHAPE_FILES, SHAPE_FILES_META
 from shacl.log.log import get_logger
 from pkan_config.namespaces import SH
 from shacl.preprocess import Preprocess
@@ -61,6 +61,12 @@ class HTMLTableReport:
             for field in comparison_fields:
                 overview_html += "<tr><td>{field}</td><td>{old}</td><td>{new}</td></tr>".format(**field)
             overview_html += '</table>'
+        overview_html += '<h3>Shacl Dateien</h3>'
+        overview_html += SHACL_FILES_TABLE_HEADER
+        for filename in SHAPE_FILES:
+            meta = SHAPE_FILES_META[filename]
+            overview_html += f"<tr><td>{filename}</td><td>{meta['version']}</td><td>{meta['last_change']}</td><td>{meta['last_download']}</td></tr>"
+        overview_html += '</table>'
         return overview_html
 
     def get_row(self, data):
