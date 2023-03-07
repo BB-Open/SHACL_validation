@@ -1,4 +1,5 @@
 import tempfile
+from collections import OrderedDict
 
 import weasyprint
 from pkan_config.config import get_config
@@ -65,7 +66,8 @@ class HTMLTableReport:
         overview_html += SHACL_FILES_TABLE_HEADER
         for filename in SHAPE_FILES:
             meta = SHAPE_FILES_META[filename]
-            overview_html += f"<tr><td>{filename}</td><td>{meta['version']}</td><td>{meta['last_change']}</td><td>{meta['last_download']}</td></tr>"
+            overview_html += f"<tr><td>{filename}</td><td>{meta['version']}</td><td>{meta['last_change']}</td>" \
+                             f"<td>{meta['last_download']}</td><td>{meta['notes']}</td></tr>"
         overview_html += '</table>'
         return overview_html
 
@@ -88,7 +90,11 @@ class HTMLTableReport:
         report_graph = prep.load_data(error_path)
         shacl_results = report_graph.query(SHACL_RESULTS)
 
-        report_data = {}
+        # ordered dict to display errors first
+        report_data = OrderedDict()
+        report_data['Fehler'] = {}
+        report_data['Warnung'] = {}
+        report_data['Info'] = {}
         overview_data = {}
 
         # collecting data

@@ -12,9 +12,9 @@ from shacl.report import HTMLTableReport, PDFTableReport, HTMLBlockReport, PDFBl
 from shacl.shacl_db import fill_shacl_db
 from shacl.validate import ValidationRun
 
-input_data = 'complete_store'
-output = 'complete_store_validate'
-output_error = 'complete_store_error'
+input_data = 'test_db'
+output = input_data + '_validate'
+output_error = input_data + '_error'
 
 # input_data = BASE_DIR / 'data' / 'datenadler.ttl'
 # input_data = BASE_DIR / 'data' / 'first_1000.ttl'

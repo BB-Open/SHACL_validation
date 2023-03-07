@@ -68,22 +68,26 @@ SHAPE_FILES_META = {
     'dcat-ap_2.1.1_shacl_shapes.ttl': {
         'version': '2.1.1',
         'last_download': '2023-03-07',
-        'last_change': '2022-08-12'
+        'last_change': '2022-08-12',
+        'notes': 'xsd:dateTimeStamp als Datumstyp ergänzt',
     },
     'dcat-ap-spec-german-additions.ttl': {
         'version': 'v2.0',
         'last_download': '2023-03-07',
-        'last_change': '2023-01-23'
+        'last_change': '2023-01-23',
+        'notes': '',
     },
     'dcat-ap-spec-german-messages.ttl': {
         'version': 'v2.0',
         'last_download': '2023-03-07',
-        'last_change': '2022-08-18'
+        'last_change': '2022-08-18',
+        'notes': '',
     },
     'dcat-ap-de-imports.ttl': {
         'version': 'v2.0',
         'last_download': '2023-03-07',
-        'last_change': '2023-01-02'
+        'last_change': '2023-01-02',
+        'notes': '',
     },
 }
 
@@ -197,9 +201,9 @@ tr, div {
 
 """
 COLORS = {
-    'Fehler':'#ffe6e6',
-    'Warnung':'#ffeecc',
-    'Info':'#f2ffcc',
+    'Fehler': '#ffe6e6',
+    'Warnung': '#ffeecc',
+    'Info': '#f2ffcc',
 }
 SEVS = ['Fehler', 'Warnung', 'Info']
 
@@ -219,5 +223,6 @@ SHACL_FILES_TABLE_HEADER = """
     <th>Version</th>
     <th>Letzte Aktualisierung im Repository</th>
     <th>Letzter Download</th>
+    <th>Anmerkungen</th>
   </tr>
 """
