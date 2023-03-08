@@ -97,6 +97,7 @@ class HTMLTableReport:
         report_data['Info'] = {}
         overview_data = {}
 
+        shacl_result = None
         # collecting data
         for shacl_result in shacl_results.bindings:
 
