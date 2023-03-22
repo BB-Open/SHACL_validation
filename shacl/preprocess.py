@@ -1,11 +1,11 @@
 import pyshacl
 import rdflib
 from pkan_config.config import get_config
-from rdflib import Namespace
+from pkan_config.namespaces import NAMESPACES
+from rdflib import Namespace, Graph
 
 from shacl.constants import BASE_DIR, SHAPE_FILES, QUERY_ALL
 from shacl.log.log import get_logger
-from pkan_config.namespaces import NAMESPACES
 from shacl.ustils.errors import NotAllCasesCovered
 
 
@@ -42,15 +42,19 @@ def load_shacl_store_from_rdf4j(auth, rdf4j):
     return validator, onto_graph
 
 
-def load_shacl_store_from_file():
-    validator = pyshacl.rdfutil.load_from_source(str(BASE_DIR / 'shapes' / SHAPE_FILES[0]))
+def load_shacl_store_from_file(logger):
+    logger.info("Loading Validator")
+    logger.info("Loading file " + SHAPE_FILES[0])
+    validator = pyshacl.rdfutil.load_from_source(str(BASE_DIR / 'shapes' / SHAPE_FILES[0]), do_owl_imports=True)
 
     if len(SHAPE_FILES) > 1:
         for filename in SHAPE_FILES[1:]:
-            validator = pyshacl.rdfutil.load_from_source(str(BASE_DIR / 'shapes' / filename), g=validator)
+            logger.info("Loading file " + filename)
+            validator = pyshacl.rdfutil.load_from_source(str(BASE_DIR / 'shapes' / filename), g=validator, do_owl_imports=True)
 
-    ont_graph = rdflib.graph.Graph()
-    ont_graph.parse(str(BASE_DIR / 'shapes' / 'dcat-ap-de-imports.ttl'), format='turtle')
+    logger.info("Loading Onto Graph")
+    ont_graph = pyshacl.rdfutil.load_from_source(str(BASE_DIR / 'shapes' / 'dcat-ap-de-imports.ttl'), do_owl_imports=True)
+    logger.info("Binding Namespaces")
     bind_namespaces(validator)
     bind_namespaces(ont_graph)
     return validator, ont_graph

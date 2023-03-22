@@ -2,7 +2,7 @@ import pyshacl
 import rdflib
 from pkan_config.config import get_config
 from pyrdf4j.rdf4j import RDF4J
-from rdflib import URIRef
+from rdflib import URIRef, Graph
 from requests.auth import HTTPBasicAuth
 from zope import component
 
@@ -75,6 +75,9 @@ class ValidationRun:
         self.logger.info("Creating validator")
         validator = Validator(mode, self.auth, self.rdf4j)
 
+        self.logger.info("Creating Test Data including Input and Validator Graphs")
+        test_data = Graph() + input_data + validator.ont_graph + validator.validator
+
         data_conforms = False
         steps = 1
 
@@ -83,7 +86,7 @@ class ValidationRun:
             self.statistic('Input Data: ', input_data)
             self.logger.info('Call Validation for Input.')
 
-            conforms, report_graph, report_text = validator.validate(input_data)
+            conforms, report_graph, report_text = validator.validate(test_data)
 
             self.logger.info('Violations: ' + str(len([i for i in report_graph.triples(
                 (None, None, URIRef('http://www.w3.org/ns/shacl#ValidationResult')))])))
@@ -105,10 +108,14 @@ class ValidationRun:
                         data_conforms = False
                         if 'value' in shacl_result:
                             input_data.remove((shacl_result['node'], shacl_result['path'], shacl_result['value']))
+                            test_data.remove((shacl_result['node'], shacl_result['path'], shacl_result['value']))
                         else:
                             input_data.remove((shacl_result['node'], None, None))
                             input_data.remove((None, shacl_result['node'], None))
                             input_data.remove((None, None, shacl_result['node']))
+                            test_data.remove((shacl_result['node'], None, None))
+                            test_data.remove((None, shacl_result['node'], None))
+                            test_data.remove((None, None, shacl_result['node']))
                     else:
                         self.logger.debug(sev)
                         self.logger.debug('No Violation')
@@ -116,6 +123,7 @@ class ValidationRun:
                     self.logger.debug('No severity')
 
             input_data.commit()
+            test_data.commit()
 
             self.statistic('Validated Data: ', input_data)
 
@@ -127,6 +135,7 @@ class ValidationRun:
         del error_data
         del validator
         del writer
+        del test_data
 
     def statistic(self, stage, graph):
         self.logger.info(stage)
