@@ -6,7 +6,7 @@ authors = ["volker <volker.jaenisch@inqbus.de>"]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
-kglab = "^0.6.1"
+# kglab = "^0.6.1"
 colorlog = "^6.7.0"
 "zope.component" = "^5.0.1"
 pyrdf4j = { path = "../pyrdf4j", develop = true }
