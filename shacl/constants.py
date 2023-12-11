@@ -91,7 +91,7 @@ SHAPE_FILES_META = {
     },
     'dcat-ap-konventionen.ttl': {
         'version': 'v2.0',
-        'last_downlaod': '2023-12-11',
+        'last_download': '2023-12-11',
         'last_change': '2023-01-23',
         'notes': '',
     }
