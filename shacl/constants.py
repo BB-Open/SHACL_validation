@@ -89,6 +89,12 @@ SHAPE_FILES_META = {
         'last_change': '2023-01-02',
         'notes': '',
     },
+    'dcat-ap-konventionen.ttl': {
+        'version': 'v2.0',
+        'last_downlaod': '2023-12-11',
+        'last_change': '2023-01-23',
+        'notes': '',
+    }
 }
 
 SHAPE_FILES = [
@@ -96,6 +102,7 @@ SHAPE_FILES = [
     'dcat-ap-spec-german-additions.ttl',
     'dcat-ap-spec-german-messages.ttl',
     'dcat-ap-de-imports.ttl',
+    'dcat-ap-konventionen.ttl',
 ]
 
 QUERY_ALL = '''
